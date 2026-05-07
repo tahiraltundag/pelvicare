@@ -17,6 +17,7 @@ import ClinicianPage from './pages/ClinicianPage';
 import ResourcesPage from './pages/ResourcesPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
+import CheckoutPage from './pages/CheckoutPage';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -48,6 +49,7 @@ export default function App() {
             <Route path="/kaynaklar" element={<ResourcesPage />} />
             <Route path="/hakkimizda" element={<AboutPage />} />
             <Route path="/iletisim" element={<ContactPage />} />
+            <Route path="/odeme" element={<CheckoutPage />} />
           </Routes>
           </main>
           <Footer />

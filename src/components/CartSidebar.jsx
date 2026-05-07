@@ -1,8 +1,15 @@
 import { X, Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
 export default function CartSidebar() {
   const { items, sidebarOpen, setSidebarOpen, removeFromCart, updateQty, total } = useCart();
+  const navigate = useNavigate();
+
+  const goToCheckout = () => {
+    setSidebarOpen(false);
+    navigate('/odeme');
+  };
 
   return (
     <>
@@ -97,6 +104,7 @@ export default function CartSidebar() {
               </span>
             </div>
             <button
+              onClick={goToCheckout}
               className="w-full py-3.5 rounded-xl font-bold text-white transition-all hover:opacity-90 mb-2"
               style={{ backgroundColor: '#0d9488' }}
             >

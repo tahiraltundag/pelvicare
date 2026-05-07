@@ -1,6 +1,19 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { CheckCircle, Star, ArrowRight, Shield, Zap, Activity } from 'lucide-react';
+import DeviceModel3D from '../components/DeviceModel3D';
+import AnimateInView from '../components/AnimateInView';
 import { stats, modalities, clinicalResults, reviews } from '../data/product';
+
+const HERO_DOTS = [
+  { top: '12%', left: '4%',  size: 7,  dur: '4.2s', delay: '0s'    },
+  { top: '55%', left: '2%',  size: 4,  dur: '5s',   delay: '1.1s'  },
+  { top: '80%', left: '9%',  size: 9,  dur: '3.8s', delay: '0.5s'  },
+  { top: '25%', right: '6%', size: 5,  dur: '4.6s', delay: '0.8s'  },
+  { top: '65%', right: '4%', size: 7,  dur: '5.2s', delay: '1.6s'  },
+  { top: '88%', right: '14%',size: 4,  dur: '4s',   delay: '2s'    },
+  { top: '8%',  left: '52%', size: 3,  dur: '6s',   delay: '0.3s'  },
+  { top: '92%', left: '38%', size: 5,  dur: '4.4s', delay: '1.3s'  },
+];
 
 const trustBadges = [
   { icon: <Shield size={20} />, label: 'CE Belgeli', sub: 'Tıbbi Cihaz' },
@@ -49,7 +62,18 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero */}
-      <section className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 60%, #0d9488 100%)' }}>
+      <section data-hero className="relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 60%, #0d9488 100%)' }}>
+        {HERO_DOTS.map((d, i) => (
+          <span
+            key={i}
+            className="hero-dot"
+            style={{
+              width: d.size, height: d.size,
+              top: d.top, left: d.left, right: d.right,
+              '--dur': d.dur, '--delay': d.delay,
+            }}
+          />
+        ))}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-white">
@@ -90,22 +114,16 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Product visual */}
+            {/* Product visual — 3D rotating device */}
             <div className="flex justify-center lg:justify-end">
               <div className="relative w-full max-w-md">
-                <div className="rounded-3xl overflow-hidden bg-white/10 backdrop-blur border border-white/20">
-                  <img
-                    src="/images/urun-sistem-genel.jpg"
-                    alt="PelviCare Akıllı Hibrit Pelvik Taban Rehabilitasyon Sistemi"
-                    className="w-full object-contain"
-                  />
-                </div>
+                <DeviceModel3D height="440px" />
                 {/* Floating badges */}
-                <div className="absolute -top-4 -right-4 bg-white rounded-xl px-3 py-2 shadow-lg">
+                <div className="hero-badge-float absolute top-4 right-0 bg-white rounded-xl px-3 py-2 shadow-lg">
                   <div className="text-xs font-bold text-gray-800">CE Belgeli</div>
                   <div className="text-xs text-gray-500">Tıbbi Cihaz</div>
                 </div>
-                <div className="absolute -bottom-4 -left-4 bg-teal-600 rounded-xl px-3 py-2 shadow-lg text-white">
+                <div className="hero-badge-float-alt absolute bottom-4 left-0 bg-teal-600 rounded-xl px-3 py-2 shadow-lg text-white">
                   <div className="text-xs font-bold">3 Modalite</div>
                   <div className="text-xs text-teal-200">17 Protokol</div>
                 </div>
@@ -142,12 +160,14 @@ export default function HomePage() {
             <p className="text-gray-500 max-w-2xl mx-auto">Milyonlar tedavi aramaktan çekinmekte. PelviCare bu boşluğu klinik etkinlik ve ev erişilebilirliğiyle kapatıyor.</p>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat) => (
-              <div key={stat.value} className="text-center p-6 rounded-2xl bg-gray-50">
-                <div className="text-4xl font-bold mb-1" style={{ color: '#0d9488' }}>{stat.value}</div>
-                <div className="text-sm font-semibold text-gray-800 mb-1">{stat.label}</div>
-                <div className="text-xs text-gray-500">{stat.desc}</div>
-              </div>
+            {stats.map((stat, i) => (
+              <AnimateInView key={stat.value} delay={i * 100}>
+                <div className="text-center p-6 rounded-2xl bg-gray-50 h-full">
+                  <div className="text-4xl font-bold mb-1" style={{ color: '#0d9488' }}>{stat.value}</div>
+                  <div className="text-sm font-semibold text-gray-800 mb-1">{stat.label}</div>
+                  <div className="text-xs text-gray-500">{stat.desc}</div>
+                </div>
+              </AnimateInView>
             ))}
           </div>
         </div>
@@ -161,13 +181,15 @@ export default function HomePage() {
             <p className="text-gray-600 max-w-2xl mx-auto">Her modalite diğerinin etkisini güçlendiren sinerjik bir yapıda çalışır.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            {modalities.map((m) => (
-              <div key={m.name} className={`rounded-2xl border-2 p-6 bg-white ${m.border}`}>
-                <div className={`text-4xl mb-4`}>{m.icon}</div>
-                <h3 className={`text-lg font-bold mb-1 ${m.color}`}>{m.name}</h3>
-                <div className="text-sm font-medium text-gray-500 mb-3">{m.fullName}</div>
-                <p className="text-gray-600 text-sm leading-relaxed">{m.desc}</p>
-              </div>
+            {modalities.map((m, i) => (
+              <AnimateInView key={m.name} delay={i * 150} type="scale">
+                <div className={`rounded-2xl border-2 p-6 bg-white h-full ${m.border}`}>
+                  <div className="text-4xl mb-4">{m.icon}</div>
+                  <h3 className={`text-lg font-bold mb-1 ${m.color}`}>{m.name}</h3>
+                  <div className="text-sm font-medium text-gray-500 mb-3">{m.fullName}</div>
+                  <p className="text-gray-600 text-sm leading-relaxed">{m.desc}</p>
+                </div>
+              </AnimateInView>
             ))}
           </div>
           <div className="mt-10 text-center">
@@ -188,14 +210,16 @@ export default function HomePage() {
             <p className="text-gray-500">Klinik düzey tedavi, evde basit adımlarla.</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {steps.map((s) => (
-              <div key={s.step} className="text-center">
-                <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white font-bold text-lg mx-auto mb-4" style={{ backgroundColor: '#0d9488' }}>
-                  {s.step}
+            {steps.map((s, i) => (
+              <AnimateInView key={s.step} delay={i * 110}>
+                <div className="text-center h-full">
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white font-bold text-lg mx-auto mb-4" style={{ backgroundColor: '#0d9488' }}>
+                    {s.step}
+                  </div>
+                  <h3 className="text-base font-semibold text-gray-900 mb-2">{s.title}</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">{s.desc}</p>
                 </div>
-                <h3 className="text-base font-semibold text-gray-900 mb-2">{s.title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed">{s.desc}</p>
-              </div>
+              </AnimateInView>
             ))}
           </div>
           <div className="mt-10 text-center">
@@ -214,13 +238,15 @@ export default function HomePage() {
             <p className="text-blue-300">RCT, meta-analiz ve Cochrane derleme verileri</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {clinicalResults.map((r) => (
-              <div key={r.value} className="bg-white/10 backdrop-blur rounded-2xl p-6 text-center border border-white/10">
-                <div className="text-4xl font-bold text-teal-400 mb-2">{r.value}</div>
-                <div className="text-sm font-semibold text-white mb-1">{r.label}</div>
-                <div className="text-xs text-blue-300 mb-2">{r.detail}</div>
-                <div className="text-xs text-blue-400 italic">{r.source}</div>
-              </div>
+            {clinicalResults.map((r, i) => (
+              <AnimateInView key={r.value} delay={i * 100}>
+                <div className="bg-white/10 backdrop-blur rounded-2xl p-6 text-center border border-white/10 h-full">
+                  <div className="text-4xl font-bold text-teal-400 mb-2">{r.value}</div>
+                  <div className="text-sm font-semibold text-white mb-1">{r.label}</div>
+                  <div className="text-xs text-blue-300 mb-2">{r.detail}</div>
+                  <div className="text-xs text-blue-400 italic">{r.source}</div>
+                </div>
+              </AnimateInView>
             ))}
           </div>
           <div className="mt-10 text-center">
@@ -281,25 +307,27 @@ export default function HomePage() {
             <h2 className="text-3xl font-bold" style={{ color: '#1e3a5f' }}>Kullanıcılarımız Ne Diyor?</h2>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {reviews.map((review) => (
-              <div key={review.name} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                <div className="flex items-center justify-between mb-3">
-                  <StarRating rating={review.rating} />
-                  {review.verified && (
-                    <span className="text-xs text-teal-600 font-medium bg-teal-50 px-2 py-0.5 rounded-full">Doğrulanmış</span>
-                  )}
-                </div>
-                <p className="text-gray-700 text-sm leading-relaxed mb-4">"{review.text}"</p>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style={{ backgroundColor: '#0d9488' }}>
-                    {review.name.charAt(0)}
+            {reviews.map((review, i) => (
+              <AnimateInView key={review.name} delay={i * 120}>
+                <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 h-full">
+                  <div className="flex items-center justify-between mb-3">
+                    <StarRating rating={review.rating} />
+                    {review.verified && (
+                      <span className="text-xs text-teal-600 font-medium bg-teal-50 px-2 py-0.5 rounded-full">Doğrulanmış</span>
+                    )}
                   </div>
-                  <div>
-                    <div className="text-sm font-semibold text-gray-900">{review.name}</div>
-                    <div className="text-xs text-gray-400">{review.location} · {review.date}</div>
+                  <p className="text-gray-700 text-sm leading-relaxed mb-4">"{review.text}"</p>
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style={{ backgroundColor: '#0d9488' }}>
+                      {review.name.charAt(0)}
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold text-gray-900">{review.name}</div>
+                      <div className="text-xs text-gray-400">{review.location} · {review.date}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </AnimateInView>
             ))}
           </div>
           <div className="mt-10 text-center">

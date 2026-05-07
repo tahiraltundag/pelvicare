@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle, Star, Shield, Truck, RotateCcw, ArrowRight } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import DeviceModel3D from '../components/DeviceModel3D';
 
 const galleryImages = [
   { src: '/images/urun-sistem-genel.jpg', alt: 'PelviCare Sistem Genel Görünüm', label: 'Sistem Genel' },
@@ -15,29 +16,63 @@ const galleryImages = [
 ];
 
 function ProductGallery() {
+  const [tab, setTab] = useState('3d');
   const [active, setActive] = useState(0);
+
   return (
     <div className="flex flex-col gap-3">
-      <div className="rounded-2xl overflow-hidden bg-white border border-white/20 aspect-square flex items-center justify-center">
-        <img
-          src={galleryImages[active].src}
-          alt={galleryImages[active].alt}
-          className="w-full h-full object-contain"
-        />
+      {/* Sekme seçici */}
+      <div className="flex gap-2">
+        <button
+          onClick={() => setTab('3d')}
+          className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all ${
+            tab === '3d'
+              ? 'bg-teal-400 text-white'
+              : 'bg-white/10 text-white/70 hover:bg-white/20'
+          }`}
+        >
+          3D Görünüm
+        </button>
+        <button
+          onClick={() => setTab('photos')}
+          className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all ${
+            tab === 'photos'
+              ? 'bg-teal-400 text-white'
+              : 'bg-white/10 text-white/70 hover:bg-white/20'
+          }`}
+        >
+          Fotoğraflar
+        </button>
       </div>
-      <div className="grid grid-cols-4 gap-2">
-        {galleryImages.map((img, i) => (
-          <button
-            key={i}
-            onClick={() => setActive(i)}
-            className={`rounded-xl overflow-hidden border-2 transition-all aspect-square bg-white/10 ${
-              active === i ? 'border-teal-400 scale-95' : 'border-transparent hover:border-white/40'
-            }`}
-          >
-            <img src={img.src} alt={img.label} className="w-full h-full object-contain" />
-          </button>
-        ))}
-      </div>
+
+      {tab === '3d' ? (
+        <div className="rounded-2xl overflow-hidden" style={{ height: '380px' }}>
+          <DeviceModel3D height="380px" />
+        </div>
+      ) : (
+        <>
+          <div className="rounded-2xl overflow-hidden bg-white/5 border border-white/20 flex items-center justify-center" style={{ height: '300px' }}>
+            <img
+              src={galleryImages[active].src}
+              alt={galleryImages[active].alt}
+              className="w-full h-full object-contain"
+            />
+          </div>
+          <div className="grid grid-cols-4 gap-2">
+            {galleryImages.map((img, i) => (
+              <button
+                key={i}
+                onClick={() => setActive(i)}
+                className={`rounded-xl overflow-hidden border-2 transition-all aspect-square bg-white/10 ${
+                  active === i ? 'border-teal-400 scale-95' : 'border-transparent hover:border-white/40'
+                }`}
+              >
+                <img src={img.src} alt={img.label} className="w-full h-full object-contain" />
+              </button>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }

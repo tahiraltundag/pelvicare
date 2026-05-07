@@ -1,6 +1,46 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle, Star, Shield, Truck, RotateCcw, ArrowRight } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+
+const galleryImages = [
+  { src: '/images/urun-sistem-genel.jpg', alt: 'PelviCare Sistem Genel Görünüm', label: 'Sistem Genel' },
+  { src: '/images/urun-elektrod-pad.jpg', alt: 'PelviCare Elektrod Pad Detay', label: 'Elektrod Pad' },
+  { src: '/images/cihaz.png',   alt: 'PelviCare Cihaz Yan Görünüm', label: 'Yan Görünüm' },
+  { src: '/images/cihaz-2.png', alt: 'PelviCare Cihaz Üst Görünüm', label: 'Üst Görünüm' },
+  { src: '/images/cihaz-3.png', alt: 'PelviCare Cihaz Ön Görünüm', label: 'Ön Görünüm' },
+  { src: '/images/cihaz-4.png', alt: 'PelviCare Cihaz Boyutları', label: 'Boyutlar' },
+  { src: '/images/cihaz-5.png', alt: 'PelviCare Cihaz Arka Görünüm', label: 'Arka Görünüm' },
+  { src: '/images/cihaz-6.png', alt: 'PelviCare Cihaz LED Panel', label: 'LED Panel' },
+];
+
+function ProductGallery() {
+  const [active, setActive] = useState(0);
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="rounded-2xl overflow-hidden bg-white border border-white/20 aspect-square flex items-center justify-center">
+        <img
+          src={galleryImages[active].src}
+          alt={galleryImages[active].alt}
+          className="w-full h-full object-contain"
+        />
+      </div>
+      <div className="grid grid-cols-4 gap-2">
+        {galleryImages.map((img, i) => (
+          <button
+            key={i}
+            onClick={() => setActive(i)}
+            className={`rounded-xl overflow-hidden border-2 transition-all aspect-square bg-white/10 ${
+              active === i ? 'border-teal-400 scale-95' : 'border-transparent hover:border-white/40'
+            }`}
+          >
+            <img src={img.src} alt={img.label} className="w-full h-full object-contain" />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 const packages = [
   {
@@ -144,15 +184,8 @@ export default function ProductPage() {
                 </Link>
               </div>
             </div>
-            <div className="flex justify-center">
-              <div className="w-80 h-80 rounded-3xl bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center">
-                <div className="text-center text-white">
-                  <div className="text-7xl mb-4">🩺</div>
-                  <div className="text-lg font-bold text-teal-300">PelviCare Device</div>
-                  <div className="text-sm text-blue-200 mt-1">+ Electrode Pad</div>
-                  <div className="text-sm text-blue-200">+ Mobile App</div>
-                </div>
-              </div>
+            <div className="w-full max-w-md mx-auto">
+              <ProductGallery />
             </div>
           </div>
         </div>
@@ -291,13 +324,12 @@ export default function ProductPage() {
                 </button>
               </div>
             </div>
-            <div className="rounded-2xl p-8 flex items-center justify-center" style={{ backgroundColor: '#f0fdfa' }}>
-              <div className="text-center">
-                <div className="text-8xl mb-4">🔋</div>
-                <div className="text-lg font-bold" style={{ color: '#1e3a5f' }}>Elektrod Pad</div>
-                <div className="text-sm text-gray-500 mt-1">Therapeutic Signal · Vibration</div>
-                <div className="text-sm text-gray-500">Hydrogel · Contoured Profile</div>
-              </div>
+            <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: '#f0fdfa' }}>
+              <img
+                src="/images/urun-elektrod-pad.jpg"
+                alt="PelviCare Elektrod Pad"
+                className="w-full h-full object-contain"
+              />
             </div>
           </div>
         </div>

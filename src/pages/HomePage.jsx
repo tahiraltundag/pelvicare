@@ -92,18 +92,13 @@ export default function HomePage() {
 
             {/* Product visual */}
             <div className="flex justify-center lg:justify-end">
-              <div className="relative">
-                <div className="w-72 h-72 lg:w-96 lg:h-96 rounded-3xl bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center">
-                  <div className="text-center text-white">
-                    <div className="text-7xl mb-4">🩺</div>
-                    <div className="text-xl font-bold text-teal-300">PelviCare</div>
-                    <div className="text-sm text-blue-200 mt-1">Akıllı Hibrit Sistem</div>
-                    <div className="mt-4 flex justify-center gap-3">
-                      <span className="text-2xl">⚡</span>
-                      <span className="text-2xl">🧲</span>
-                      <span className="text-2xl">📳</span>
-                    </div>
-                  </div>
+              <div className="relative w-full max-w-md">
+                <div className="rounded-3xl overflow-hidden bg-white/10 backdrop-blur border border-white/20">
+                  <img
+                    src="/images/urun-sistem-genel.jpg"
+                    alt="PelviCare Akıllı Hibrit Pelvik Taban Rehabilitasyon Sistemi"
+                    className="w-full object-contain"
+                  />
                 </div>
                 {/* Floating badges */}
                 <div className="absolute -top-4 -right-4 bg-white rounded-xl px-3 py-2 shadow-lg">

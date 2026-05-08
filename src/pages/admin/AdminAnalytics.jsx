@@ -55,12 +55,20 @@ const CustomTooltipStock = ({ active, payload, label }) => {
 export default function AdminAnalytics() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [revenueView, setRevenueView] = useState('gelir'); // 'gelir' | 'siparis'
 
   useEffect(() => {
-    api.get('/admin/analytics').then(res => {
-      if (res.success) setData(res.data);
-    }).finally(() => setLoading(false));
+    api.get('/admin/analytics')
+      .then(res => {
+        if (res.success) {
+          setData(res.data);
+        } else {
+          setError(res.error || 'API başarısız döndü');
+        }
+      })
+      .catch(err => setError(err.message || 'Bağlantı hatası'))
+      .finally(() => setLoading(false));
   }, []);
 
   if (loading) return (
@@ -69,7 +77,13 @@ export default function AdminAnalytics() {
     </div>
   );
 
-  if (!data) return <div className="text-red-500 p-4">Veriler yüklenemedi.</div>;
+  if (error || !data) return (
+    <div className="bg-red-50 border border-red-200 rounded-2xl p-6 text-red-700">
+      <div className="font-semibold mb-1">Analitik verileri yüklenemedi</div>
+      <div className="text-sm font-mono">{error || 'Bilinmeyen hata'}</div>
+      <div className="text-xs text-red-500 mt-2">Tarayıcı konsolunu kontrol edin (F12)</div>
+    </div>
+  );
 
   const { monthlyRevenue, orderStatusDist, productStock, pnl } = data;
 

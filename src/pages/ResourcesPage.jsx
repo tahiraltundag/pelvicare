@@ -1,14 +1,15 @@
 import { Download, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useCms } from '../hooks/useCms';
 
-const downloads = [
+const DEFAULT_DOWNLOADS = [
   { title: 'Doktorunuz İçin Bilgi', desc: 'Hekim ziyaretinizde kullanabileceğiniz ürün tanıtım ve reçete talep formu', format: 'PDF', icon: '📄' },
   { title: 'Ürün Broşürü (TR)', desc: 'Türkçe tam ürün tanıtım broşürü — özellikler, protokoller ve fiyatlar', format: 'PDF', icon: '📋' },
   { title: 'Günlük Seans Takip Formu', desc: 'İlerlemenizi kağıt üzerinde takip etmek için yazdırılabilir form', format: 'PDF', icon: '📊' },
   { title: 'SGK / Özel Sigorta Mektubu', desc: 'Geri ödeme başvurusu için tıbbi gereklilik belgesi taslağı', format: 'PDF', icon: '🏥' },
 ];
 
-const articles = [
+const DEFAULT_ARTICLES = [
   {
     category: 'İdrar Kaçırma & Stres İnkontinans',
     items: [
@@ -28,7 +29,7 @@ const articles = [
   {
     category: 'Diğer Pelvik Taban Bozuklukları',
     items: [
-      { title: 'Vajinismus: Tanı, Neden ve Tedavi', date: 'Şubat 2026', desc: 'İstem dışı vajinal kas spazmının güncel tedavi protokolleri ve EMS\'in rolü.' },
+      { title: 'Vajinismus: Tanı, Neden ve Tedavi', date: 'Şubat 2026', desc: "İstem dışı vajinal kas spazmının güncel tedavi protokolleri ve EMS'in rolü." },
       { title: 'Pelvik Organ Sarkması (Prolapsus)', date: 'Ocak 2026', desc: 'Prolapsusun evreleri ve konservatif tedavi seçenekleri.' },
       { title: 'Erkekte Pelvik Taban Sağlığı', date: 'Mart 2026', desc: 'Erkek pelvik taban bozukluklarının göz ardı edilen boyutu ve modern rehabilitasyon.' },
     ],
@@ -36,19 +37,24 @@ const articles = [
   {
     category: 'Dismenore & Ağrı',
     items: [
-      { title: 'Dismenore İçin EMS: 20 Dakikada Ağrı Rahatlaması', date: 'Ocak 2026', desc: 'Cochrane 2024 meta-analizi ışığında EMS\'in dismenore tedavisindeki etkinliği.' },
+      { title: "Dismenore İçin EMS: 20 Dakikada Ağrı Rahatlaması", date: 'Ocak 2026', desc: "Cochrane 2024 meta-analizi ışığında EMS'in dismenore tedavisindeki etkinliği." },
       { title: 'Kronik Pelvik Ağrı Yönetimi', date: 'Şubat 2026', desc: 'Kronik pelvik ağrının multidisipliner yaklaşımı ve elektrostimülasyonun yeri.' },
     ],
   },
 ];
 
 export default function ResourcesPage() {
+  const { get, getJson } = useCms();
+  const heroTitle = get('resources_hero_title', 'Kaynaklar');
+  const downloads = getJson('resources_downloads', DEFAULT_DOWNLOADS);
+  const articles = getJson('resources_articles', DEFAULT_ARTICLES);
+
   return (
     <div>
       {/* Hero */}
       <section className="py-16 lg:py-20" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 100%)' }}>
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">Kaynaklar</h1>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
           <p className="text-blue-200 text-lg">İndirilebilir belgeler, makaleler ve pelvik sağlık rehberleri</p>
         </div>
       </section>

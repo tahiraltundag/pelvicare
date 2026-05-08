@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import { maleModes } from '../data/product';
+import { useCms } from '../hooks/useCms';
 
-const targetProfiles = [
+const DEFAULT_PROFILES = [
   { icon: '🔷', title: 'Erektil Disfonksiyon', modes: 'E-03', desc: 'İskiokavernozus güçlendirme ve intrakavernal basınç artışı.' },
   { icon: '⏱', title: 'Erken Boşalma', modes: 'E-04', desc: 'Nöromodülasyon ile IELT uzatma ve ejakülasyon eşik yükseltme.' },
   { icon: '💧', title: 'İdrar Kaçırma', modes: 'E-01', desc: 'Prostatektomi sonrası sfinkter güçlendirme ve erken iyileşme.' },
@@ -10,15 +11,20 @@ const targetProfiles = [
 ];
 
 export default function MenPage() {
+  const { get, getJson } = useCms();
+  const heroTitle = get('men_hero_title', 'Erkek Pelvik Sağlığı');
+  const heroSubtitle = get('men_hero_subtitle', '7 bilimsel protokol. Erektil disfonksiyondan prostatik ağrıya, erken boşalmadan idrar kaçırmaya kapsamlı erkek pelvik rehabilitasyonu.');
+  const targetProfiles = getJson('men_profiles', DEFAULT_PROFILES);
+
   return (
     <div>
       {/* Hero */}
       <section className="py-16 lg:py-24" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 100%)' }}>
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
           <div className="text-5xl mb-4">💪</div>
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">Erkek Pelvik Sağlığı</h1>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
           <p className="text-xl text-blue-200 leading-relaxed mb-6">
-            7 bilimsel protokol. Erektil disfonksiyondan prostatik ağrıya, erken boşalmadan idrar kaçırmaya kapsamlı erkek pelvik rehabilitasyonu.
+            {heroSubtitle}
           </p>
           <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-400/30 rounded-full px-5 py-2">
             <span className="text-teal-300 text-sm font-medium">Evde gizlilikle uygulanabilir · Erkek anatomisine özel tasarım</span>

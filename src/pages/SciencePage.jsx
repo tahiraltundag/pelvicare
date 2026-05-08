@@ -1,13 +1,16 @@
 import { clinicalResults, modalities, techSpecs } from '../data/product';
+import { useCms } from '../hooks/useCms';
 
-const clinicalStudies = [
+const DEFAULT_STUDIES = [
   { modalite: 'EMS · K-01', endikasyon: 'İdrar Kaçırma', sonuc: '%95 sızıntı azalması', kaynak: 'Stania M. et al. 2022 RCT', tag: 'RCT' },
   { modalite: 'Manyetik · K-03', endikasyon: 'Prolapsus', sonuc: '%100 POP-Q evre iyileşmesi (20 seans)', kaynak: 'Xu J. et al. 2023 RCT', tag: 'RCT' },
   { modalite: 'EMS · K-04', endikasyon: 'Dismenore', sonuc: '-%93 analjezik; %74 rahatlama', kaynak: 'Han S. Cochrane 2024 (20 RCT)', tag: 'Cochrane' },
   { modalite: 'EMS · E-03', endikasyon: 'Erektil Disfonksiyon', sonuc: 'İntrakavernal basınç artışı (RCT)', kaynak: 'Capogrosso et al. 2018', tag: 'RCT' },
-  { modalite: 'Manyetik · E-06', endikasyon: 'Prostatik Ağrı', sonuc: '24 hafta NIH-CPSI iyileşmesi', kaynak: 'Kim TH. et al. 2013', tag: 'Klinik' },
-  { modalite: 'EMS · K-05', endikasyon: 'Vajinismus', sonuc: 'Botulinum toksin ile kıyaslanabilir etkinlik', kaynak: 'Yaraghi M. et al. 2019 RCT', tag: 'RCT' },
-  { modalite: 'EMS · E-04', endikasyon: 'Erken Boşalma', sonuc: 'IELT anlamlı uzama (50+ hasta)', kaynak: 'Tahmasbi F. et al. 2025', tag: 'Meta-Analiz' },
+];
+
+const DEFAULT_DIFFS = [
+  { title: 'Non-invazif Perineal Yerleşim', desc: 'Vücut dışında, iç çamaşırı gibi kullanım. Vajinal veya rektal prob gerektirmez.' },
+  { title: 'Üç Bölgeli Hidrojel Yapısı', desc: 'Dört ayrı hidrojel bölgesi, anatomik alanlara optimum enerji iletimi sağlar.' },
 ];
 
 const tagColors = {
@@ -17,22 +20,21 @@ const tagColors = {
   'Meta-Analiz': 'bg-amber-100 text-amber-700',
 };
 
-const differentiators = [
-  { title: 'Non-invazif Perineal Yerleşim', desc: 'Vücut dışında, iç çamaşırı gibi kullanım. Vajinal veya rektal prob gerektirmez. Biyouyumlu hidrojel elektrodu ile deri üzerinden etkili stimülasyon.' },
-  { title: 'Üç Bölgeli Hidrojel Yapısı', desc: 'Dört ayrı hidrojel bölgesi, anatomik alanlara optimum enerji iletimi sağlar. Her bölge farklı modalite için optimize edilmiştir.' },
-  { title: 'Pre-Modüle Dalga Formu', desc: 'Sinir ve kas liflerine özel pre-modüle edilmiş dalga formları ile hem Tip I (tonik) hem Tip II (fazik) lifleri etkili biçimde aktive eder.' },
-  { title: 'Sinerjik Modalite Kombinasyonu', desc: 'EMS + Elektromanyetik + Vibrasyon aynı anda veya sırayla uygulanabilir. Kombinasyon tedavisi tek modaliteye kıyasla %66 daha iyi etkinlik gösterir.' },
-];
-
 export default function SciencePage() {
+  const { get, getJson } = useCms();
+  const heroTitle = get('science_hero_title', 'Bilimsel Kanıtlar');
+  const heroSubtitle = get('science_hero_subtitle', 'PelviCare\'in etkinliği 50\'den fazla randomize kontrollü klinik çalışma ile desteklenmektedir.');
+  const clinicalStudies = getJson('science_studies', DEFAULT_STUDIES);
+  const differentiators = getJson('science_differentiators', DEFAULT_DIFFS);
+
   return (
     <div>
       {/* Hero */}
       <section className="py-16 lg:py-24" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 100%)' }}>
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">Klinik Kanıt Altyapısı</h1>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
           <p className="text-xl text-blue-200 leading-relaxed mb-8">
-            RCT'ler · Meta-Analizler · Cochrane Derlemeleri
+            {heroSubtitle}
           </p>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {[

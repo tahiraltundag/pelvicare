@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import { femaleModes } from '../data/product';
+import { useCms } from '../hooks/useCms';
 
-const targetProfiles = [
+const DEFAULT_PROFILES = [
   { icon: '🤱', title: 'Yeni Anne', modes: 'K-08 · K-09', desc: 'Doğum sonrası pelvik rehabilitasyon; levator ani hasarı ve pudendal nöropraksi.' },
   { icon: '🌿', title: 'Menopoz Dönemi', modes: 'K-01 · K-10', desc: 'Östrojen düşüşüyle artan inkontinans, pelvik atrofi ve cinsel isteksizlik.' },
   { icon: '🛡', title: 'Vajinismus / Ağrı', modes: 'K-05', desc: 'Kademeli kas spazmı çözme ve desensitizasyon protokolü.' },
@@ -10,15 +11,20 @@ const targetProfiles = [
 ];
 
 export default function WomenPage() {
+  const { get, getJson } = useCms();
+  const heroTitle = get('women_hero_title', 'Kadın Pelvik Sağlığı');
+  const heroSubtitle = get('women_hero_subtitle', '10 bilimsel protokol. İdrar kaçırmadan vajinismusa, dismenorenin anından menopoza kapsamlı kadın pelvik rehabilitasyonu.');
+  const targetProfiles = getJson('women_profiles', DEFAULT_PROFILES);
+
   return (
     <div>
       {/* Hero */}
       <section className="py-16 lg:py-24" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 60%, #0d9488 100%)' }}>
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
           <div className="text-5xl mb-4">🌸</div>
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">Kadın Pelvik Sağlığı</h1>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
           <p className="text-xl text-blue-200 leading-relaxed mb-6">
-            10 bilimsel protokol. İdrar kaçırmadan vajinismusa, dismenorenin anından menopoza kapsamlı kadın pelvik rehabilitasyonu.
+            {heroSubtitle}
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             {['10 Protokol', 'Non-invazif', 'Evde Kullanım', 'Klinik Kanıtlı'].map((tag) => (

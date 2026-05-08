@@ -1,28 +1,37 @@
 import { CheckCircle, Smartphone, Zap, Activity, Waves } from 'lucide-react';
 import { modalities, techSpecs } from '../data/product';
+import { useCms } from '../hooks/useCms';
 
-const phases = [
+const DEFAULT_PHASES = [
   { code: 'F1', name: 'Fortifikasyon', duration: '1–2 Hafta', desc: 'Düşük yoğunlukta kas aktivasyonu ve nöromusküler bağlantı kurma. Vücut cihaza adapte olur.', color: 'bg-teal-100 text-teal-700 border-teal-200' },
   { code: 'F2', name: 'Güçlendirme', duration: '3–6 Hafta', desc: 'Artan şiddet ve frekansla klinik etkinlik bölgesine geçiş. Kas kuvveti ve dayanıklılık artar.', color: 'bg-blue-100 text-blue-700 border-blue-200' },
   { code: 'F3', name: 'İdame', duration: 'Sürekli', desc: 'Kazanılan terapötik kazanımları koruma. Haftada 3 seans ile uzun vadeli sağlık sürdürülür.', color: 'bg-purple-100 text-purple-700 border-purple-200' },
 ];
 
-const appFeatures = [
-  { icon: <Activity size={20} />, title: 'Hazır Modlar', desc: '17 tanıya tek dokunuşla başlatma. Kadın / Erkek profil seçimi. Mod açıklaması ve bilgi ekranı.' },
-  { icon: <Zap size={20} />, title: 'Manuel Kontrol', desc: 'EMS, Manyetik, Vibrasyon ayrı ayrı ayarlama. Frekans, şiddet, süre, duty cycle kontrolü.' },
-  { icon: <Waves size={20} />, title: 'Takip & Rehberlik', desc: 'Faz bazlı otomatik ilerleme F1→F2→F3. Seans geçmişi ve ilerleme grafiği. Hatırlatıcı desteği.' },
-  { icon: <Smartphone size={20} />, title: 'Bluetooth Bağlantı', desc: 'iOS ve Android uyumlu. Firmware güncelleme desteği. Cihaz durumu anlık izleme.' },
+const DEFAULT_APP_FEATURES = [
+  { title: 'Hazır Modlar', desc: '17 tanıya tek dokunuşla başlatma. Kadın / Erkek profil seçimi. Mod açıklaması ve bilgi ekranı.' },
+  { title: 'Manuel Kontrol', desc: 'EMS, Manyetik, Vibrasyon ayrı ayrı ayarlama. Frekans, şiddet, süre, duty cycle kontrolü.' },
+  { title: 'Takip & Rehberlik', desc: 'Faz bazlı otomatik ilerleme F1→F2→F3. Seans geçmişi ve ilerleme grafiği. Hatırlatıcı desteği.' },
+  { title: 'Bluetooth Bağlantı', desc: 'iOS ve Android uyumlu. Firmware güncelleme desteği. Cihaz durumu anlık izleme.' },
 ];
 
+const APP_FEATURE_ICONS = [<Activity size={20} />, <Zap size={20} />, <Waves size={20} />, <Smartphone size={20} />];
+
 export default function HowItWorksPage() {
+  const { get, getJson } = useCms();
+  const heroTitle = get('how_hero_title', 'Nasıl Çalışır?');
+  const heroSubtitle = get('how_hero_subtitle', 'PelviCare, üç tedavi modalitesini tek bir giyilebilir cihazda birleştirerek klinik düzey pelvik taban rehabilitasyonunu evinize taşır.');
+  const phases = getJson('how_phases', DEFAULT_PHASES);
+  const appFeatures = getJson('how_app_features', DEFAULT_APP_FEATURES);
+
   return (
     <div>
       {/* Hero */}
       <section className="py-16 lg:py-24" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 100%)' }}>
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">Nasıl Çalışır?</h1>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
           <p className="text-xl text-blue-200 leading-relaxed">
-            PelviCare, üç tedavi modalitesini tek bir giyilebilir cihazda birleştirerek klinik düzey pelvik taban rehabilitasyonunu evinize taşır.
+            {heroSubtitle}
           </p>
         </div>
       </section>
@@ -128,10 +137,10 @@ export default function HowItWorksPage() {
             <p className="text-blue-300">Tam kontrol parmaklarınızın ucunda</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {appFeatures.map((f) => (
+            {appFeatures.map((f, i) => (
               <div key={f.title} className="bg-white/10 backdrop-blur rounded-2xl p-5 border border-white/10">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center text-teal-400 bg-teal-400/10 mb-4">
-                  {f.icon}
+                  {APP_FEATURE_ICONS[i % APP_FEATURE_ICONS.length]}
                 </div>
                 <h3 className="font-semibold text-white mb-2">{f.title}</h3>
                 <p className="text-sm text-blue-300 leading-relaxed">{f.desc}</p>

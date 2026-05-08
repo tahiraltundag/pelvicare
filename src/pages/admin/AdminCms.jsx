@@ -1,78 +1,136 @@
-import { useEffect, useState, useRef } from 'react';
-import { Save, Eye, EyeOff, Upload, Type, FileText, Image } from 'lucide-react';
+import { useEffect, useState, useRef, useMemo } from 'react';
+import { Save, Eye, EyeOff, Upload, Type, FileText, Image, List, Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import api from '../../api/client';
 
+const PHASES_SCHEMA = [
+  { key: 'code', label: 'Kod (F1, F2...)', type: 'text' },
+  { key: 'name', label: 'Ad', type: 'text' },
+  { key: 'duration', label: 'Süre', type: 'text' },
+  { key: 'desc', label: 'Açıklama', type: 'textarea' },
+];
+const APP_FEATURES_SCHEMA = [
+  { key: 'icon', label: 'İkon Adı (Activity/Zap/Waves/Smartphone)', type: 'text' },
+  { key: 'title', label: 'Başlık', type: 'text' },
+  { key: 'desc', label: 'Açıklama', type: 'textarea' },
+];
+const PROFILE_SCHEMA = [
+  { key: 'icon', label: 'İkon (emoji)', type: 'text' },
+  { key: 'title', label: 'Başlık', type: 'text' },
+  { key: 'modes', label: 'Modlar (örn: K-01)', type: 'text' },
+  { key: 'desc', label: 'Açıklama', type: 'textarea' },
+];
+const STUDY_SCHEMA = [
+  { key: 'modalite', label: 'Modalite', type: 'text' },
+  { key: 'endikasyon', label: 'Endikasyon', type: 'text' },
+  { key: 'sonuc', label: 'Sonuç', type: 'text' },
+  { key: 'kaynak', label: 'Kaynak', type: 'text' },
+  { key: 'tag', label: 'Etiket (RCT/Cochrane/Klinik/Meta-Analiz)', type: 'text' },
+];
+const DIFF_SCHEMA = [
+  { key: 'title', label: 'Başlık', type: 'text' },
+  { key: 'desc', label: 'Açıklama', type: 'textarea' },
+];
+const REVIEW_SCHEMA = [
+  { key: 'name', label: 'İsim', type: 'text' },
+  { key: 'location', label: 'Şehir', type: 'text' },
+  { key: 'rating', label: 'Puan (1-5)', type: 'number' },
+  { key: 'date', label: 'Tarih', type: 'text' },
+  { key: 'text', label: 'Yorum', type: 'textarea' },
+  { key: 'verified', label: 'Doğrulanmış', type: 'boolean' },
+];
+const DOWNLOAD_SCHEMA = [
+  { key: 'icon', label: 'İkon (emoji)', type: 'text' },
+  { key: 'title', label: 'Başlık', type: 'text' },
+  { key: 'desc', label: 'Açıklama', type: 'textarea' },
+  { key: 'format', label: 'Format (PDF/DOCX)', type: 'text' },
+];
+
 const SECTIONS = [
+  { title: 'Ana Sayfa', keys: ['hero_title', 'hero_subtitle', 'hero_cta', 'hero_image', 'announcement_bar'] },
+  { title: 'Hakkımızda', keys: ['about_title', 'about_content'] },
+  { title: 'Klinisyenler', keys: ['clinician_title', 'clinician_content'] },
+  { title: 'İletişim', keys: ['contact_title', 'contact_subtitle'] },
+  { title: 'Footer', keys: ['footer_address', 'footer_phone', 'footer_email'] },
+  { title: 'Marka', keys: ['logo_url'] },
   {
-    title: 'Ana Sayfa',
-    keys: ['hero_title', 'hero_subtitle', 'hero_cta', 'hero_image', 'announcement_bar'],
+    title: 'SSS',
+    keys: [
+      'faq_hero_title', 'faq_hero_subtitle',
+      { key: 'faq_categories', type: 'json-faq', label: 'SSS Kategorileri ve Sorular' },
+    ],
   },
   {
-    title: 'Hakkımızda',
-    keys: ['about_title', 'about_content'],
+    title: 'Nasıl Çalışır',
+    keys: [
+      'how_hero_title', 'how_hero_subtitle',
+      { key: 'how_phases', type: 'json-list', label: 'Tedavi Fazları', itemLabel: 'Faz', schema: PHASES_SCHEMA },
+      { key: 'how_app_features', type: 'json-list', label: 'Uygulama Özellikleri', itemLabel: 'Özellik', schema: APP_FEATURES_SCHEMA },
+    ],
   },
   {
-    title: 'Klinisyenler',
-    keys: ['clinician_title', 'clinician_content'],
+    title: 'Kadın Sağlığı',
+    keys: [
+      'women_hero_title', 'women_hero_subtitle',
+      { key: 'women_profiles', type: 'json-list', label: 'Hedef Profiller', itemLabel: 'Profil', schema: PROFILE_SCHEMA },
+    ],
   },
   {
-    title: 'İletişim',
-    keys: ['contact_title', 'contact_subtitle'],
+    title: 'Erkek Sağlığı',
+    keys: [
+      'men_hero_title', 'men_hero_subtitle',
+      { key: 'men_profiles', type: 'json-list', label: 'Hedef Profiller', itemLabel: 'Profil', schema: PROFILE_SCHEMA },
+    ],
   },
   {
-    title: 'Footer',
-    keys: ['footer_address', 'footer_phone', 'footer_email'],
+    title: 'Bilim',
+    keys: [
+      'science_hero_title', 'science_hero_subtitle',
+      { key: 'science_studies', type: 'json-list', label: 'Klinik Çalışmalar', itemLabel: 'Çalışma', schema: STUDY_SCHEMA },
+      { key: 'science_differentiators', type: 'json-list', label: 'Farklılaştırıcılar', itemLabel: 'Madde', schema: DIFF_SCHEMA },
+    ],
   },
   {
-    title: 'Marka',
-    keys: ['logo_url'],
+    title: 'Yorumlar',
+    keys: [
+      'reviews_hero_title',
+      { key: 'reviews_items', type: 'json-list', label: 'Yorumlar Listesi', itemLabel: 'Yorum', schema: REVIEW_SCHEMA },
+    ],
+  },
+  {
+    title: 'Kaynaklar',
+    keys: [
+      'resources_hero_title',
+      { key: 'resources_downloads', type: 'json-list', label: 'İndirilebilir Belgeler', itemLabel: 'Belge', schema: DOWNLOAD_SCHEMA },
+      { key: 'resources_articles', type: 'json-articles', label: 'Makale Kategorileri' },
+    ],
   },
 ];
 
 function RichTextEditor({ value, onChange }) {
   const editorRef = useRef(null);
   const [isFocused, setIsFocused] = useState(false);
-
   const exec = (cmd, val = null) => {
     editorRef.current?.focus();
     document.execCommand(cmd, false, val);
     onChange(editorRef.current?.innerHTML || '');
   };
-
   return (
     <div className={`border rounded-xl overflow-hidden transition-colors ${isFocused ? 'border-teal-500 ring-2 ring-teal-100' : 'border-gray-200'}`}>
       <div className="flex items-center gap-1 p-2 border-b border-gray-100 bg-gray-50 flex-wrap">
-        {[
-          { cmd: 'bold', label: 'B', cls: 'font-bold' },
-          { cmd: 'italic', label: 'İ', cls: 'italic' },
-          { cmd: 'underline', label: 'A', cls: 'underline' },
-        ].map(btn => (
+        {[{ cmd: 'bold', label: 'B', cls: 'font-bold' }, { cmd: 'italic', label: 'İ', cls: 'italic' }, { cmd: 'underline', label: 'A', cls: 'underline' }].map(btn => (
           <button key={btn.cmd} type="button" onMouseDown={e => { e.preventDefault(); exec(btn.cmd); }}
-            className={`w-7 h-7 rounded text-sm hover:bg-gray-200 transition-colors ${btn.cls}`}>
-            {btn.label}
-          </button>
+            className={`w-7 h-7 rounded text-sm hover:bg-gray-200 transition-colors ${btn.cls}`}>{btn.label}</button>
         ))}
         <div className="w-px h-5 bg-gray-300 mx-1" />
         <button type="button" onMouseDown={e => { e.preventDefault(); exec('insertUnorderedList'); }}
           className="px-2 h-7 rounded text-xs hover:bg-gray-200 transition-colors">• Liste</button>
-        <button type="button" onMouseDown={e => {
-          e.preventDefault();
-          const url = prompt('Link URL:');
-          if (url) exec('createLink', url);
-        }} className="px-2 h-7 rounded text-xs hover:bg-gray-200 transition-colors">
-          Link
-        </button>
+        <button type="button" onMouseDown={e => { e.preventDefault(); const url = prompt('Link URL:'); if (url) exec('createLink', url); }}
+          className="px-2 h-7 rounded text-xs hover:bg-gray-200 transition-colors">Link</button>
       </div>
-      <div
-        ref={editorRef}
-        contentEditable
-        suppressContentEditableWarning
-        dangerouslySetInnerHTML={{ __html: value }}
+      <div ref={editorRef} contentEditable suppressContentEditableWarning dangerouslySetInnerHTML={{ __html: value }}
         onInput={() => onChange(editorRef.current?.innerHTML || '')}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        className="min-h-[120px] p-3 text-sm text-gray-800 outline-none"
-      />
+        onFocus={() => setIsFocused(true)} onBlur={() => setIsFocused(false)}
+        className="min-h-[120px] p-3 text-sm text-gray-800 outline-none" />
     </div>
   );
 }
@@ -80,29 +138,20 @@ function RichTextEditor({ value, onChange }) {
 function ImageUploadField({ value, onChange }) {
   const [uploading, setUploading] = useState(false);
   const inputRef = useRef();
-
   const handleFile = async (file) => {
     if (!file) return;
     setUploading(true);
     try {
       const res = await api.upload('/uploads/products', [file]);
       if (res.success) onChange(res.data.urls[0]);
-    } catch (err) {
-      alert('Yükleme hatası: ' + err.message);
-    } finally {
-      setUploading(false);
-    }
+    } catch (err) { alert('Yükleme hatası: ' + err.message); }
+    finally { setUploading(false); }
   };
-
   return (
     <div className="space-y-2">
       <div className="flex gap-2">
-        <input
-          className="flex-1 px-3 py-2 rounded-xl border border-gray-200 text-sm outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 transition-colors"
-          placeholder="Görsel URL veya yükle..."
-          value={value}
-          onChange={e => onChange(e.target.value)}
-        />
+        <input className="flex-1 px-3 py-2 rounded-xl border border-gray-200 text-sm outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 transition-colors"
+          placeholder="Görsel URL veya yükle..." value={value} onChange={e => onChange(e.target.value)} />
         <button type="button" onClick={() => inputRef.current?.click()}
           className="px-3 py-2 rounded-xl border border-gray-200 text-sm flex items-center gap-1.5 hover:bg-gray-50 transition-colors text-gray-600 flex-shrink-0">
           <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={e => handleFile(e.target.files?.[0])} />
@@ -110,11 +159,181 @@ function ImageUploadField({ value, onChange }) {
           Yükle
         </button>
       </div>
-      {value && (
-        <div className="w-32 h-20 rounded-xl overflow-hidden bg-gray-100 border border-gray-200">
-          <img src={value} alt="preview" className="w-full h-full object-cover" />
+      {value && <div className="w-32 h-20 rounded-xl overflow-hidden bg-gray-100 border border-gray-200"><img src={value} alt="preview" className="w-full h-full object-cover" /></div>}
+    </div>
+  );
+}
+
+function ListEditor({ value, onChange, schema, itemLabel = 'Öğe' }) {
+  const items = useMemo(() => { try { return JSON.parse(value) || []; } catch { return []; } }, [value]);
+  const update = (arr) => onChange(JSON.stringify(arr));
+  const addItem = () => {
+    const blank = {};
+    schema.forEach(f => { blank[f.key] = f.type === 'boolean' ? false : f.type === 'number' ? 0 : ''; });
+    update([...items, blank]);
+  };
+  const removeItem = (i) => update(items.filter((_, idx) => idx !== i));
+  const updateField = (i, field, val) => {
+    const next = [...items];
+    next[i] = { ...next[i], [field]: val };
+    update(next);
+  };
+  const moveItem = (i, dir) => {
+    const next = [...items];
+    const j = i + dir;
+    if (j < 0 || j >= next.length) return;
+    [next[i], next[j]] = [next[j], next[i]];
+    update(next);
+  };
+
+  return (
+    <div className="space-y-3">
+      {items.map((item, i) => (
+        <div key={i} className="border border-gray-200 rounded-xl overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-2 bg-gray-50 border-b border-gray-100">
+            <span className="text-xs font-bold text-gray-600">{itemLabel} {i + 1}</span>
+            <div className="flex items-center gap-1">
+              <button onClick={() => moveItem(i, -1)} disabled={i === 0} className="p-1 rounded hover:bg-gray-200 disabled:opacity-30 transition-colors"><ChevronUp size={14} /></button>
+              <button onClick={() => moveItem(i, 1)} disabled={i === items.length - 1} className="p-1 rounded hover:bg-gray-200 disabled:opacity-30 transition-colors"><ChevronDown size={14} /></button>
+              <button onClick={() => removeItem(i)} className="p-1 rounded hover:bg-red-100 text-red-500 transition-colors"><Trash2 size={14} /></button>
+            </div>
+          </div>
+          <div className="p-4 space-y-3">
+            {schema.map(field => (
+              <div key={field.key}>
+                <label className="text-xs font-semibold text-gray-600 mb-1 block">{field.label}</label>
+                {field.type === 'textarea' ? (
+                  <textarea className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm outline-none focus:border-teal-500 resize-none transition-colors" rows={3}
+                    value={item[field.key] || ''} onChange={e => updateField(i, field.key, e.target.value)} />
+                ) : field.type === 'boolean' ? (
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" checked={!!item[field.key]} onChange={e => updateField(i, field.key, e.target.checked)} className="w-4 h-4 rounded accent-teal-600" />
+                    <span className="text-sm text-gray-600">Evet</span>
+                  </label>
+                ) : field.type === 'number' ? (
+                  <input type="number" className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm outline-none focus:border-teal-500 transition-colors"
+                    value={item[field.key] || ''} onChange={e => updateField(i, field.key, Number(e.target.value))} />
+                ) : (
+                  <input type="text" className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm outline-none focus:border-teal-500 transition-colors"
+                    value={item[field.key] || ''} onChange={e => updateField(i, field.key, e.target.value)} />
+                )}
+              </div>
+            ))}
+          </div>
         </div>
-      )}
+      ))}
+      <button onClick={addItem}
+        className="w-full border-2 border-dashed border-gray-300 rounded-xl py-3 text-sm text-gray-500 hover:border-teal-400 hover:text-teal-600 transition-colors flex items-center justify-center gap-2">
+        <Plus size={16} /> {itemLabel} Ekle
+      </button>
+    </div>
+  );
+}
+
+function FaqEditor({ value, onChange }) {
+  const cats = useMemo(() => { try { return JSON.parse(value) || []; } catch { return []; } }, [value]);
+  const update = (arr) => onChange(JSON.stringify(arr));
+  const [openCat, setOpenCat] = useState(null);
+
+  const addCat = () => update([...cats, { category: 'Yeni Kategori', questions: [] }]);
+  const removeCat = (i) => update(cats.filter((_, idx) => idx !== i));
+  const updateCatName = (i, name) => { const next = [...cats]; next[i] = { ...next[i], category: name }; update(next); };
+  const addQ = (i) => { const next = [...cats]; next[i].questions = [...next[i].questions, { q: '', a: '' }]; update(next); };
+  const removeQ = (i, j) => { const next = [...cats]; next[i].questions = next[i].questions.filter((_, idx) => idx !== j); update(next); };
+  const updateQ = (i, j, field, val) => { const next = [...cats]; next[i].questions[j] = { ...next[i].questions[j], [field]: val }; update(next); };
+
+  return (
+    <div className="space-y-3">
+      {cats.map((cat, i) => (
+        <div key={i} className="border border-gray-200 rounded-xl overflow-hidden">
+          <div className="flex items-center gap-2 px-4 py-3 bg-gray-50 border-b border-gray-100">
+            <button onClick={() => setOpenCat(openCat === i ? null : i)} className="flex-1 flex items-center gap-2 text-left">
+              {openCat === i ? <ChevronUp size={16} className="text-gray-400" /> : <ChevronDown size={16} className="text-gray-400" />}
+              <input className="flex-1 bg-transparent font-semibold text-sm text-gray-800 outline-none border-b border-transparent focus:border-teal-400"
+                value={cat.category} onChange={e => updateCatName(i, e.target.value)} onClick={e => e.stopPropagation()} />
+            </button>
+            <span className="text-xs text-gray-400">{cat.questions.length} soru</span>
+            <button onClick={() => removeCat(i)} className="p-1 rounded hover:bg-red-100 text-red-400 transition-colors"><Trash2 size={14} /></button>
+          </div>
+          {openCat === i && (
+            <div className="p-4 space-y-3">
+              {cat.questions.map((qa, j) => (
+                <div key={j} className="border border-gray-100 rounded-lg p-3 space-y-2 bg-white">
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs font-medium text-gray-500">Soru {j + 1}</span>
+                    <button onClick={() => removeQ(i, j)} className="text-red-400 hover:text-red-600 transition-colors"><Trash2 size={12} /></button>
+                  </div>
+                  <input className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm outline-none focus:border-teal-500 transition-colors"
+                    placeholder="Soru" value={qa.q || ''} onChange={e => updateQ(i, j, 'q', e.target.value)} />
+                  <textarea className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm outline-none focus:border-teal-500 resize-none transition-colors" rows={3}
+                    placeholder="Cevap" value={qa.a || ''} onChange={e => updateQ(i, j, 'a', e.target.value)} />
+                </div>
+              ))}
+              <button onClick={() => addQ(i)} className="w-full border border-dashed border-gray-300 rounded-lg py-2 text-xs text-gray-500 hover:border-teal-400 hover:text-teal-600 transition-colors flex items-center justify-center gap-1">
+                <Plus size={12} /> Soru Ekle
+              </button>
+            </div>
+          )}
+        </div>
+      ))}
+      <button onClick={addCat} className="w-full border-2 border-dashed border-gray-300 rounded-xl py-3 text-sm text-gray-500 hover:border-teal-400 hover:text-teal-600 transition-colors flex items-center justify-center gap-2">
+        <Plus size={16} /> Kategori Ekle
+      </button>
+    </div>
+  );
+}
+
+function ArticlesEditor({ value, onChange }) {
+  const cats = useMemo(() => { try { return JSON.parse(value) || []; } catch { return []; } }, [value]);
+  const update = (arr) => onChange(JSON.stringify(arr));
+  const [openCat, setOpenCat] = useState(null);
+
+  const addCat = () => update([...cats, { category: 'Yeni Kategori', items: [] }]);
+  const removeCat = (i) => update(cats.filter((_, idx) => idx !== i));
+  const updateCatName = (i, name) => { const next = [...cats]; next[i] = { ...next[i], category: name }; update(next); };
+  const addItem = (i) => { const next = [...cats]; next[i].items = [...next[i].items, { title: '', date: '', desc: '' }]; update(next); };
+  const removeItem = (i, j) => { const next = [...cats]; next[i].items = next[i].items.filter((_, idx) => idx !== j); update(next); };
+  const updateItem = (i, j, field, val) => { const next = [...cats]; next[i].items[j] = { ...next[i].items[j], [field]: val }; update(next); };
+
+  return (
+    <div className="space-y-3">
+      {cats.map((cat, i) => (
+        <div key={i} className="border border-gray-200 rounded-xl overflow-hidden">
+          <div className="flex items-center gap-2 px-4 py-3 bg-gray-50 border-b border-gray-100">
+            <button onClick={() => setOpenCat(openCat === i ? null : i)} className="flex-1 flex items-center gap-2 text-left">
+              {openCat === i ? <ChevronUp size={16} className="text-gray-400" /> : <ChevronDown size={16} className="text-gray-400" />}
+              <input className="flex-1 bg-transparent font-semibold text-sm text-gray-800 outline-none border-b border-transparent focus:border-teal-400"
+                value={cat.category} onChange={e => updateCatName(i, e.target.value)} onClick={e => e.stopPropagation()} />
+            </button>
+            <span className="text-xs text-gray-400">{cat.items.length} makale</span>
+            <button onClick={() => removeCat(i)} className="p-1 rounded hover:bg-red-100 text-red-400 transition-colors"><Trash2 size={14} /></button>
+          </div>
+          {openCat === i && (
+            <div className="p-4 space-y-3">
+              {cat.items.map((item, j) => (
+                <div key={j} className="border border-gray-100 rounded-lg p-3 space-y-2 bg-white">
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs font-medium text-gray-500">Makale {j + 1}</span>
+                    <button onClick={() => removeItem(i, j)} className="text-red-400 hover:text-red-600 transition-colors"><Trash2 size={12} /></button>
+                  </div>
+                  <input className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm outline-none focus:border-teal-500 transition-colors"
+                    placeholder="Başlık" value={item.title || ''} onChange={e => updateItem(i, j, 'title', e.target.value)} />
+                  <input className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm outline-none focus:border-teal-500 transition-colors"
+                    placeholder="Tarih (örn: Ocak 2026)" value={item.date || ''} onChange={e => updateItem(i, j, 'date', e.target.value)} />
+                  <textarea className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm outline-none focus:border-teal-500 resize-none transition-colors" rows={2}
+                    placeholder="Açıklama" value={item.desc || ''} onChange={e => updateItem(i, j, 'desc', e.target.value)} />
+                </div>
+              ))}
+              <button onClick={() => addItem(i)} className="w-full border border-dashed border-gray-300 rounded-lg py-2 text-xs text-gray-500 hover:border-teal-400 hover:text-teal-600 transition-colors flex items-center justify-center gap-1">
+                <Plus size={12} /> Makale Ekle
+              </button>
+            </div>
+          )}
+        </div>
+      ))}
+      <button onClick={addCat} className="w-full border-2 border-dashed border-gray-300 rounded-xl py-3 text-sm text-gray-500 hover:border-teal-400 hover:text-teal-600 transition-colors flex items-center justify-center gap-2">
+        <Plus size={16} /> Kategori Ekle
+      </button>
     </div>
   );
 }
@@ -128,9 +347,7 @@ export default function AdminCms() {
   const [preview, setPreview] = useState(false);
 
   useEffect(() => {
-    api.get('/cms').then(res => {
-      if (res.success) setCms(res.data);
-    }).finally(() => setLoading(false));
+    api.get('/cms').then(res => { if (res.success) setCms(res.data); }).finally(() => setLoading(false));
   }, []);
 
   const getValue = (key) => key in changes ? changes[key] : (cms[key]?.value || '');
@@ -138,20 +355,14 @@ export default function AdminCms() {
   const hasChanges = Object.keys(changes).length > 0;
 
   const handleSave = async () => {
-    setSaving(true);
-    setSaved(false);
+    setSaving(true); setSaved(false);
     try {
       const res = await api.put('/cms', { updates: changes });
       if (!res.success) throw new Error(res.error);
-      setCms(res.data);
-      setChanges({});
-      setSaved(true);
-      setTimeout(() => setSaved(false), 3000);
-    } catch (err) {
-      alert('Kaydetme hatası: ' + err.message);
-    } finally {
-      setSaving(false);
-    }
+      setCms(res.data); setChanges({});
+      setSaved(true); setTimeout(() => setSaved(false), 3000);
+    } catch (err) { alert('Kaydetme hatası: ' + err.message); }
+    finally { setSaving(false); }
   };
 
   if (loading) return (
@@ -163,7 +374,43 @@ export default function AdminCms() {
   const typeIcon = (type) => {
     if (type === 'html') return <FileText size={14} className="text-purple-500" />;
     if (type === 'image') return <Image size={14} className="text-blue-500" />;
+    if (type?.startsWith('json')) return <List size={14} className="text-orange-500" />;
     return <Type size={14} className="text-gray-400" />;
+  };
+
+  const renderField = (keyEntry) => {
+    const isObj = typeof keyEntry === 'object';
+    const key = isObj ? keyEntry.key : keyEntry;
+    const type = isObj ? keyEntry.type : (cms[key]?.type || 'text');
+    const label = isObj ? keyEntry.label : (cms[key]?.label || key);
+    const val = getValue(key);
+    const changed = key in changes;
+
+    return (
+      <div key={key}>
+        <label className="flex items-center gap-1.5 text-xs font-semibold text-gray-600 mb-1.5">
+          {typeIcon(type)}
+          {label}
+          {changed && <span className="text-orange-500 text-[10px] font-medium">(değiştirildi)</span>}
+        </label>
+        {type === 'html' ? (
+          <RichTextEditor value={val} onChange={v => setValue(key, v)} />
+        ) : type === 'image' ? (
+          <ImageUploadField value={val} onChange={v => setValue(key, v)} />
+        ) : type === 'json-list' ? (
+          <ListEditor value={val} onChange={v => setValue(key, v)} schema={keyEntry.schema} itemLabel={keyEntry.itemLabel} />
+        ) : type === 'json-faq' ? (
+          <FaqEditor value={val} onChange={v => setValue(key, v)} />
+        ) : type === 'json-articles' ? (
+          <ArticlesEditor value={val} onChange={v => setValue(key, v)} />
+        ) : (
+          <input
+            className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 transition-colors"
+            value={val} onChange={e => setValue(key, e.target.value)} placeholder={label}
+          />
+        )}
+      </div>
+    );
   };
 
   return (
@@ -193,76 +440,18 @@ export default function AdminCms() {
         </div>
       </div>
 
-      {preview ? (
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-          <div className="prose max-w-none space-y-4">
-            {SECTIONS.map(section => (
-              <div key={section.title}>
-                <h3 className="font-bold text-gray-900 border-b pb-2 mb-3">{section.title}</h3>
-                <div className="grid gap-3">
-                  {section.keys.map(key => {
-                    const item = cms[key];
-                    const val = getValue(key);
-                    return (
-                      <div key={key} className="text-sm">
-                        <span className="font-medium text-gray-600 mr-2">{item?.label || key}:</span>
-                        {item?.type === 'html' ? (
-                          <div className="mt-1 p-3 bg-gray-50 rounded-lg text-gray-700" dangerouslySetInnerHTML={{ __html: val || '<em>Boş</em>' }} />
-                        ) : item?.type === 'image' ? (
-                          val ? <img src={val} alt={key} className="mt-1 max-h-24 rounded-lg" /> : <em className="text-gray-400">Görsel yok</em>
-                        ) : (
-                          <span className="text-gray-700">{val || <em className="text-gray-400">Boş</em>}</span>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ) : (
-        <div className="space-y-4">
-          {SECTIONS.map(section => (
-            <div key={section.title} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-              <div className="px-5 py-3 border-b border-gray-100 bg-gray-50">
-                <h2 className="font-bold text-gray-900">{section.title}</h2>
-              </div>
-              <div className="p-5 space-y-5">
-                {section.keys.map(key => {
-                  const item = cms[key];
-                  const type = item?.type || 'text';
-                  const label = item?.label || key;
-                  const val = getValue(key);
-                  const changed = key in changes;
-
-                  return (
-                    <div key={key}>
-                      <label className="flex items-center gap-1.5 text-xs font-semibold text-gray-600 mb-1.5">
-                        {typeIcon(type)}
-                        {label}
-                        {changed && <span className="text-orange-500 text-[10px] font-medium">(değiştirildi)</span>}
-                      </label>
-                      {type === 'html' ? (
-                        <RichTextEditor value={val} onChange={v => setValue(key, v)} />
-                      ) : type === 'image' ? (
-                        <ImageUploadField value={val} onChange={v => setValue(key, v)} />
-                      ) : (
-                        <input
-                          className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 transition-colors"
-                          value={val}
-                          onChange={e => setValue(key, e.target.value)}
-                          placeholder={label}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
+      <div className="space-y-4">
+        {SECTIONS.map(section => (
+          <div key={section.title} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <div className="px-5 py-3 border-b border-gray-100 bg-gray-50">
+              <h2 className="font-bold text-gray-900">{section.title}</h2>
             </div>
-          ))}
-        </div>
-      )}
+            <div className="p-5 space-y-5">
+              {section.keys.map(keyEntry => renderField(keyEntry))}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

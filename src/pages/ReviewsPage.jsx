@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { Star } from 'lucide-react';
-import { reviews } from '../data/product';
+import { useCms } from '../hooks/useCms';
 
-const extendedReviews = [
-  ...reviews,
-  { name: 'Selin A.', location: 'Eskişehir', rating: 5, date: 'Mart 2026', text: 'Aşırı aktif mesane için kullandım. 4 haftada gece kalkmalarım ikiden bire düştü. Mobil uygulama takibi çok motivasyonumu artırdı.', verified: true },
-  { name: 'Gül Y.', location: 'Adana', rating: 5, date: 'Şubat 2026', text: 'Postpartum rehabilitasyon için mükemmel. Fizyoterapiste her hafta gitmek yerine evde yapabilmek büyük avantaj. 6 haftada belirgin iyileşme.', verified: true },
-  { name: 'Ahmet K.', location: 'Gaziantep', rating: 4, date: 'Ocak 2026', text: 'Erken boşalma için 8 hafta kullandım. Sonuçlar tatmin edici. Gizlilikle evde kullanabilmek psikolojik baskıyı da azalttı.', verified: true },
-  { name: 'Meral T.', location: 'Samsun', rating: 5, date: 'Nisan 2026', text: 'Dismenore için kullanıyorum. Artık her adet döneminde ağrı kesici almak zorunda kalmıyorum. Gerçekten işe yarıyor.', verified: true },
+const DEFAULT_REVIEWS = [
+  { name: 'Ayşe K.', location: 'İstanbul', rating: 5, date: 'Ocak 2026', text: '3 haftada fark ettim! 2 yıldır yaşadığım idrar kaçırma sorunu büyük ölçüde geçti.', verified: true },
+  { name: 'Fatma D.', location: 'Ankara', rating: 5, date: 'Şubat 2026', text: 'Dismenore için kullandım. İlk seansta dahi %50 ağrı azalması hissettim.', verified: true },
+  { name: 'Mehmet A.', location: 'Antalya', rating: 5, date: 'Ocak 2026', text: 'Prostatektomi sonrası başladım. 8 haftada idrar kontrolüm büyük ölçüde geri geldi.', verified: true },
   { name: 'Leyla B.', location: 'Trabzon', rating: 5, date: 'Ocak 2026', text: 'Menopoz sonrası inkontinans için başladım. 3 haftada fark ettim. Artık dışarı çıkarken endişelenmiyorum.', verified: true },
   { name: 'Osman S.', location: 'Diyarbakır', rating: 5, date: 'Şubat 2026', text: 'Prostatektomi sonrası 6. haftada başladım. 3 ay sonra pad kullanmıyorum. Ürolog da sonuçlardan çok memnun.', verified: true },
 ];
@@ -45,16 +43,24 @@ function RatingBar({ stars, count, total }) {
 }
 
 export default function ReviewsPage() {
+  const { get, getJson } = useCms();
+  const heroTitle = get('reviews_hero_title', 'Kullanıcı Yorumları');
+  const allReviews = getJson('reviews_items', DEFAULT_REVIEWS);
   const [activeFilter, setActiveFilter] = useState(null);
-  const total = extendedReviews.length;
-  const avg = (extendedReviews.reduce((s, r) => s + r.rating, 0) / total).toFixed(1);
+
+  const extendedReviews = activeFilter
+    ? allReviews.filter((r) => r.text?.toLowerCase().includes(activeFilter) || r.tag === activeFilter)
+    : allReviews;
+
+  const total = allReviews.length;
+  const avg = total > 0 ? (allReviews.reduce((s, r) => s + r.rating, 0) / total).toFixed(1) : '5.0';
 
   return (
     <div>
       {/* Hero */}
       <section className="py-16" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 100%)' }}>
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">Kullanıcı Yorumları</h1>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
           <p className="text-blue-200 text-lg">Gerçek kullanıcılar, gerçek sonuçlar.</p>
           <div className="mt-6 inline-flex items-center gap-3 bg-white/10 rounded-2xl px-6 py-3">
             <StarRating rating={5} size={20} />
@@ -75,12 +81,12 @@ export default function ReviewsPage() {
             </div>
             <div className="flex-1 space-y-2 w-full">
               {[5, 4, 3, 2, 1].map((s) => {
-                const count = extendedReviews.filter((r) => r.rating === s).length;
+                const count = allReviews.filter((r) => r.rating === s).length;
                 return <RatingBar key={s} stars={s} count={count} total={total} />;
               })}
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-teal-600">%{Math.round((extendedReviews.filter(r=>r.rating>=4).length/total)*100)}</div>
+              <div className="text-3xl font-bold text-teal-600">%{Math.round((allReviews.filter(r => r.rating >= 4).length / total) * 100)}</div>
               <div className="text-sm text-gray-500">4+ yıldız</div>
               <div className="mt-3 text-3xl font-bold" style={{ color: '#1e3a5f' }}>60 Gün</div>
               <div className="text-sm text-gray-500">Para İade Garantisi</div>

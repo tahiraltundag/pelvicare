@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Package, Users, FileText, ShoppingCart, Menu, X, LogOut, ChevronRight, AlertTriangle } from 'lucide-react';
+import { LayoutDashboard, Package, Users, FileText, ShoppingCart, BarChart2, Menu, X, LogOut, ChevronRight, AlertTriangle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 const navItems = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/admin' },
+  { icon: BarChart2, label: 'Analitik', path: '/admin/analitik' },
   { icon: Package, label: 'Ürünler', path: '/admin/urunler' },
   { icon: ShoppingCart, label: 'Siparişler', path: '/admin/siparisler' },
   { icon: FileText, label: 'İçerik (CMS)', path: '/admin/cms' },

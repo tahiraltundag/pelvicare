@@ -31,6 +31,7 @@ import AdminProducts from './pages/admin/AdminProducts';
 import AdminOrders from './pages/admin/AdminOrders';
 import AdminCms from './pages/admin/AdminCms';
 import AdminUsers from './pages/admin/AdminUsers';
+import AdminAnalytics from './pages/admin/AdminAnalytics';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -83,6 +84,11 @@ export default function App() {
             <Route path="/admin/kullanicilar" element={
               <ProtectedRoute roles={['admin', 'superadmin']}>
                 <AdminLayout><AdminUsers /></AdminLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/analitik" element={
+              <ProtectedRoute roles={['admin', 'superadmin']}>
+                <AdminLayout><AdminAnalytics /></AdminLayout>
               </ProtectedRoute>
             } />
 

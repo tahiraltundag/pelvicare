@@ -7,9 +7,13 @@ const { verifyToken, requireRole } = require('../middleware/auth');
 
 const router = express.Router();
 
-const UPLOAD_DIR = path.join(__dirname, '../uploads');
+const UPLOAD_DIR = process.env.VERCEL ? '/tmp/uploads' : path.join(__dirname, '../uploads');
 const PRODUCTS_DIR = path.join(UPLOAD_DIR, 'products');
-[UPLOAD_DIR, PRODUCTS_DIR].forEach(dir => { if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true }); });
+try {
+  [UPLOAD_DIR, PRODUCTS_DIR].forEach(dir => { if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true }); });
+} catch (e) {
+  console.warn('Upload dizini oluşturulamadı:', e.message);
+}
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, PRODUCTS_DIR),

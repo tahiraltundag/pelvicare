@@ -1,4 +1,11 @@
-const BASE_URL = '/api';
+const SERVER_URL = import.meta.env.VITE_SERVER_URL || '';
+const BASE_URL = `${SERVER_URL}/api`;
+
+export function getImageUrl(path) {
+  if (!path) return '';
+  if (path.startsWith('http')) return path;
+  return `${SERVER_URL}${path}`;
+}
 
 function getTokens() {
   try {

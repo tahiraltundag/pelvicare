@@ -12,6 +12,14 @@ dist
 dist-ssr
 *.local
 
+# Server
+server/node_modules
+server/.env
+server/prisma/dev.db
+server/prisma/dev.db-journal
+server/prisma/prisma/
+server/uploads/products/
+
 # Graphify outputs (büyük/gereksiz dosyalar)
 graphify-out/
 run_ast.py

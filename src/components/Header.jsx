@@ -22,9 +22,8 @@ const navItems = [
 ];
 
 function UserMenu({ user, logout, isAdmin }) {
-  const [open, setOpen] = useState(false);
   return (
-    <div className="relative" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+    <div className="relative group">
       <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gray-100 hover:bg-teal-50 hover:text-teal-600 transition-colors text-sm font-medium text-gray-700">
         <div className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold" style={{ backgroundColor: '#0d9488' }}>
           {user.name?.charAt(0).toUpperCase()}
@@ -32,8 +31,8 @@ function UserMenu({ user, logout, isAdmin }) {
         {user.name?.split(' ')[0]}
         <ChevronDown size={12} />
       </button>
-      {open && (
-        <div className="absolute right-0 top-full mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50">
+      <div className="absolute right-0 top-full pt-1 hidden group-hover:block z-50">
+        <div className="w-52 bg-white rounded-xl shadow-lg border border-gray-100 py-2">
           <div className="px-4 py-2 border-b border-gray-100 mb-1">
             <div className="text-sm font-semibold text-gray-900">{user.name}</div>
             <div className="text-xs text-gray-400">{user.email}</div>
@@ -52,14 +51,13 @@ function UserMenu({ user, logout, isAdmin }) {
             </button>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const location = useLocation();
   const { count, setSidebarOpen } = useCart();
   const { user, logout, isAdmin } = useAuth();
@@ -91,14 +89,12 @@ export default function Header() {
           <nav className="hidden lg:flex items-center gap-1">
             {navItems.map((item) =>
               item.children ? (
-                <div key={item.label} className="relative"
-                  onMouseEnter={() => setDropdownOpen(true)}
-                  onMouseLeave={() => setDropdownOpen(false)}>
+                <div key={item.label} className="relative group">
                   <button className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-700 hover:text-teal-600 transition-colors rounded-md hover:bg-teal-50">
                     {item.label}<ChevronDown size={14} />
                   </button>
-                  {dropdownOpen && (
-                    <div className="absolute top-full left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 py-2">
+                  <div className="absolute top-full left-0 pt-1 hidden group-hover:block z-50">
+                    <div className="w-52 bg-white rounded-xl shadow-lg border border-gray-100 py-2">
                       {item.children.map((child) => (
                         <Link key={child.path} to={child.path}
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors">
@@ -106,7 +102,7 @@ export default function Header() {
                         </Link>
                       ))}
                     </div>
-                  )}
+                  </div>
                 </div>
               ) : (
                 <Link key={item.path} to={item.path}

@@ -1,12 +1,18 @@
-import { CheckCircle, Smartphone, Zap, Activity, Waves } from 'lucide-react';
+import { Smartphone, Zap, Activity, Waves } from 'lucide-react';
 import { modalities, techSpecs } from '../data/product';
 import { useCms } from '../hooks/useCms';
 
 const DEFAULT_PHASES = [
-  { code: 'F1', name: 'Fortifikasyon', duration: '1–2 Hafta', desc: 'Düşük yoğunlukta kas aktivasyonu ve nöromusküler bağlantı kurma. Vücut cihaza adapte olur.', color: 'bg-teal-100 text-teal-700 border-teal-200' },
-  { code: 'F2', name: 'Güçlendirme', duration: '3–6 Hafta', desc: 'Artan şiddet ve frekansla klinik etkinlik bölgesine geçiş. Kas kuvveti ve dayanıklılık artar.', color: 'bg-blue-100 text-blue-700 border-blue-200' },
-  { code: 'F3', name: 'İdame', duration: 'Sürekli', desc: 'Kazanılan terapötik kazanımları koruma. Haftada 3 seans ile uzun vadeli sağlık sürdürülür.', color: 'bg-purple-100 text-purple-700 border-purple-200' },
+  { code: 'F1', name: 'Fortifikasyon', duration: '1–2 Hafta', desc: 'Düşük yoğunlukta kas aktivasyonu ve nöromusküler bağlantı kurma. Vücut cihaza adapte olur.' },
+  { code: 'F2', name: 'Güçlendirme', duration: '3–6 Hafta', desc: 'Artan şiddet ve frekansla klinik etkinlik bölgesine geçiş. Kas kuvveti ve dayanıklılık artar.' },
+  { code: 'F3', name: 'İdame', duration: 'Sürekli', desc: 'Kazanılan terapötik kazanımları koruma. Haftada 3 seans ile uzun vadeli sağlık sürdürülür.' },
 ];
+
+const PHASE_STYLES = {
+  F1: { badge: 'bg-teal-100 text-teal-700', border: 'border-teal-200' },
+  F2: { badge: 'bg-blue-100 text-blue-700', border: 'border-blue-200' },
+  F3: { badge: 'bg-purple-100 text-purple-700', border: 'border-purple-200' },
+};
 
 const DEFAULT_APP_FEATURES = [
   { title: 'Hazır Modlar', desc: '17 tanıya tek dokunuşla başlatma. Kadın / Erkek profil seçimi. Mod açıklaması ve bilgi ekranı.' },
@@ -83,16 +89,19 @@ export default function HowItWorksPage() {
             <p className="text-gray-500">Bilimsel protokol üç fazda ilerler ve uygulama otomatik yönetir.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
-            {phases.map((phase) => (
-              <div key={phase.code} className={`rounded-2xl border-2 p-6 ${phase.color.split(' ').slice(2).join(' ')}`}>
-                <div className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-bold mb-4 ${phase.color}`}>
+            {phases.map((phase) => {
+              const styles = PHASE_STYLES[phase.code] || { badge: 'bg-gray-100 text-gray-700', border: 'border-gray-200' };
+              return (
+              <div key={phase.code} className={`rounded-2xl border-2 p-6 ${styles.border}`}>
+                <div className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-bold mb-4 ${styles.badge}`}>
                   {phase.code}
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-1">{phase.name}</h3>
                 <div className="text-sm text-gray-500 mb-3">{phase.duration}</div>
                 <p className="text-sm text-gray-700 leading-relaxed">{phase.desc}</p>
               </div>
-            ))}
+              );
+            })}
           </div>
           <div className="mt-8 flex justify-center">
             <div className="flex items-center gap-3 bg-white rounded-2xl px-6 py-3 shadow-sm border border-gray-200">

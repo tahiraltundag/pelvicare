@@ -157,14 +157,14 @@ export default function HomePage() {
                         </button>
                       ))}
                     </div>
-                    {/* 3D toggle hint */}
+                    {/* 3D toggle */}
                     <div className="flex justify-center mt-3">
                       <button
                         onClick={() => setHeroView('3d')}
-                        className="inline-flex items-center gap-1.5 text-xs text-white/60 hover:text-teal-300 transition-colors"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 border border-white/30 text-white text-sm font-medium hover:bg-white/25 transition-all"
                       >
-                        <Box size={12} />
-                        3D animasyonu gör
+                        <Box size={14} />
+                        3D Animasyonu Gör
                       </button>
                     </div>
                   </>

@@ -16,7 +16,7 @@ const galleryImages = [
 ];
 
 function ProductGallery() {
-  const [tab, setTab] = useState('3d');
+  const [tab, setTab] = useState('photos');
   const [active, setActive] = useState(0);
 
   return (

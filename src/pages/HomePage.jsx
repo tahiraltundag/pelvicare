@@ -6,6 +6,7 @@ import AnimateInView from '../components/AnimateInView';
 import { stats, modalities, clinicalResults, reviews } from '../data/product';
 
 const PRODUCT_IMAGES = [
+  '/images/urun-sistem-genel.jpg',
   '/images/cihaz.png',
   '/images/cihaz-2.png',
   '/images/cihaz-3.png',
@@ -132,69 +133,62 @@ export default function HomePage() {
             {/* Product visual */}
             <div className="flex justify-center lg:justify-end">
               <div className="relative w-full max-w-md">
-                {/* Toggle */}
-                <div className="flex justify-center mb-4">
-                  <div className="inline-flex rounded-full bg-white/10 border border-white/20 p-1 gap-1">
-                    <button
-                      onClick={() => setHeroView('photos')}
-                      className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${heroView === 'photos' ? 'bg-white text-gray-900' : 'text-white/70 hover:text-white'}`}
-                    >
-                      Ürün Fotoğrafları
-                    </button>
-                    <button
-                      onClick={() => setHeroView('3d')}
-                      className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-medium transition-all ${heroView === '3d' ? 'bg-white text-gray-900' : 'text-white/70 hover:text-white'}`}
-                    >
-                      <Box size={14} />
-                      3D Animasyon
-                    </button>
-                  </div>
-                </div>
 
                 {heroView === 'photos' ? (
-                  <div className="relative">
-                    <div className="relative h-[380px] bg-white/5 rounded-2xl overflow-hidden flex items-center justify-center">
+                  <>
+                    <div className="rounded-3xl overflow-hidden bg-white/10 backdrop-blur border border-white/20">
                       <img
                         key={photoIndex}
                         src={PRODUCT_IMAGES[photoIndex]}
                         alt="PelviCare ürün fotoğrafı"
-                        className="max-h-full max-w-full object-contain p-4"
+                        className="w-full object-contain"
                         style={{ animation: 'fadeIn 0.3s ease' }}
                       />
-                      <button
-                        onClick={prevPhoto}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/20 hover:bg-white/40 flex items-center justify-center text-white transition-all"
-                      >
-                        <ChevronLeft size={18} />
-                      </button>
-                      <button
-                        onClick={nextPhoto}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/20 hover:bg-white/40 flex items-center justify-center text-white transition-all"
-                      >
-                        <ChevronRight size={18} />
-                      </button>
                     </div>
-                    {/* Dots */}
-                    <div className="flex justify-center gap-1.5 mt-3">
-                      {PRODUCT_IMAGES.map((_, i) => (
+                    {/* Thumbnail strip */}
+                    <div className="flex justify-center gap-2 mt-3">
+                      {PRODUCT_IMAGES.map((src, i) => (
                         <button
                           key={i}
                           onClick={() => setPhotoIndex(i)}
-                          className={`w-2 h-2 rounded-full transition-all ${i === photoIndex ? 'bg-teal-400 w-4' : 'bg-white/40'}`}
-                        />
+                          className={`w-10 h-10 rounded-lg overflow-hidden border-2 transition-all ${i === photoIndex ? 'border-teal-400 opacity-100' : 'border-white/20 opacity-50 hover:opacity-75'}`}
+                        >
+                          <img src={src} alt="" className="w-full h-full object-cover" />
+                        </button>
                       ))}
                     </div>
-                  </div>
+                    {/* 3D toggle hint */}
+                    <div className="flex justify-center mt-3">
+                      <button
+                        onClick={() => setHeroView('3d')}
+                        className="inline-flex items-center gap-1.5 text-xs text-white/60 hover:text-teal-300 transition-colors"
+                      >
+                        <Box size={12} />
+                        3D animasyonu gör
+                      </button>
+                    </div>
+                  </>
                 ) : (
-                  <DeviceModel3D height="440px" />
+                  <>
+                    <DeviceModel3D height="440px" />
+                    <div className="flex justify-center mt-1">
+                      <button
+                        onClick={() => setHeroView('photos')}
+                        className="inline-flex items-center gap-1.5 text-xs text-white/60 hover:text-teal-300 transition-colors"
+                      >
+                        <ChevronLeft size={12} />
+                        Ürün fotoğraflarına dön
+                      </button>
+                    </div>
+                  </>
                 )}
 
                 {/* Floating badges */}
-                <div className="hero-badge-float absolute top-16 right-0 bg-white rounded-xl px-3 py-2 shadow-lg">
+                <div className="hero-badge-float absolute -top-4 -right-4 bg-white rounded-xl px-3 py-2 shadow-lg">
                   <div className="text-xs font-bold text-gray-800">CE Belgeli</div>
                   <div className="text-xs text-gray-500">Tıbbi Cihaz</div>
                 </div>
-                <div className="hero-badge-float-alt absolute bottom-10 left-0 bg-teal-600 rounded-xl px-3 py-2 shadow-lg text-white">
+                <div className="hero-badge-float-alt absolute -bottom-4 -left-4 bg-teal-600 rounded-xl px-3 py-2 shadow-lg text-white">
                   <div className="text-xs font-bold">3 Modalite</div>
                   <div className="text-xs text-teal-200">17 Protokol</div>
                 </div>

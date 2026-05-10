@@ -136,12 +136,12 @@ export default function HomePage() {
 
                 {heroView === 'photos' ? (
                   <>
-                    <div className="rounded-3xl overflow-hidden bg-white/10 backdrop-blur border border-white/20">
+                    <div className="rounded-3xl overflow-hidden bg-white/10 backdrop-blur border border-white/20 h-80 flex items-center justify-center">
                       <img
                         key={photoIndex}
                         src={PRODUCT_IMAGES[photoIndex]}
                         alt="PelviCare ürün fotoğrafı"
-                        className="w-full object-contain"
+                        className="max-h-full max-w-full object-contain p-4"
                         style={{ animation: 'fadeIn 0.3s ease' }}
                       />
                     </div>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle, Star, Shield, Truck, RotateCcw, ArrowRight } from 'lucide-react';
+import { CheckCircle, Star, Shield, Truck, RotateCcw, ArrowRight, Box, ChevronLeft } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import DeviceModel3D from '../components/DeviceModel3D';
 
@@ -16,60 +16,56 @@ const galleryImages = [
 ];
 
 function ProductGallery() {
-  const [tab, setTab] = useState('3d');
+  const [view, setView] = useState('photos');
   const [active, setActive] = useState(0);
 
   return (
     <div className="flex flex-col gap-3">
-      {/* Sekme seçici */}
-      <div className="flex gap-2">
-        <button
-          onClick={() => setTab('3d')}
-          className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all ${
-            tab === '3d'
-              ? 'bg-teal-400 text-white'
-              : 'bg-white/10 text-white/70 hover:bg-white/20'
-          }`}
-        >
-          3D Görünüm
-        </button>
-        <button
-          onClick={() => setTab('photos')}
-          className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all ${
-            tab === 'photos'
-              ? 'bg-teal-400 text-white'
-              : 'bg-white/10 text-white/70 hover:bg-white/20'
-          }`}
-        >
-          Fotoğraflar
-        </button>
-      </div>
-
-      {tab === '3d' ? (
-        <div className="rounded-2xl overflow-hidden" style={{ height: '380px' }}>
-          <DeviceModel3D height="380px" />
-        </div>
-      ) : (
+      {view === 'photos' ? (
         <>
-          <div className="rounded-2xl overflow-hidden bg-white/5 border border-white/20 flex items-center justify-center" style={{ height: '300px' }}>
+          <div className="rounded-3xl overflow-hidden bg-white/10 backdrop-blur border border-white/20 h-[480px] flex items-center justify-center">
             <img
+              key={active}
               src={galleryImages[active].src}
               alt={galleryImages[active].alt}
-              className="w-full h-full object-contain"
+              className="max-h-full max-w-full object-contain p-4"
+              style={{ animation: 'fadeIn 0.3s ease' }}
             />
           </div>
-          <div className="grid grid-cols-4 gap-2">
+          {/* Thumbnail strip */}
+          <div className="flex justify-center gap-2 flex-wrap">
             {galleryImages.map((img, i) => (
               <button
                 key={i}
                 onClick={() => setActive(i)}
-                className={`rounded-xl overflow-hidden border-2 transition-all aspect-square bg-white/10 ${
-                  active === i ? 'border-teal-400 scale-95' : 'border-transparent hover:border-white/40'
-                }`}
+                className={`w-10 h-10 rounded-lg overflow-hidden border-2 transition-all ${i === active ? 'border-teal-400 opacity-100' : 'border-white/20 opacity-50 hover:opacity-75'}`}
               >
-                <img src={img.src} alt={img.label} className="w-full h-full object-contain" />
+                <img src={img.src} alt={img.label} className="w-full h-full object-cover" />
               </button>
             ))}
+          </div>
+          {/* 3D toggle */}
+          <div className="flex justify-center mt-1">
+            <button
+              onClick={() => setView('3d')}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 border border-white/30 text-white text-sm font-medium hover:bg-white/25 transition-all"
+            >
+              <Box size={14} />
+              3D Animasyonu Gör
+            </button>
+          </div>
+        </>
+      ) : (
+        <>
+          <DeviceModel3D height="480px" />
+          <div className="flex justify-center mt-1">
+            <button
+              onClick={() => setView('photos')}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 border border-white/30 text-white text-sm font-medium hover:bg-white/25 transition-all"
+            >
+              <ChevronLeft size={14} />
+              Ürün Fotoğraflarına Dön
+            </button>
           </div>
         </>
       )}

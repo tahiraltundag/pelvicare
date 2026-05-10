@@ -136,7 +136,7 @@ export default function HomePage() {
 
                 {heroView === 'photos' ? (
                   <>
-                    <div className="rounded-3xl overflow-hidden bg-white/10 backdrop-blur border border-white/20 h-80 flex items-center justify-center">
+                    <div className="rounded-3xl overflow-hidden bg-white/10 backdrop-blur border border-white/20 h-96 flex items-center justify-center">
                       <img
                         key={photoIndex}
                         src={PRODUCT_IMAGES[photoIndex]}
@@ -171,13 +171,13 @@ export default function HomePage() {
                 ) : (
                   <>
                     <DeviceModel3D height="440px" />
-                    <div className="flex justify-center mt-1">
+                    <div className="flex justify-center mt-3">
                       <button
                         onClick={() => setHeroView('photos')}
-                        className="inline-flex items-center gap-1.5 text-xs text-white/60 hover:text-teal-300 transition-colors"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 border border-white/30 text-white text-sm font-medium hover:bg-white/25 transition-all"
                       >
-                        <ChevronLeft size={12} />
-                        Ürün fotoğraflarına dön
+                        <ChevronLeft size={14} />
+                        Ürün Fotoğraflarına Dön
                       </button>
                     </div>
                   </>

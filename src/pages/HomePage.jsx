@@ -136,7 +136,7 @@ export default function HomePage() {
 
                 {heroView === 'photos' ? (
                   <>
-                    <div className="rounded-3xl overflow-hidden bg-white/10 backdrop-blur border border-white/20 h-96 flex items-center justify-center">
+                    <div className="rounded-3xl overflow-hidden bg-white/10 backdrop-blur border border-white/20 h-[480px] flex items-center justify-center">
                       <img
                         key={photoIndex}
                         src={PRODUCT_IMAGES[photoIndex]}

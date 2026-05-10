@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { CheckCircle, Star, ArrowRight, Shield, Zap, Activity, ChevronLeft, ChevronRight, Box } from 'lucide-react';
+import { CheckCircle, Star, ArrowRight, Shield, Zap, Activity } from 'lucide-react';
 import DeviceModel3D from '../components/DeviceModel3D';
 import AnimateInView from '../components/AnimateInView';
 import { stats, modalities, clinicalResults, reviews } from '../data/product';
@@ -64,9 +64,6 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [heroView, setHeroView] = useState('photos');
   const [photoIndex, setPhotoIndex] = useState(0);
-
-  const prevPhoto = () => setPhotoIndex((i) => (i - 1 + PRODUCT_IMAGES.length) % PRODUCT_IMAGES.length);
-  const nextPhoto = () => setPhotoIndex((i) => (i + 1) % PRODUCT_IMAGES.length);
 
   const goToPrice = () => {
     navigate('/urun/pelvicare');
@@ -132,55 +129,50 @@ export default function HomePage() {
 
             {/* Product visual */}
             <div className="flex justify-center lg:justify-end">
-              <div className="relative w-full max-w-md">
+              <div className="relative w-full max-w-md flex flex-col gap-3">
+                {/* Tab buttons — ürün sayfasıyla aynı stil */}
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setHeroView('photos')}
+                    className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all ${heroView === 'photos' ? 'bg-teal-400 text-white' : 'bg-white/10 text-white/70 hover:bg-white/20'}`}
+                  >
+                    Ürün Fotoğrafları
+                  </button>
+                  <button
+                    onClick={() => setHeroView('3d')}
+                    className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all ${heroView === '3d' ? 'bg-teal-400 text-white' : 'bg-white/10 text-white/70 hover:bg-white/20'}`}
+                  >
+                    3D Görünüm
+                  </button>
+                </div>
 
                 {heroView === 'photos' ? (
                   <>
-                    <div className="rounded-3xl overflow-hidden bg-white/10 backdrop-blur border border-white/20 h-[480px] flex items-center justify-center">
+                    <div className="rounded-2xl overflow-hidden bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center" style={{ height: '380px' }}>
                       <img
                         key={photoIndex}
                         src={PRODUCT_IMAGES[photoIndex]}
                         alt="PelviCare ürün fotoğrafı"
-                        className="max-h-full max-w-full object-contain p-4"
+                        className="w-full h-full object-contain p-4"
                         style={{ animation: 'fadeIn 0.3s ease' }}
                       />
                     </div>
-                    {/* Thumbnail strip */}
-                    <div className="flex justify-center gap-2 mt-3">
+                    <div className="grid grid-cols-4 gap-2">
                       {PRODUCT_IMAGES.map((src, i) => (
                         <button
                           key={i}
                           onClick={() => setPhotoIndex(i)}
-                          className={`w-10 h-10 rounded-lg overflow-hidden border-2 transition-all ${i === photoIndex ? 'border-teal-400 opacity-100' : 'border-white/20 opacity-50 hover:opacity-75'}`}
+                          className={`rounded-xl overflow-hidden border-2 transition-all aspect-square bg-white/10 ${i === photoIndex ? 'border-teal-400 scale-95' : 'border-transparent hover:border-white/40'}`}
                         >
-                          <img src={src} alt="" className="w-full h-full object-cover" />
+                          <img src={src} alt="" className="w-full h-full object-contain" />
                         </button>
                       ))}
                     </div>
-                    {/* 3D toggle */}
-                    <div className="flex justify-center mt-3">
-                      <button
-                        onClick={() => setHeroView('3d')}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 border border-white/30 text-white text-sm font-medium hover:bg-white/25 transition-all"
-                      >
-                        <Box size={14} />
-                        3D Animasyonu Gör
-                      </button>
-                    </div>
                   </>
                 ) : (
-                  <>
-                    <DeviceModel3D height="440px" />
-                    <div className="flex justify-center mt-3">
-                      <button
-                        onClick={() => setHeroView('photos')}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 border border-white/30 text-white text-sm font-medium hover:bg-white/25 transition-all"
-                      >
-                        <ChevronLeft size={14} />
-                        Ürün Fotoğraflarına Dön
-                      </button>
-                    </div>
-                  </>
+                  <div className="rounded-2xl overflow-hidden" style={{ height: '380px' }}>
+                    <DeviceModel3D height="380px" />
+                  </div>
                 )}
 
                 {/* Floating badges */}

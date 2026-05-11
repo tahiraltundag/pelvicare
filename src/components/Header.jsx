@@ -72,11 +72,11 @@ export default function Header() {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
+    <header className="sticky top-0 z-[100] bg-white border-b border-gray-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" onClick={() => setSidebarOpen(false)} className="flex items-center gap-2">
             <div className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center">
               <span className="text-white font-bold text-sm">P</span>
             </div>

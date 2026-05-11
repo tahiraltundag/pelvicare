@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import { Save, Eye, EyeOff, Upload, Type, FileText, Image, List, Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import api from '../../api/client';
+import { clearCmsCache } from '../../hooks/useCms';
 
 const PHASES_SCHEMA = [
   { key: 'code', label: 'Kod (F1, F2...)', type: 'text' },
@@ -139,26 +140,42 @@ const SECTIONS = [
     title: 'Genel',
     icon: '🌐',
     desc: 'Her sayfada görünen içerikler (footer, duyuru)',
-    keys: ['announcement_bar', 'logo_url', 'footer_address', 'footer_phone', 'footer_email'],
+    keys: [
+      'announcement_bar', 'logo_url',
+      { key: 'footer_address', label: 'Footer Adres', placeholder: 'Teknokent Binası, Blok A No:12\nAnkara / Türkiye' },
+      { key: 'footer_phone', label: 'Footer Telefon', placeholder: '0850 123 45 67' },
+      { key: 'footer_email', label: 'Footer E-posta', placeholder: 'info@pelvicare.com' },
+    ],
   },
   {
     title: 'Ana Sayfa',
     icon: '🏠',
     desc: 'Ana sayfa tüm bölümleri',
     keys: [
-      'hero_title', 'hero_subtitle', 'hero_cta', 'hero_image',
+      { key: 'home_stats_title', label: 'İstatistikler Başlığı', placeholder: 'Pelvik Sağlık: Sessiz Kriz' },
+      { key: 'home_stats_subtitle', label: 'İstatistikler Alt Başlığı', placeholder: 'Milyonlar tedavi aramaktan çekinmekte...' },
       { key: 'home_trust_badges', type: 'json-list', label: 'Güven Rozetleri', itemLabel: 'Rozet', schema: TRUST_BADGE_SCHEMA },
-      'home_stats_title', 'home_stats_subtitle',
-      { key: 'home_stats_items', type: 'json-list', label: 'İstatistikler', itemLabel: 'İstatistik', schema: HOME_STAT_SCHEMA },
-      'home_modalities_title', 'home_modalities_subtitle', 'home_modalities_synergy',
-      'home_steps_title', 'home_steps_subtitle',
-      { key: 'home_steps_items', type: 'json-list', label: '4 Adım', itemLabel: 'Adım', schema: HOME_STEP_SCHEMA },
-      'home_clinical_title', 'home_clinical_subtitle',
+      { key: 'home_stats_items', type: 'json-list', label: 'İstatistik Kartları', itemLabel: 'İstatistik', schema: HOME_STAT_SCHEMA },
+      { key: 'home_modalities_title', label: 'Modaliteler Başlığı', placeholder: 'Üç Tedavi Modalitesi' },
+      { key: 'home_modalities_subtitle', label: 'Modaliteler Alt Başlığı', placeholder: 'Her modalite diğerinin etkisini güçlendirir...' },
+      { key: 'home_modalities_synergy', label: 'Sinerjik Etki Metni', placeholder: 'Kombinasyon tedavisi tek başına hiçbir modalitaenin...' },
+      { key: 'home_steps_title', label: '4 Adım Bölüm Başlığı', placeholder: 'Güvene Giden 4 Adım' },
+      { key: 'home_steps_subtitle', label: '4 Adım Alt Başlığı', placeholder: 'Klinik düzey tedavi, evde basit adımlarla.' },
+      { key: 'home_steps_items', type: 'json-list', label: '4 Adım Listesi', itemLabel: 'Adım', schema: HOME_STEP_SCHEMA },
+      { key: 'home_clinical_title', label: 'Klinik Sonuçlar Başlığı', placeholder: 'Bilimle Desteklenen Sonuçlar' },
+      { key: 'home_clinical_subtitle', label: 'Klinik Sonuçlar Alt Başlığı', placeholder: 'RCT, meta-analiz ve Cochrane derleme verileri' },
       { key: 'home_clinical_results', type: 'json-list', label: 'Klinik Sonuç Kartları', itemLabel: 'Sonuç', schema: HOME_CLINICAL_SCHEMA },
-      'home_comparison_title', 'home_comparison_subtitle',
-      'home_reviews_title', 'home_reviews_rating', 'home_reviews_count',
-      'home_quiz_title', 'home_quiz_subtitle', 'home_quiz_button',
-      'home_newsletter_title', 'home_newsletter_subtitle', 'home_newsletter_button',
+      { key: 'home_comparison_title', label: 'Karşılaştırma Başlığı', placeholder: 'PelviCare vs. Diğer Yöntemler' },
+      { key: 'home_comparison_subtitle', label: 'Karşılaştırma Alt Başlığı', placeholder: 'Neden PelviCare? Bir karşılaştırma.' },
+      { key: 'home_reviews_title', label: 'Yorumlar Başlığı', placeholder: 'Kullanıcılarımız Ne Diyor?' },
+      { key: 'home_reviews_rating', label: 'Yorum Puanı', placeholder: '4.8/5' },
+      { key: 'home_reviews_count', label: 'Yorum Sayısı', placeholder: '500+ değerlendirme' },
+      { key: 'home_quiz_title', label: 'Quiz Başlığı', placeholder: 'Hangi Mod Size Uygun?' },
+      { key: 'home_quiz_subtitle', label: 'Quiz Alt Başlığı', placeholder: '3 dakikalık kısa testimizle...' },
+      { key: 'home_quiz_button', label: 'Quiz Buton Metni', placeholder: 'Testi Başlat' },
+      { key: 'home_newsletter_title', label: 'Bülten Başlığı', placeholder: 'Pelvik Sağlık Bültenimize Katılın' },
+      { key: 'home_newsletter_subtitle', label: 'Bülten Alt Başlığı', placeholder: 'İlk siparişinizde ₺500 indirim kazanın...' },
+      { key: 'home_newsletter_button', label: 'Bülten Buton Metni', placeholder: 'Abone Ol' },
     ],
   },
   {
@@ -166,13 +183,20 @@ const SECTIONS = [
     icon: '📦',
     desc: 'PelviCare cihaz sayfası ve paketler',
     keys: [
-      'product_hero_badge', 'product_hero_title', 'product_hero_subtitle', 'product_hero_tagline', 'product_rating_text',
-      'product_features_title',
+      { key: 'product_hero_badge', label: 'Hero Rozet Metni', placeholder: 'CE Belgeli · Tıbbi Sınıf' },
+      { key: 'product_hero_title', label: 'Ürün Başlığı', placeholder: 'PelviCare' },
+      { key: 'product_hero_subtitle', label: 'Ürün Alt Başlığı', placeholder: 'Akıllı Hibrit Pelvik Taban Rehabilitasyon Sistemi' },
+      { key: 'product_hero_tagline', label: 'Tagline (Slogan)', placeholder: '"Üç güç. Bir cihaz. Sonsuz özgürlük."' },
+      { key: 'product_rating_text', label: 'Puan Metni', placeholder: '4.8/5 · 500+ değerlendirme' },
+      { key: 'product_features_title', label: 'Özellikler Başlığı', placeholder: 'Temel Özellikler' },
       { key: 'product_features', type: 'json-list', label: 'Ürün Özellikleri', itemLabel: 'Özellik', schema: PRODUCT_FEAT_SCHEMA },
-      'product_packages_title', 'product_packages_subtitle',
+      { key: 'product_packages_title', label: 'Paketler Başlığı', placeholder: 'Paket Seçenekleri' },
+      { key: 'product_packages_subtitle', label: 'Paketler Alt Başlığı', placeholder: 'İhtiyacınıza en uygun paketi seçin.' },
       { key: 'product_packages', type: 'json-list', label: 'Paket Seçenekleri', itemLabel: 'Paket', schema: PACKAGE_SCHEMA },
       { key: 'product_guarantees', type: 'json-list', label: 'Garanti / Güven Rozetleri', itemLabel: 'Rozet', schema: GUARANTEE_SCHEMA },
-      'product_pad_title', 'product_pad_desc', 'product_pad_price',
+      { key: 'product_pad_title', label: 'Pad Başlığı', placeholder: 'PelviCare Elektrod Pad' },
+      { key: 'product_pad_desc', label: 'Pad Açıklaması', placeholder: 'Özel hidrojel formülasyonu, yüksek iletkenlik...' },
+      { key: 'product_pad_price', label: 'Pad Fiyatı', placeholder: '₺290' },
       { key: 'product_pad_specs', type: 'json-list', label: 'Pad Teknik Detaylar', itemLabel: 'Satır', schema: PAD_SPEC_SCHEMA },
     ],
   },
@@ -181,16 +205,22 @@ const SECTIONS = [
     icon: 'ℹ️',
     desc: 'Şirket, ekip, değerler ve sertifikalar',
     keys: [
-      'about_title', 'about_hero_subtitle',
-      'about_mission_title', 'about_mission_text1', 'about_mission_text2',
+      { key: 'about_title', label: 'Sayfa Başlığı', placeholder: 'Hakkımızda' },
+      { key: 'about_hero_subtitle', label: 'Hero Alt Başlığı', placeholder: 'PelviCare, pelvik sağlık sorunlarının utanç kaynağı değil...' },
+      { key: 'about_mission_title', label: 'Misyon Başlığı', placeholder: 'Pelvik Sağlığı Herkes İçin Erişilebilir Kılmak' },
+      { key: 'about_mission_text1', label: 'Misyon Paragraf 1', placeholder: 'Dünya genelinde 500 milyondan fazla insan...' },
+      { key: 'about_mission_text2', label: 'Misyon Paragraf 2', placeholder: 'PelviCare bu boşluğu kapatmak için kuruldu...' },
       { key: 'about_mission_items', type: 'json-list', label: 'Misyon Maddeleri', itemLabel: 'Madde', schema: ABOUT_ITEM_SCHEMA },
-      'about_values_title',
+      { key: 'about_values_title', label: 'Değerler Başlığı', placeholder: 'Temel Değerlerimiz' },
       { key: 'about_values', type: 'json-list', label: 'Temel Değerler', itemLabel: 'Değer', schema: ABOUT_VALUE_SCHEMA },
-      'about_team_title', 'about_team_subtitle',
+      { key: 'about_team_title', label: 'Ekip Başlığı', placeholder: 'Ekibimiz' },
+      { key: 'about_team_subtitle', label: 'Ekip Alt Başlığı', placeholder: 'Tıp, mühendislik ve hasta savunuculuğundan gelen uzman ekip' },
       { key: 'about_team', type: 'json-list', label: 'Ekip Üyeleri', itemLabel: 'Üye', schema: TEAM_MEM_SCHEMA },
-      'about_certs_title',
+      { key: 'about_certs_title', label: 'Sertifikalar Başlığı', placeholder: 'Sertifikalar & Standartlar' },
       { key: 'about_certs', type: 'json-list', label: 'Sertifikalar', itemLabel: 'Sertifika', schema: CERT_SCHEMA },
-      'about_founder_name', 'about_founder_role', 'about_founder_quote',
+      { key: 'about_founder_name', label: 'Kurucu Adı', placeholder: 'Dr. Elif Yıldız' },
+      { key: 'about_founder_role', label: 'Kurucu Unvanı', placeholder: 'Kurucu & CEO' },
+      { key: 'about_founder_quote', label: 'Kurucu Alıntısı', placeholder: '"Pelvik taban sorunlarıyla kişisel deneyimim..."' },
     ],
   },
   {
@@ -198,8 +228,13 @@ const SECTIONS = [
     icon: '📞',
     desc: 'İletişim bilgileri',
     keys: [
-      'contact_title', 'contact_subtitle',
-      'contact_email', 'contact_clinician_email', 'contact_phone', 'contact_hours', 'contact_address',
+      { key: 'contact_title', label: 'Sayfa Başlığı', placeholder: 'İletişim' },
+      { key: 'contact_subtitle', label: 'Alt Başlık', placeholder: 'Size nasıl yardımcı olabileceğimizi öğrenmek isteriz.' },
+      { key: 'contact_email', label: 'Genel E-posta', placeholder: 'info@pelvicare.com' },
+      { key: 'contact_clinician_email', label: 'Klinisyen E-posta', placeholder: 'klinisyen@pelvicare.com' },
+      { key: 'contact_phone', label: 'Telefon', placeholder: '0850 123 45 67' },
+      { key: 'contact_hours', label: 'Destek Saatleri', placeholder: 'Pzt–Cum: 09:00–18:00' },
+      { key: 'contact_address', label: 'Adres (satır sonu için Enter kullanın)', placeholder: 'Teknokent Binası, Blok A No:12\nAnkara / Türkiye' },
     ],
   },
   {
@@ -207,9 +242,11 @@ const SECTIONS = [
     icon: '👨‍⚕️',
     desc: 'Klinisyen sayfası içerikleri',
     keys: [
-      'clinician_title',
-      'clinician_hero_badge', 'clinician_hero_subtitle', 'clinician_contact_email',
-      { key: 'clinician_evidence', type: 'json-list', label: 'Klinik Kanıtlar', itemLabel: 'Kanıt', schema: CLINICIAN_EV_SCHEMA },
+      { key: 'clinician_title', label: 'Hero Başlık', placeholder: 'Hastanız İçin Yeni Bir Seçenek' },
+      { key: 'clinician_hero_badge', label: 'Hero Rozet', placeholder: 'Sağlık Profesyonelleri' },
+      { key: 'clinician_hero_subtitle', label: 'Hero Alt Başlık', placeholder: 'PelviCare, klinik fizyoterapiye ek veya monoterapi olarak...' },
+      { key: 'clinician_contact_email', label: 'Klinisyen İletişim E-posta', placeholder: 'klinisyen@pelvicare.com' },
+      { key: 'clinician_evidence', type: 'json-list', label: 'Klinik Kanıtlar (3 kart)', itemLabel: 'Kanıt', schema: CLINICIAN_EV_SCHEMA },
       { key: 'clinician_steps', type: 'json-list', label: 'Reçete Adımları', itemLabel: 'Adım', schema: CLINICIAN_STEP_SCHEMA2 },
       { key: 'clinician_downloads', type: 'json-list', label: 'Profesyonel Kaynaklar', itemLabel: 'Belge', schema: CLINICIAN_DL_SCHEMA },
     ],
@@ -219,7 +256,8 @@ const SECTIONS = [
     icon: '❓',
     desc: 'Sık sorulan sorular ve kategoriler',
     keys: [
-      'faq_hero_title', 'faq_hero_subtitle',
+      { key: 'faq_hero_title', label: 'Sayfa Başlığı', placeholder: 'Sık Sorulan Sorular' },
+      { key: 'faq_hero_subtitle', label: 'Alt Başlık', placeholder: 'PelviCare hakkında merak ettiklerinizin yanıtları' },
       { key: 'faq_categories', type: 'json-faq', label: 'SSS Kategorileri ve Sorular' },
     ],
   },
@@ -228,13 +266,16 @@ const SECTIONS = [
     icon: '⚙️',
     desc: 'Tedavi fazları ve uygulama özellikleri',
     keys: [
-      'how_hero_title', 'how_hero_subtitle',
-      'how_steps_title', 'how_steps_subtitle',
-      { key: 'how_use_steps', type: 'json-list', label: 'Kullanım Adımları', itemLabel: 'Adım', schema: HOW_USE_STEP_SCHEMA },
-      'how_phases_title', 'how_phases_subtitle',
-      { key: 'how_phases', type: 'json-list', label: 'Tedavi Fazları', itemLabel: 'Faz', schema: PHASES_SCHEMA },
-      'how_app_title',
-      { key: 'how_app_features', type: 'json-list', label: 'Uygulama Özellikleri', itemLabel: 'Özellik', schema: APP_FEATURES_SCHEMA },
+      { key: 'how_hero_title', label: 'Sayfa Başlığı', placeholder: 'Nasıl Çalışır?' },
+      { key: 'how_hero_subtitle', label: 'Hero Alt Başlığı', placeholder: 'PelviCare, üç tedavi modalitesini tek bir giyilebilir cihazda...' },
+      { key: 'how_steps_title', label: 'Kullanım Adımları Başlığı', placeholder: 'Kullanım Adımları' },
+      { key: 'how_steps_subtitle', label: 'Kullanım Adımları Alt Başlığı', placeholder: '4 basit adımda klinik düzey tedavi' },
+      { key: 'how_use_steps', type: 'json-list', label: 'Kullanım Adımları (4 adım)', itemLabel: 'Adım', schema: HOW_USE_STEP_SCHEMA },
+      { key: 'how_phases_title', label: 'Tedavi Fazları Başlığı', placeholder: 'Faz Tabanlı Tedavi Protokolü' },
+      { key: 'how_phases_subtitle', label: 'Tedavi Fazları Alt Başlığı', placeholder: 'Bilimsel protokol üç fazda ilerler...' },
+      { key: 'how_phases', type: 'json-list', label: 'Tedavi Fazları (F1/F2/F3)', itemLabel: 'Faz', schema: PHASES_SCHEMA },
+      { key: 'how_app_title', label: 'Mobil Uygulama Başlığı', placeholder: 'Mobil Uygulama Özellikleri' },
+      { key: 'how_app_features', type: 'json-list', label: 'Uygulama Özellikleri (4 kart)', itemLabel: 'Özellik', schema: APP_FEATURES_SCHEMA },
     ],
   },
   {
@@ -242,10 +283,13 @@ const SECTIONS = [
     icon: '👩',
     desc: 'Kadın sayfası hedef profiller ve bölüm başlıkları',
     keys: [
-      'women_hero_title', 'women_hero_subtitle',
-      { key: 'women_profiles', type: 'json-list', label: 'Hedef Profiller', itemLabel: 'Profil', schema: PROFILE_SCHEMA },
-      'women_modes_title', 'women_modes_subtitle',
-      'women_cta_title', 'women_cta_subtitle',
+      { key: 'women_hero_title', label: 'Sayfa Başlığı', placeholder: 'Kadın Pelvik Sağlığı' },
+      { key: 'women_hero_subtitle', label: 'Hero Alt Başlığı', placeholder: '10 bilimsel protokol. İdrar kaçırmadan vajinismusa...' },
+      { key: 'women_profiles', type: 'json-list', label: 'Hedef Profiller (4 kart)', itemLabel: 'Profil', schema: PROFILE_SCHEMA },
+      { key: 'women_modes_title', label: 'Protokoller Başlığı', placeholder: '10 Kadın Tedavi Protokolü' },
+      { key: 'women_modes_subtitle', label: 'Protokoller Alt Başlığı', placeholder: 'Her hastalık için bilimsel parametreler...' },
+      { key: 'women_cta_title', label: 'CTA Başlığı', placeholder: 'Pelvik Sağlığınızı Geri Kazanın' },
+      { key: 'women_cta_subtitle', label: 'CTA Alt Başlığı', placeholder: 'Klinik kanıtlı protokollerle, evinizin konforunda.' },
     ],
   },
   {
@@ -253,10 +297,13 @@ const SECTIONS = [
     icon: '👨',
     desc: 'Erkek sayfası hedef profiller ve bölüm başlıkları',
     keys: [
-      'men_hero_title', 'men_hero_subtitle',
-      { key: 'men_profiles', type: 'json-list', label: 'Hedef Profiller', itemLabel: 'Profil', schema: PROFILE_SCHEMA },
-      'men_modes_title', 'men_modes_subtitle',
-      'men_cta_title', 'men_cta_subtitle',
+      { key: 'men_hero_title', label: 'Sayfa Başlığı', placeholder: 'Erkek Pelvik Sağlığı' },
+      { key: 'men_hero_subtitle', label: 'Hero Alt Başlığı', placeholder: '7 bilimsel protokol. Erektil disfonksiyondan...' },
+      { key: 'men_profiles', type: 'json-list', label: 'Hedef Profiller (4 kart)', itemLabel: 'Profil', schema: PROFILE_SCHEMA },
+      { key: 'men_modes_title', label: 'Protokoller Başlığı', placeholder: '7 Erkek Tedavi Protokolü' },
+      { key: 'men_modes_subtitle', label: 'Protokoller Alt Başlığı', placeholder: 'Her hastalık için bilimsel parametreler...' },
+      { key: 'men_cta_title', label: 'CTA Başlığı', placeholder: 'Erkek Pelvik Sağlığında Yeni Dönem' },
+      { key: 'men_cta_subtitle', label: 'CTA Alt Başlığı', placeholder: 'Gizlilikle, evinizde, klinik kanıtlı protokollerle.' },
     ],
   },
   {
@@ -264,10 +311,11 @@ const SECTIONS = [
     icon: '🔬',
     desc: 'Klinik araştırmalar ve kanıtlar',
     keys: [
-      'science_hero_title', 'science_hero_subtitle',
-      { key: 'science_hero_stats', type: 'json-list', label: 'Hero İstatistikleri', itemLabel: 'İstatistik', schema: SCIENCE_STAT_SCHEMA },
-      { key: 'science_studies', type: 'json-list', label: 'Klinik Çalışmalar', itemLabel: 'Çalışma', schema: STUDY_SCHEMA },
-      { key: 'science_differentiators', type: 'json-list', label: 'Farklılaştırıcılar', itemLabel: 'Madde', schema: DIFF_SCHEMA },
+      { key: 'science_hero_title', label: 'Sayfa Başlığı', placeholder: 'Bilimsel Kanıtlar' },
+      { key: 'science_hero_subtitle', label: 'Hero Alt Başlığı', placeholder: "PelviCare'in etkinliği 50'den fazla randomize kontrollü..." },
+      { key: 'science_hero_stats', type: 'json-list', label: 'Hero İstatistikleri (4 kart)', itemLabel: 'İstatistik', schema: SCIENCE_STAT_SCHEMA },
+      { key: 'science_studies', type: 'json-list', label: 'Klinik Çalışma Tablosu', itemLabel: 'Çalışma', schema: STUDY_SCHEMA },
+      { key: 'science_differentiators', type: 'json-list', label: 'Farklılaştırıcı Teknolojiler', itemLabel: 'Madde', schema: DIFF_SCHEMA },
     ],
   },
   {
@@ -275,7 +323,7 @@ const SECTIONS = [
     icon: '⭐',
     desc: 'Kullanıcı yorumları ve değerlendirmeler',
     keys: [
-      'reviews_hero_title',
+      { key: 'reviews_hero_title', label: 'Sayfa Başlığı', placeholder: 'Kullanıcı Yorumları' },
       { key: 'reviews_items', type: 'json-list', label: 'Yorumlar Listesi', itemLabel: 'Yorum', schema: REVIEW_SCHEMA },
     ],
   },
@@ -284,7 +332,7 @@ const SECTIONS = [
     icon: '📚',
     desc: 'İndirilebilir belgeler ve makaleler',
     keys: [
-      'resources_hero_title',
+      { key: 'resources_hero_title', label: 'Sayfa Başlığı', placeholder: 'Kaynaklar' },
       { key: 'resources_downloads', type: 'json-list', label: 'İndirilebilir Belgeler', itemLabel: 'Belge', schema: DOWNLOAD_SCHEMA },
       { key: 'resources_articles', type: 'json-articles', label: 'Makale Kategorileri' },
     ],
@@ -546,6 +594,7 @@ export default function AdminCms() {
       const res = await api.put('/cms', { updates: changes });
       if (!res.success) throw new Error(res.error);
       setCms(res.data); setChanges({});
+      clearCmsCache();
       setSaved(true); setTimeout(() => setSaved(false), 3000);
     } catch (err) { alert('Kaydetme hatası: ' + err.message); }
     finally { setSaving(false); }
@@ -592,7 +641,8 @@ export default function AdminCms() {
         ) : (
           <input
             className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 transition-colors"
-            value={val} onChange={e => setValue(key, e.target.value)} placeholder={label}
+            value={val} onChange={e => setValue(key, e.target.value)}
+            placeholder={isObj && keyEntry.placeholder ? keyEntry.placeholder : label}
           />
         )}
       </div>

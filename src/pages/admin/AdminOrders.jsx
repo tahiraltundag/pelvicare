@@ -28,9 +28,9 @@ function OrderRow({ order, onStatusChange }) {
     <>
       <tr className="border-b border-gray-50 hover:bg-gray-50/50 transition-colors cursor-pointer" onClick={() => setOpen(o => !o)}>
         <td className="px-4 py-3 font-mono text-xs text-gray-500">{order.id.slice(-8).toUpperCase()}</td>
-        <td className="px-4 py-3">
-          <div className="font-medium text-gray-900">{order.user?.name || `${addr.firstName || ''} ${addr.lastName || ''}`.trim() || 'Misafir'}</div>
-          <div className="text-xs text-gray-400">{order.user?.email || addr.email || ''}</div>
+        <td className="px-4 py-3 max-w-[140px]">
+          <div className="font-medium text-gray-900 truncate">{order.user?.name || `${addr.firstName || ''} ${addr.lastName || ''}`.trim() || 'Misafir'}</div>
+          <div className="text-xs text-gray-400 truncate">{order.user?.email || addr.email || ''}</div>
         </td>
         <td className="hidden sm:table-cell px-4 py-3 font-bold text-gray-900">{order.total.toLocaleString('tr-TR')} ₺</td>
         <td className="px-4 py-3">

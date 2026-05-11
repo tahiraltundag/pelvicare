@@ -94,9 +94,9 @@ export default function AdminDashboard() {
                 {recentOrders.map(order => (
                   <tr key={order.id} className="border-b border-gray-50 hover:bg-gray-50/50 transition-colors">
                     <td className="px-5 py-3 font-mono text-xs text-gray-500">{order.id.slice(-8).toUpperCase()}</td>
-                    <td className="px-5 py-3">
-                      <div className="font-medium text-gray-800">{order.user?.name || order.address?.firstName + ' ' + order.address?.lastName || 'Misafir'}</div>
-                      <div className="text-xs text-gray-400">{order.user?.email || order.address?.email || ''}</div>
+                    <td className="px-5 py-3 max-w-[140px]">
+                      <div className="font-medium text-gray-800 truncate">{order.user?.name || order.address?.firstName + ' ' + order.address?.lastName || 'Misafir'}</div>
+                      <div className="text-xs text-gray-400 truncate">{order.user?.email || order.address?.email || ''}</div>
                     </td>
                     <td className="px-5 py-3 font-bold text-gray-900">{order.total.toLocaleString('tr-TR')} ₺</td>
                     <td className="px-5 py-3">

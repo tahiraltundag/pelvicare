@@ -95,9 +95,9 @@ export default function AdminUsers() {
                           <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0" style={{ backgroundColor: '#0d9488' }}>
                             {u.name?.charAt(0).toUpperCase()}
                           </div>
-                          <div>
-                            <div className="font-medium text-gray-900">{u.name} {isMe && <span className="text-xs text-gray-400">(siz)</span>}</div>
-                            <div className="text-xs text-gray-400">{u.email}</div>
+                          <div className="min-w-0">
+                            <div className="font-medium text-gray-900 truncate">{u.name} {isMe && <span className="text-xs text-gray-400">(siz)</span>}</div>
+                            <div className="text-xs text-gray-400 truncate">{u.email}</div>
                           </div>
                         </div>
                       </td>

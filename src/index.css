@@ -74,6 +74,7 @@
     color: #1f2937;
     background: #ffffff;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
   #root {
     width: 100%;

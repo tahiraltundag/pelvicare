@@ -54,8 +54,8 @@ export default function CartSidebar() {
               {items.map((item) => (
                 <div
                   key={item.id + item.variant}
-                  className={`flex gap-3 p-3 rounded-2xl bg-gray-50 border border-gray-100 ${item.path ? 'cursor-pointer hover:bg-gray-100 transition-colors' : ''}`}
-                  onClick={() => { if (item.path) { setSidebarOpen(false); navigate(item.path); } }}
+                  className="flex gap-3 p-3 rounded-2xl bg-gray-50 border border-gray-100 cursor-pointer hover:bg-gray-100 transition-colors"
+                  onClick={() => { setSidebarOpen(false); navigate(item.path || '/magaza'); }}
                 >
                   <div className="w-14 h-14 rounded-xl flex items-center justify-center text-2xl flex-shrink-0" style={{ backgroundColor: '#f0fdfa' }}>
                     {item.icon}

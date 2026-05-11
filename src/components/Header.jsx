@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, ShoppingCart, ChevronDown, User, LogOut, Settings, Package } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
+import { PelviCareIcon } from './PelviCareLogo';
 
 const navItems = [
   { label: 'Nasıl Çalışır', path: '/nasil-calisir' },
@@ -77,11 +78,9 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" onClick={() => setSidebarOpen(false)} className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-sm">P</span>
-            </div>
-            <span className="text-xl font-bold" style={{ color: '#1e3a5f' }}>
+          <Link to="/" onClick={() => setSidebarOpen(false)} className="flex items-center gap-2.5">
+            <PelviCareIcon size={36} />
+            <span className="text-xl font-extrabold tracking-tight" style={{ color: '#1e3a5f', letterSpacing: '-0.02em' }}>
               Pelvi<span style={{ color: '#0d9488' }}>Care</span>
             </span>
           </Link>

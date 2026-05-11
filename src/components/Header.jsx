@@ -21,7 +21,7 @@ const navItems = [
   },
 ];
 
-function UserMenu({ user, logout, isAdmin }) {
+function UserMenu({ user, logout, isAdmin, setSidebarOpen }) {
   return (
     <div className="relative group">
       <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gray-100 hover:bg-teal-50 hover:text-teal-600 transition-colors text-sm font-medium text-gray-700">
@@ -37,16 +37,16 @@ function UserMenu({ user, logout, isAdmin }) {
             <div className="text-sm font-semibold text-gray-900">{user.name}</div>
             <div className="text-xs text-gray-400">{user.email}</div>
           </div>
-          <Link to="/siparislerim" className="flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors">
+          <Link to="/siparislerim" onClick={() => setSidebarOpen(false)} className="flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors">
             <Package size={15} />Siparişlerim
           </Link>
           {isAdmin && (
-            <Link to="/admin" className="flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors">
+            <Link to="/admin" onClick={() => setSidebarOpen(false)} className="flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors">
               <Settings size={15} />Admin Panel
             </Link>
           )}
           <div className="border-t border-gray-100 mt-1 pt-1">
-            <button onClick={logout} className="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition-colors">
+            <button onClick={() => { logout(); setSidebarOpen(false); }} className="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition-colors">
               <LogOut size={15} />Çıkış Yap
             </button>
           </div>
@@ -98,6 +98,7 @@ export default function Header() {
                     <div className="w-52 bg-white rounded-xl shadow-lg border border-gray-100 py-2">
                       {item.children.map((child) => (
                         <Link key={child.path} to={child.path}
+                          onClick={() => setSidebarOpen(false)}
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-600 transition-colors">
                           {child.label}
                         </Link>
@@ -107,6 +108,7 @@ export default function Header() {
                 </div>
               ) : (
                 <Link key={item.path} to={item.path}
+                  onClick={() => setSidebarOpen(false)}
                   className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${isActive(item.path) ? 'text-teal-600 bg-teal-50' : 'text-gray-700 hover:text-teal-600 hover:bg-teal-50'}`}>
                   {item.label}
                 </Link>
@@ -126,13 +128,13 @@ export default function Header() {
             </button>
 
             {user ? (
-              <UserMenu user={user} logout={logout} isAdmin={isAdmin} />
+              <UserMenu user={user} logout={logout} isAdmin={isAdmin} setSidebarOpen={setSidebarOpen} />
             ) : (
               <>
-                <Link to="/giris" className="px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-teal-600 transition-colors rounded-lg hover:bg-teal-50">
+                <Link to="/giris" onClick={() => setSidebarOpen(false)} className="px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-teal-600 transition-colors rounded-lg hover:bg-teal-50">
                   Giriş
                 </Link>
-                <Link to="/kayit" className="px-4 py-1.5 text-sm font-semibold text-white rounded-lg hover:opacity-90 transition-all" style={{ backgroundColor: '#0d9488' }}>
+                <Link to="/kayit" onClick={() => setSidebarOpen(false)} className="px-4 py-1.5 text-sm font-semibold text-white rounded-lg hover:opacity-90 transition-all" style={{ backgroundColor: '#0d9488' }}>
                   Kayıt Ol
                 </Link>
               </>

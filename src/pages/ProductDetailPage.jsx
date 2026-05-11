@@ -2,7 +2,57 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Package, ArrowLeft, CheckCircle, Tag, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import api, { getImageUrl } from '../api/client';
+import api from '../api/client';
+
+const STATIC_PRODUCTS = {
+  'pkg-starter': {
+    id: 'pkg-starter', slug: 'pkg-starter',
+    name: 'Başlangıç Paketi',
+    price: 4990, comparePrice: null,
+    description: 'PelviCare ana cihaz ve 2 adet elektrod pad içeren başlangıç paketi. Mobil uygulama erişimi ve 1 yıl garanti dahildir.',
+    images: ['/images/cihaz.png', '/images/urun-sistem-genel.jpg'],
+    tags: ['EMS', 'Pelvik Taban', 'Başlangıç'],
+    stock: 99, variants: [], category: null,
+    features: ['PelviCare Ana Cihaz', '2 Adet Elektrod Pad (10 seans)', 'Mobil Uygulama Erişimi', 'Türkçe Kullanım Kılavuzu', '1 Yıl Garanti'],
+  },
+  'pkg-premium': {
+    id: 'pkg-premium', slug: 'pkg-premium',
+    name: 'Premium Paket',
+    price: 6490, comparePrice: 7990,
+    description: 'PelviCare ana cihaz, 4 elektrod pad, şarj ünitesi ve premium mobil uygulama erişimi içeren en popüler paket. 2 yıl garanti.',
+    images: ['/images/cihaz.png', '/images/urun-sistem-genel.jpg'],
+    tags: ['EMS', 'Pelvik Taban', 'Premium'],
+    stock: 99, variants: [], category: null,
+    features: ['PelviCare Ana Cihaz', '4 Adet Elektrod Pad (20 seans)', 'Mobil Uygulama Erişimi (Premium)', 'Türkçe Kullanım Kılavuzu', '2 Yıl Garanti', 'Öncelikli Destek', 'Şarj Ünitesi'],
+  },
+  'pkg-pro': {
+    id: 'pkg-pro', slug: 'pkg-pro',
+    name: 'Profesyonel Paket',
+    price: 8990, comparePrice: null,
+    description: '2 adet cihaz ve 10 elektrod pad içeren klinisyen paketi. Hasta takip sistemi, teknik destek hattı ve 3 yıl garanti dahildir.',
+    images: ['/images/cihaz.png', '/images/urun-sistem-genel.jpg'],
+    tags: ['EMS', 'Pelvik Taban', 'Profesyonel', 'Klinisyen'],
+    stock: 99, variants: [], category: null,
+    features: ['PelviCare Ana Cihaz (x2)', '10 Adet Elektrod Pad (50 seans)', 'Klinisyen Yönetim Paneli', 'Hasta Takip Sistemi', 'Teknik Destek Hattı', '3 Yıl Garanti', 'Eğitim Materyalleri'],
+  },
+  'pad-5pack': {
+    id: 'pad-5pack', slug: 'pad-5pack',
+    name: 'Elektrod Pad',
+    price: 290, comparePrice: null,
+    description: "5'li hidrojel elektrod pad paketi. Yüksek iletkenlik ve vücut uyumu için özel formülasyon. Tüy çekmez, ISO 10993 uyumlu.",
+    images: ['/images/urun-elektrod-pad.jpg'],
+    tags: ['Aksesuar', 'Elektrod', 'Hidrojel'],
+    stock: 99, variants: ["5'li Paket (15–25 seans)"], category: null,
+    features: ['Hidrojel formülasyon', 'Universal fit (tek beden)', '3–5 seans / pad kullanım ömrü', 'ISO 10993 biyouyumluluk', 'Resealable poşet ile saklama'],
+  },
+};
+
+function resolveImage(src) {
+  if (!src) return '';
+  if (src.startsWith('http') || src.startsWith('/')) return src;
+  const SERVER_URL = import.meta.env.VITE_SERVER_URL || '';
+  return `${SERVER_URL}${src}`;
+}
 
 export default function ProductDetailPage() {
   const { slug } = useParams();
@@ -19,6 +69,17 @@ export default function ProductDetailPage() {
   useEffect(() => {
     setLoading(true);
     setNotFound(false);
+    setActiveImage(0);
+
+    // Check static fallback first (for hardcoded package IDs)
+    if (STATIC_PRODUCTS[slug]) {
+      const p = STATIC_PRODUCTS[slug];
+      setProduct(p);
+      if (p.variants?.length > 0) setSelectedVariant(p.variants[0]);
+      setLoading(false);
+      return;
+    }
+
     api.get(`/products/${slug}`)
       .then(res => {
         if (res.success) {
@@ -60,6 +121,7 @@ export default function ProductDetailPage() {
   const images = product.images || [];
   const variants = product.variants || [];
   const tags = product.tags || [];
+  const features = product.features || [];
   const discount = product.comparePrice
     ? Math.round((1 - product.price / product.comparePrice) * 100)
     : null;
@@ -69,10 +131,10 @@ export default function ProductDetailPage() {
       id: product.id,
       name: product.name,
       price: product.price,
-      icon: images[0] ? null : '📦',
-      image: images[0] ? getImageUrl(images[0]) : null,
+      icon: images.length > 0 ? null : '📦',
       variant: selectedVariant,
-      path: `/urun/${product.slug}`,
+      slug: product.slug,
+      path: `/urun/${product.slug || product.id}`,
     });
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
@@ -97,7 +159,7 @@ export default function ProductDetailPage() {
                 <>
                   <div className="relative aspect-square rounded-2xl overflow-hidden bg-white border border-gray-100 mb-3 flex items-center justify-center">
                     <img
-                      src={getImageUrl(images[activeImage])}
+                      src={resolveImage(images[activeImage])}
                       alt={product.name}
                       className="w-full h-full object-contain"
                     />
@@ -128,7 +190,7 @@ export default function ProductDetailPage() {
                             activeImage === i ? 'border-teal-500 scale-95' : 'border-transparent hover:border-gray-300'
                           }`}
                         >
-                          <img src={getImageUrl(img)} alt="" className="w-full h-full object-cover" />
+                          <img src={resolveImage(img)} alt="" className="w-full h-full object-cover" />
                         </button>
                       ))}
                     </div>
@@ -145,14 +207,14 @@ export default function ProductDetailPage() {
             <div className="p-6 lg:p-8 flex flex-col gap-4">
               {product.category && (
                 <span className="text-xs text-teal-600 font-semibold uppercase tracking-wide">
-                  {product.category.name}
+                  {typeof product.category === 'string' ? product.category : product.category.name}
                 </span>
               )}
 
               <h1 className="text-2xl font-bold text-gray-900">{product.name}</h1>
 
               {/* Price */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 flex-wrap">
                 <span className="text-3xl font-bold" style={{ color: '#1e3a5f' }}>
                   {product.price.toLocaleString('tr-TR')} ₺
                 </span>
@@ -171,6 +233,18 @@ export default function ProductDetailPage() {
               {/* Description */}
               {product.description && (
                 <p className="text-sm text-gray-600 leading-relaxed">{product.description}</p>
+              )}
+
+              {/* Features */}
+              {features.length > 0 && (
+                <ul className="space-y-1.5">
+                  {features.map((f, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                      <CheckCircle size={15} className="text-teal-500 flex-shrink-0 mt-0.5" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
               )}
 
               {/* Variants */}
@@ -203,7 +277,9 @@ export default function ProductDetailPage() {
                 {product.stock > 0 ? (
                   <span className="flex items-center gap-1.5 text-sm text-green-600 font-medium">
                     <CheckCircle size={15} /> Stokta var
-                    <span className="text-gray-400 font-normal">({product.stock} adet)</span>
+                    {product.stock < 100 && (
+                      <span className="text-gray-400 font-normal">({product.stock} adet)</span>
+                    )}
                   </span>
                 ) : (
                   <span className="text-sm text-red-500 font-medium">Stok tükendi</span>

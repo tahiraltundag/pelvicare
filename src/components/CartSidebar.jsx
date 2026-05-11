@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
 const STATIC_PATHS = {
-  'pkg-starter': '/urun/pelvicare',
-  'pkg-premium': '/urun/pelvicare',
-  'pkg-pro': '/urun/pelvicare',
-  'pad-5pack': '/urun/elektrod-pad',
+  'pkg-starter': '/urun/pkg-starter',
+  'pkg-premium': '/urun/pkg-premium',
+  'pkg-pro': '/urun/pkg-pro',
+  'pad-5pack': '/urun/pad-5pack',
 };
 
 function getItemPath(item) {

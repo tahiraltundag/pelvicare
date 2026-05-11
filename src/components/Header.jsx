@@ -65,6 +65,7 @@ export default function Header() {
 
   const goToPrice = () => {
     setMobileOpen(false);
+    setSidebarOpen(false);
     navigate('/urun/pelvicare');
     setTimeout(() => document.getElementById('paketler')?.scrollIntoView({ behavior: 'smooth' }), 150);
   };
@@ -170,14 +171,14 @@ export default function Header() {
                 <div key={item.label}>
                   <div className="px-3 py-2 text-sm font-semibold text-gray-500 uppercase tracking-wider">{item.label}</div>
                   {item.children.map((child) => (
-                    <Link key={child.path} to={child.path} onClick={() => setMobileOpen(false)}
+                    <Link key={child.path} to={child.path} onClick={() => { setMobileOpen(false); setSidebarOpen(false); }}
                       className="block pl-6 pr-3 py-2 text-sm text-gray-700 hover:text-teal-600">
                       {child.label}
                     </Link>
                   ))}
                 </div>
               ) : (
-                <Link key={item.path} to={item.path} onClick={() => setMobileOpen(false)}
+                <Link key={item.path} to={item.path} onClick={() => { setMobileOpen(false); setSidebarOpen(false); }}
                   className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-teal-600 rounded-md">
                   {item.label}
                 </Link>
@@ -187,25 +188,25 @@ export default function Header() {
             <div className="border-t border-gray-100 pt-3 mt-2 space-y-2">
               {user ? (
                 <>
-                  <Link to="/siparislerim" onClick={() => setMobileOpen(false)} className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-teal-600 rounded-md">
+                  <Link to="/siparislerim" onClick={() => { setMobileOpen(false); setSidebarOpen(false); }} className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-teal-600 rounded-md">
                     Siparişlerim
                   </Link>
                   {isAdmin && (
-                    <Link to="/admin" onClick={() => setMobileOpen(false)} className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-teal-600 rounded-md">
+                    <Link to="/admin" onClick={() => { setMobileOpen(false); setSidebarOpen(false); }} className="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-teal-600 rounded-md">
                       Admin Panel
                     </Link>
                   )}
-                  <button onClick={() => { logout(); setMobileOpen(false); }} className="w-full text-left px-3 py-2 text-sm font-medium text-red-500 rounded-md">
+                  <button onClick={() => { logout(); setMobileOpen(false); setSidebarOpen(false); }} className="w-full text-left px-3 py-2 text-sm font-medium text-red-500 rounded-md">
                     Çıkış Yap
                   </button>
                 </>
               ) : (
                 <div className="flex gap-2">
-                  <Link to="/giris" onClick={() => setMobileOpen(false)}
+                  <Link to="/giris" onClick={() => { setMobileOpen(false); setSidebarOpen(false); }}
                     className="flex-1 py-2 text-sm font-semibold text-center text-gray-700 border border-gray-200 rounded-xl hover:bg-gray-50 transition">
                     Giriş
                   </Link>
-                  <Link to="/kayit" onClick={() => setMobileOpen(false)}
+                  <Link to="/kayit" onClick={() => { setMobileOpen(false); setSidebarOpen(false); }}
                     className="flex-1 py-2 text-sm font-semibold text-center text-white rounded-xl hover:opacity-90 transition"
                     style={{ backgroundColor: '#0d9488' }}>
                     Kayıt Ol

@@ -46,14 +46,34 @@ const DOWNLOAD_SCHEMA = [
 ];
 
 const SECTIONS = [
-  { title: 'Ana Sayfa', keys: ['hero_title', 'hero_subtitle', 'hero_cta', 'hero_image', 'announcement_bar'] },
-  { title: 'Hakkımızda', keys: ['about_title', 'about_content'] },
-  { title: 'Klinisyenler', keys: ['clinician_title', 'clinician_content'] },
-  { title: 'İletişim', keys: ['contact_title', 'contact_subtitle'] },
-  { title: 'Footer', keys: ['footer_address', 'footer_phone', 'footer_email'] },
-  { title: 'Marka', keys: ['logo_url'] },
+  {
+    title: 'Genel',
+    icon: '🌐',
+    desc: 'Her sayfada görünen içerikler',
+    keys: [
+      'announcement_bar',
+      'logo_url',
+      'footer_address', 'footer_phone', 'footer_email',
+      'about_title', 'about_content',
+      'contact_title', 'contact_subtitle',
+    ],
+  },
+  {
+    title: 'Ana Sayfa',
+    icon: '🏠',
+    desc: 'Hero bölümü ve giriş içerikleri',
+    keys: ['hero_title', 'hero_subtitle', 'hero_cta', 'hero_image'],
+  },
+  {
+    title: 'Klinisyenler',
+    icon: '👨‍⚕️',
+    desc: 'Klinisyen sayfası içerikleri',
+    keys: ['clinician_title', 'clinician_content'],
+  },
   {
     title: 'SSS',
+    icon: '❓',
+    desc: 'Sık sorulan sorular ve kategoriler',
     keys: [
       'faq_hero_title', 'faq_hero_subtitle',
       { key: 'faq_categories', type: 'json-faq', label: 'SSS Kategorileri ve Sorular' },
@@ -61,6 +81,8 @@ const SECTIONS = [
   },
   {
     title: 'Nasıl Çalışır',
+    icon: '⚙️',
+    desc: 'Tedavi fazları ve uygulama özellikleri',
     keys: [
       'how_hero_title', 'how_hero_subtitle',
       { key: 'how_phases', type: 'json-list', label: 'Tedavi Fazları', itemLabel: 'Faz', schema: PHASES_SCHEMA },
@@ -69,6 +91,8 @@ const SECTIONS = [
   },
   {
     title: 'Kadın Sağlığı',
+    icon: '👩',
+    desc: 'Kadın sayfası hedef profiller',
     keys: [
       'women_hero_title', 'women_hero_subtitle',
       { key: 'women_profiles', type: 'json-list', label: 'Hedef Profiller', itemLabel: 'Profil', schema: PROFILE_SCHEMA },
@@ -76,6 +100,8 @@ const SECTIONS = [
   },
   {
     title: 'Erkek Sağlığı',
+    icon: '👨',
+    desc: 'Erkek sayfası hedef profiller',
     keys: [
       'men_hero_title', 'men_hero_subtitle',
       { key: 'men_profiles', type: 'json-list', label: 'Hedef Profiller', itemLabel: 'Profil', schema: PROFILE_SCHEMA },
@@ -83,6 +109,8 @@ const SECTIONS = [
   },
   {
     title: 'Bilim',
+    icon: '🔬',
+    desc: 'Klinik araştırmalar ve kanıtlar',
     keys: [
       'science_hero_title', 'science_hero_subtitle',
       { key: 'science_studies', type: 'json-list', label: 'Klinik Çalışmalar', itemLabel: 'Çalışma', schema: STUDY_SCHEMA },
@@ -91,6 +119,8 @@ const SECTIONS = [
   },
   {
     title: 'Yorumlar',
+    icon: '⭐',
+    desc: 'Kullanıcı yorumları ve değerlendirmeler',
     keys: [
       'reviews_hero_title',
       { key: 'reviews_items', type: 'json-list', label: 'Yorumlar Listesi', itemLabel: 'Yorum', schema: REVIEW_SCHEMA },
@@ -98,6 +128,8 @@ const SECTIONS = [
   },
   {
     title: 'Kaynaklar',
+    icon: '📚',
+    desc: 'İndirilebilir belgeler ve makaleler',
     keys: [
       'resources_hero_title',
       { key: 'resources_downloads', type: 'json-list', label: 'İndirilebilir Belgeler', itemLabel: 'Belge', schema: DOWNLOAD_SCHEMA },
@@ -345,6 +377,7 @@ export default function AdminCms() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [preview, setPreview] = useState(false);
+  const [activeSection, setActiveSection] = useState(SECTIONS[0].title);
 
   useEffect(() => {
     api.get('/cms').then(res => { if (res.success) setCms(res.data); }).finally(() => setLoading(false));
@@ -413,12 +446,20 @@ export default function AdminCms() {
     );
   };
 
+  const currentSection = SECTIONS.find(s => s.title === activeSection) || SECTIONS[0];
+  const sectionHasChanges = (section) =>
+    section.keys.some(k => {
+      const key = typeof k === 'object' ? k.key : k;
+      return key in changes;
+    });
+
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
+      {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">İçerik Yönetimi (CMS)</h1>
-          <p className="text-gray-500 text-sm mt-0.5">Site içeriklerini buradan düzenleyin</p>
+          <h1 className="text-2xl font-bold text-gray-900">İçerik Yönetimi</h1>
+          <p className="text-gray-500 text-sm mt-0.5">Kategori seçerek içerikleri düzenleyin</p>
         </div>
         <div className="flex items-center gap-2">
           {hasChanges && (
@@ -426,11 +467,6 @@ export default function AdminCms() {
               Kaydedilmemiş değişiklikler
             </span>
           )}
-          <button onClick={() => setPreview(p => !p)}
-            className="flex items-center gap-2 px-3 py-2 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
-            {preview ? <EyeOff size={16} /> : <Eye size={16} />}
-            {preview ? 'Düzenle' : 'Önizleme'}
-          </button>
           <button onClick={handleSave} disabled={saving || !hasChanges}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-white transition disabled:opacity-60 ${saved ? 'bg-green-500' : 'hover:opacity-90 active:scale-[0.98]'}`}
             style={saved ? {} : { backgroundColor: '#0d9488' }}>
@@ -440,17 +476,92 @@ export default function AdminCms() {
         </div>
       </div>
 
-      <div className="space-y-4">
-        {SECTIONS.map(section => (
-          <div key={section.title} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-            <div className="px-5 py-3 border-b border-gray-100 bg-gray-50">
-              <h2 className="font-bold text-gray-900">{section.title}</h2>
+      {/* Mobile: yatay scroll sekmeler */}
+      <div className="lg:hidden flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
+        {SECTIONS.map(s => (
+          <button
+            key={s.title}
+            onClick={() => setActiveSection(s.title)}
+            className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium transition-all whitespace-nowrap ${
+              activeSection === s.title
+                ? 'text-white shadow-sm'
+                : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
+            }`}
+            style={activeSection === s.title ? { backgroundColor: '#0d9488' } : {}}
+          >
+            <span>{s.icon}</span>
+            {s.title}
+            {sectionHasChanges(s) && <span className="w-1.5 h-1.5 rounded-full bg-orange-400 flex-shrink-0" />}
+          </button>
+        ))}
+      </div>
+
+      {/* Desktop: iki kolonlu layout */}
+      <div className="hidden lg:flex gap-5 items-start">
+        {/* Sol: kategori listesi */}
+        <aside className="w-56 flex-shrink-0 sticky top-24">
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <div className="px-4 py-3 border-b border-gray-100 bg-gray-50">
+              <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">Kategoriler</span>
+            </div>
+            <nav className="p-2 space-y-0.5">
+              {SECTIONS.map(s => (
+                <button
+                  key={s.title}
+                  onClick={() => setActiveSection(s.title)}
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-left ${
+                    activeSection === s.title
+                      ? 'text-white shadow-sm'
+                      : 'text-gray-700 hover:bg-gray-50'
+                  }`}
+                  style={activeSection === s.title ? { backgroundColor: '#0d9488' } : {}}
+                >
+                  <span className="text-base leading-none">{s.icon}</span>
+                  <span className="flex-1 truncate">{s.title}</span>
+                  {sectionHasChanges(s) && (
+                    <span className="w-2 h-2 rounded-full bg-orange-400 flex-shrink-0" />
+                  )}
+                </button>
+              ))}
+            </nav>
+          </div>
+        </aside>
+
+        {/* Sağ: seçili kategori alanları */}
+        <div className="flex-1 min-w-0">
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <div className="px-5 py-4 border-b border-gray-100 bg-gray-50 flex items-center gap-3">
+              <span className="text-2xl">{currentSection.icon}</span>
+              <div>
+                <h2 className="font-bold text-gray-900">{currentSection.title}</h2>
+                {currentSection.desc && (
+                  <p className="text-xs text-gray-500 mt-0.5">{currentSection.desc}</p>
+                )}
+              </div>
             </div>
             <div className="p-5 space-y-5">
-              {section.keys.map(keyEntry => renderField(keyEntry))}
+              {currentSection.keys.map(keyEntry => renderField(keyEntry))}
             </div>
           </div>
-        ))}
+        </div>
+      </div>
+
+      {/* Mobile: seçili kategori alanları */}
+      <div className="lg:hidden">
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div className="px-5 py-4 border-b border-gray-100 bg-gray-50 flex items-center gap-3">
+            <span className="text-2xl">{currentSection.icon}</span>
+            <div>
+              <h2 className="font-bold text-gray-900">{currentSection.title}</h2>
+              {currentSection.desc && (
+                <p className="text-xs text-gray-500 mt-0.5">{currentSection.desc}</p>
+              )}
+            </div>
+          </div>
+          <div className="p-5 space-y-5">
+            {currentSection.keys.map(keyEntry => renderField(keyEntry))}
+          </div>
+        </div>
       </div>
     </div>
   );

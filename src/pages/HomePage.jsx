@@ -64,7 +64,7 @@ function StarRating({ rating }) {
 export default function HomePage() {
   const navigate = useNavigate();
   const { get } = useCms();
-  const heroDescription = get('hero_description', 'EMS + Elektromanyetik Enerji + Vibrasyon. Üç güç, bir cihaz. 17 hastalık modunda klinik düzey rehabilitasyon artık evinizde.');
+  const heroDescription = get('hero_subtitle', 'EMS + Elektromanyetik Enerji + Vibrasyon. Üç güç, bir cihaz. 17 hastalık modunda klinik düzey rehabilitasyon artık evinizde.');
 
   const [heroView, setHeroView] = useState('photos');
   const [photoIndex, setPhotoIndex] = useState(0);

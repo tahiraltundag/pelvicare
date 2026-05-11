@@ -62,11 +62,7 @@ const SECTIONS = [
     title: 'Ana Sayfa',
     icon: '🏠',
     desc: 'Hero bölümü ve giriş içerikleri',
-    keys: [
-      'hero_title', 'hero_subtitle',
-      { key: 'hero_description', label: 'Açıklama Paragrafı', default: 'EMS + Elektromanyetik Enerji + Vibrasyon. Üç güç, bir cihaz. 17 hastalık modunda klinik düzey rehabilitasyon artık evinizde.' },
-      'hero_cta', 'hero_image',
-    ],
+    keys: ['hero_title', 'hero_subtitle', 'hero_cta', 'hero_image'],
   },
   {
     title: 'Klinisyenler',

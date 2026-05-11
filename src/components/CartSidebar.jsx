@@ -2,6 +2,20 @@ import { X, Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
+const STATIC_PATHS = {
+  'pkg-starter': '/urun/pelvicare',
+  'pkg-premium': '/urun/pelvicare',
+  'pkg-pro': '/urun/pelvicare',
+  'pad-5pack': '/urun/elektrod-pad',
+};
+
+function getItemPath(item) {
+  if (STATIC_PATHS[item.id]) return STATIC_PATHS[item.id];
+  if (item.slug) return `/urun/${item.slug}`;
+  if (item.path) return item.path;
+  return `/urun/${item.id}`;
+}
+
 export default function CartSidebar() {
   const { items, sidebarOpen, setSidebarOpen, removeFromCart, updateQty, total } = useCart();
   const navigate = useNavigate();
@@ -55,7 +69,7 @@ export default function CartSidebar() {
                 <div
                   key={item.id + item.variant}
                   className="flex gap-3 p-3 rounded-2xl bg-gray-50 border border-gray-100 cursor-pointer hover:bg-gray-100 transition-colors"
-                  onClick={() => { setSidebarOpen(false); navigate(item.path || '/magaza'); }}
+                  onClick={() => { setSidebarOpen(false); navigate(getItemPath(item)); }}
                 >
                   <div className="w-14 h-14 rounded-xl flex items-center justify-center text-2xl flex-shrink-0" style={{ backgroundColor: '#f0fdfa' }}>
                     {item.icon}

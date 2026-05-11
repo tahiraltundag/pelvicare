@@ -56,7 +56,7 @@ function ProductCard({ product }) {
         </div>
         <button
           disabled={product.stock <= 0}
-          onClick={() => addToCart({ id: product.id, name: product.name, price: product.price, icon: '📦', variant: '', path: detailPath })}
+          onClick={() => addToCart({ id: product.id, name: product.name, price: product.price, icon: '📦', variant: '', slug: product.slug, path: detailPath })}
           className="w-full py-2.5 rounded-xl text-sm font-bold text-white flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.98] transition disabled:opacity-40 disabled:cursor-not-allowed"
           style={{ backgroundColor: '#0d9488' }}
         >

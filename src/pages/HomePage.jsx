@@ -4,6 +4,7 @@ import { CheckCircle, Star, ArrowRight, Shield, Zap, Activity } from 'lucide-rea
 import DeviceModel3D from '../components/DeviceModel3D';
 import AnimateInView from '../components/AnimateInView';
 import { stats, modalities, clinicalResults, reviews } from '../data/product';
+import { useCms } from '../hooks/useCms';
 
 const PRODUCT_IMAGES = [
   '/images/urun-sistem-genel.jpg',
@@ -64,6 +65,32 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [heroView, setHeroView] = useState('photos');
   const [photoIndex, setPhotoIndex] = useState(0);
+  const { get, getJson } = useCms();
+
+  const statsItems = getJson('home_stats_items', stats);
+  const stepsItems = getJson('home_steps_items', steps);
+  const clinicalItems = getJson('home_clinical_results', clinicalResults);
+  const trustItems = getJson('home_trust_badges', null);
+  const statsTitle = get('home_stats_title', 'Pelvik Sağlık: Sessiz Kriz');
+  const statsSubtitle = get('home_stats_subtitle', 'Milyonlar tedavi aramaktan çekinmekte. PelviCare bu boşluğu klinik etkinlik ve ev erişilebilirliğiyle kapatıyor.');
+  const modalitiesTitle = get('home_modalities_title', 'Üç Tedavi Modalitesi');
+  const modalitiesSubtitle = get('home_modalities_subtitle', 'Her modalite diğerinin etkisini güçlendiren sinerjik bir yapıda çalışır.');
+  const modalitiesSynergy = get('home_modalities_synergy', 'Kombinasyon tedavisi tek başına hiçbir modalitaenin ulaşamadığı derinliği sağlar.');
+  const stepsTitle = get('home_steps_title', 'Güvene Giden 4 Adım');
+  const stepsSubtitle = get('home_steps_subtitle', 'Klinik düzey tedavi, evde basit adımlarla.');
+  const clinicalTitle = get('home_clinical_title', 'Bilimle Desteklenen Sonuçlar');
+  const clinicalSubtitle = get('home_clinical_subtitle', 'RCT, meta-analiz ve Cochrane derleme verileri');
+  const comparisonTitle = get('home_comparison_title', 'PelviCare vs. Diğer Yöntemler');
+  const comparisonSubtitle = get('home_comparison_subtitle', 'Neden PelviCare? Bir karşılaştırma.');
+  const reviewsTitle = get('home_reviews_title', 'Kullanıcılarımız Ne Diyor?');
+  const reviewsRating = get('home_reviews_rating', '4.8/5');
+  const reviewsCount = get('home_reviews_count', '500+ değerlendirme');
+  const quizTitle = get('home_quiz_title', 'Hangi Mod Size Uygun?');
+  const quizSubtitle = get('home_quiz_subtitle', '3 dakikalık kısa testimizle size en uygun tedavi protokolünü belirleyin.');
+  const quizButton = get('home_quiz_button', 'Testi Başlat');
+  const newsletterTitle = get('home_newsletter_title', 'Pelvik Sağlık Bültenimize Katılın');
+  const newsletterSubtitle = get('home_newsletter_subtitle', 'İlk siparişinizde ₺500 indirim kazanın. Bilimsel içerikler ve ürün haberleri.');
+  const newsletterButton = get('home_newsletter_button', 'Abone Ol');
 
   const goToPrice = () => {
     navigate('/urun/pelvicare');
@@ -213,11 +240,11 @@ export default function HomePage() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>Pelvik Sağlık: Sessiz Kriz</h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">Milyonlar tedavi aramaktan çekinmekte. PelviCare bu boşluğu klinik etkinlik ve ev erişilebilirliğiyle kapatıyor.</p>
+            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>{statsTitle}</h2>
+            <p className="text-gray-500 max-w-2xl mx-auto">{statsSubtitle}</p>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, i) => (
+            {statsItems.map((stat, i) => (
               <AnimateInView key={stat.value} delay={i * 100}>
                 <div className="text-center p-6 rounded-2xl bg-gray-50 h-full">
                   <div className="text-4xl font-bold mb-1" style={{ color: '#0d9488' }}>{stat.value}</div>
@@ -234,8 +261,8 @@ export default function HomePage() {
       <section className="py-16" style={{ backgroundColor: '#f0fdfa' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>Üç Tedavi Modalitesi</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">Her modalite diğerinin etkisini güçlendiren sinerjik bir yapıda çalışır.</p>
+            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>{modalitiesTitle}</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">{modalitiesSubtitle}</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {modalities.map((m, i) => (
@@ -253,7 +280,7 @@ export default function HomePage() {
             <div className="inline-flex items-center gap-2 bg-teal-600 text-white rounded-2xl px-6 py-3">
               <Zap size={18} />
               <span className="font-semibold">Sinerjik Etki:</span>
-              <span className="text-teal-100 text-sm">Kombinasyon tedavisi tek başına hiçbir modalitaenin ulaşamadığı derinliği sağlar.</span>
+              <span className="text-teal-100 text-sm">{modalitiesSynergy}</span>
             </div>
           </div>
         </div>
@@ -263,11 +290,11 @@ export default function HomePage() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>Güvene Giden 4 Adım</h2>
-            <p className="text-gray-500">Klinik düzey tedavi, evde basit adımlarla.</p>
+            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>{stepsTitle}</h2>
+            <p className="text-gray-500">{stepsSubtitle}</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {steps.map((s, i) => (
+            {stepsItems.map((s, i) => (
               <AnimateInView key={s.step} delay={i * 110}>
                 <div className="text-center h-full">
                   <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white font-bold text-lg mx-auto mb-4" style={{ backgroundColor: '#0d9488' }}>
@@ -291,11 +318,11 @@ export default function HomePage() {
       <section className="py-16" style={{ backgroundColor: '#1e3a5f' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-white mb-3">Bilimle Desteklenen Sonuçlar</h2>
-            <p className="text-blue-300">RCT, meta-analiz ve Cochrane derleme verileri</p>
+            <h2 className="text-3xl font-bold text-white mb-3">{clinicalTitle}</h2>
+            <p className="text-blue-300">{clinicalSubtitle}</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {clinicalResults.map((r, i) => (
+            {clinicalItems.map((r, i) => (
               <AnimateInView key={r.value} delay={i * 100}>
                 <div className="bg-white/10 backdrop-blur rounded-2xl p-6 text-center border border-white/10 h-full">
                   <div className="text-4xl font-bold text-teal-400 mb-2">{r.value}</div>
@@ -318,8 +345,8 @@ export default function HomePage() {
       <section className="py-16 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>PelviCare vs. Diğer Yöntemler</h2>
-            <p className="text-gray-500">Neden PelviCare? Bir karşılaştırma.</p>
+            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>{comparisonTitle}</h2>
+            <p className="text-gray-500">{comparisonSubtitle}</p>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -358,10 +385,10 @@ export default function HomePage() {
           <div className="text-center mb-12">
             <div className="flex justify-center items-center gap-2 mb-2">
               <StarRating rating={5} />
-              <span className="font-bold text-gray-900">4.8/5</span>
-              <span className="text-gray-500 text-sm">· 500+ değerlendirme</span>
+              <span className="font-bold text-gray-900">{reviewsRating}</span>
+              <span className="text-gray-500 text-sm">· {reviewsCount}</span>
             </div>
-            <h2 className="text-3xl font-bold" style={{ color: '#1e3a5f' }}>Kullanıcılarımız Ne Diyor?</h2>
+            <h2 className="text-3xl font-bold" style={{ color: '#1e3a5f' }}>{reviewsTitle}</h2>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {reviews.map((review, i) => (
@@ -400,14 +427,14 @@ export default function HomePage() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="rounded-3xl p-10 border-2" style={{ borderColor: '#0d9488', backgroundColor: '#f0fdfa' }}>
             <div className="text-4xl mb-4">🤔</div>
-            <h2 className="text-2xl font-bold mb-3" style={{ color: '#1e3a5f' }}>Hangi Mod Size Uygun?</h2>
-            <p className="text-gray-600 mb-6">3 dakikalık kısa testimizle size en uygun tedavi protokolünü belirleyin.</p>
+            <h2 className="text-2xl font-bold mb-3" style={{ color: '#1e3a5f' }}>{quizTitle}</h2>
+            <p className="text-gray-600 mb-6">{quizSubtitle}</p>
             <Link
               to="/sss"
               className="inline-flex items-center gap-2 px-8 py-3.5 font-semibold text-white rounded-xl hover:opacity-90 transition-all"
               style={{ backgroundColor: '#0d9488' }}
             >
-              Testi Başlat
+              {quizButton}
               <ArrowRight size={18} />
             </Link>
           </div>
@@ -417,8 +444,8 @@ export default function HomePage() {
       {/* Newsletter */}
       <section className="py-12 bg-gray-50 border-t border-gray-100">
         <div className="max-w-2xl mx-auto px-4 text-center">
-          <h3 className="text-xl font-bold mb-2" style={{ color: '#1e3a5f' }}>Pelvik Sağlık Bültenimize Katılın</h3>
-          <p className="text-gray-500 text-sm mb-5">İlk siparişinizde <span className="font-semibold text-teal-600">₺500 indirim</span> kazanın. Bilimsel içerikler ve ürün haberleri.</p>
+          <h3 className="text-xl font-bold mb-2" style={{ color: '#1e3a5f' }}>{newsletterTitle}</h3>
+          <p className="text-gray-500 text-sm mb-5">{newsletterSubtitle}</p>
           <form className="flex gap-3 max-w-md mx-auto" onSubmit={(e) => e.preventDefault()}>
             <input
               type="email"
@@ -430,7 +457,7 @@ export default function HomePage() {
               className="px-5 py-2.5 text-sm font-semibold text-white rounded-lg hover:opacity-90 transition-all"
               style={{ backgroundColor: '#0d9488' }}
             >
-              Abone Ol
+              {newsletterButton}
             </button>
           </form>
         </div>

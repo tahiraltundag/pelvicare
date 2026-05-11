@@ -14,6 +14,13 @@ const PHASE_STYLES = {
   F3: { badge: 'bg-purple-100 text-purple-700', border: 'border-purple-200' },
 };
 
+const DEFAULT_USE_STEPS = [
+  { num: '01', title: 'Elektrod Pedi Hazırlayın', desc: 'Resealable poşetten çıkarın. Hidrojel yüzeyinin nemliliğini kontrol edin. Her pad 3–5 seans kullanıma uygundur.' },
+  { num: '02', title: 'Pedi Yerleştirin', desc: 'İç çamaşırı konforu ile perineal bölgeye yerleştirin. Prob yok, girişim yok. Giysi altında tamamen görünmez.' },
+  { num: '03', title: 'Uygulamayı Açın', desc: 'Bluetooth ile cihaza bağlanın. Kadın veya erkek profilinizi seçin. Hastalık modunuzu belirleyin ve seanı başlatın.' },
+  { num: '04', title: 'Seanı Tamamlayın', desc: '20 dakikalık protokol otomatik çalışır. Günlük aktivitelerinize devam edebilirsiniz. Uygulama ilerlemenizi kaydeder.' },
+];
+
 const DEFAULT_APP_FEATURES = [
   { title: 'Hazır Modlar', desc: '17 tanıya tek dokunuşla başlatma. Kadın / Erkek profil seçimi. Mod açıklaması ve bilgi ekranı.' },
   { title: 'Manuel Kontrol', desc: 'EMS, Manyetik, Vibrasyon ayrı ayrı ayarlama. Frekans, şiddet, süre, duty cycle kontrolü.' },
@@ -27,7 +34,13 @@ export default function HowItWorksPage() {
   const { get, getJson } = useCms();
   const heroTitle = get('how_hero_title', 'Nasıl Çalışır?');
   const heroSubtitle = get('how_hero_subtitle', 'PelviCare, üç tedavi modalitesini tek bir giyilebilir cihazda birleştirerek klinik düzey pelvik taban rehabilitasyonunu evinize taşır.');
+  const stepsTitle = get('how_steps_title', 'Kullanım Adımları');
+  const stepsSubtitle = get('how_steps_subtitle', '4 basit adımda klinik düzey tedavi');
+  const useSteps = getJson('how_use_steps', DEFAULT_USE_STEPS);
+  const phasesTitle = get('how_phases_title', 'Faz Tabanlı Tedavi Protokolü');
+  const phasesSubtitle = get('how_phases_subtitle', 'Bilimsel protokol üç fazda ilerler ve uygulama otomatik yönetir.');
   const phases = getJson('how_phases', DEFAULT_PHASES);
+  const appTitle = get('how_app_title', 'Mobil Uygulama Özellikleri');
   const appFeatures = getJson('how_app_features', DEFAULT_APP_FEATURES);
 
   return (
@@ -46,17 +59,12 @@ export default function HowItWorksPage() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>Kullanım Adımları</h2>
-            <p className="text-gray-500">4 basit adımda klinik düzey tedavi</p>
+            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>{stepsTitle}</h2>
+            <p className="text-gray-500">{stepsSubtitle}</p>
           </div>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              {[
-                { num: '01', title: 'Elektrod Pedi Hazırlayın', desc: 'Resealable poşetten çıkarın. Hidrojel yüzeyinin nemliliğini kontrol edin. Her pad 3–5 seans kullanıma uygundur.' },
-                { num: '02', title: 'Pedi Yerleştirin', desc: 'İç çamaşırı konforu ile perineal bölgeye yerleştirin. Prob yok, girişim yok. Giysi altında tamamen görünmez.' },
-                { num: '03', title: 'Uygulamayı Açın', desc: 'Bluetooth ile cihaza bağlanın. Kadın veya erkek profilinizi seçin. Hastalık modunuzu belirleyin ve seanı başlatın.' },
-                { num: '04', title: 'Seanı Tamamlayın', desc: '20 dakikalık protokol otomatik çalışır. Günlük aktivitelerinize devam edebilirsiniz. Uygulama ilerlemenizi kaydeder.' },
-              ].map((step) => (
+              {useSteps.map((step) => (
                 <div key={step.num} className="flex gap-4">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold flex-shrink-0" style={{ backgroundColor: '#0d9488' }}>
                     {step.num}
@@ -85,8 +93,8 @@ export default function HowItWorksPage() {
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>Faz Tabanlı Tedavi Protokolü</h2>
-            <p className="text-gray-500">Bilimsel protokol üç fazda ilerler ve uygulama otomatik yönetir.</p>
+            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>{phasesTitle}</h2>
+            <p className="text-gray-500">{phasesSubtitle}</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {phases.map((phase) => {
@@ -142,7 +150,7 @@ export default function HowItWorksPage() {
       <section className="py-16" style={{ backgroundColor: '#1e3a5f' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-white mb-3">Mobil Uygulama Özellikleri</h2>
+            <h2 className="text-3xl font-bold text-white mb-3">{appTitle}</h2>
             <p className="text-blue-300">Tam kontrol parmaklarınızın ucunda</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">

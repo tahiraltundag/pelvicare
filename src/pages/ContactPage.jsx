@@ -1,14 +1,24 @@
 import { useState } from 'react';
 import { Mail, Phone, Clock, MapPin, CheckCircle } from 'lucide-react';
-
-const contactInfo = [
-  { icon: <Mail size={20} />, title: 'E-posta', detail: 'info@pelvicare.com', sub: 'Genel sorular' },
-  { icon: <Mail size={20} />, title: 'Klinisyen Hattı', detail: 'klinisyen@pelvicare.com', sub: 'Profesyonel destek' },
-  { icon: <Phone size={20} />, title: 'Telefon', detail: '0850 123 45 67', sub: 'Hafta içi 09–18' },
-  { icon: <Clock size={20} />, title: 'Destek Saatleri', detail: 'Pzt–Cum: 09:00–18:00', sub: 'Türkiye saati' },
-];
+import { useCms } from '../hooks/useCms';
 
 export default function ContactPage() {
+  const { get } = useCms();
+  const heroTitle = get('contact_title', 'İletişim');
+  const heroSubtitle = get('contact_subtitle', 'Size nasıl yardımcı olabileceğimizi öğrenmek isteriz.');
+  const email = get('contact_email', 'info@pelvicare.com');
+  const clinicianEmail = get('contact_clinician_email', 'klinisyen@pelvicare.com');
+  const phone = get('contact_phone', '0850 123 45 67');
+  const hours = get('contact_hours', 'Pzt–Cum: 09:00–18:00');
+  const address = get('contact_address', 'Teknokent Binası, Blok A No:12\nAnkara / Türkiye');
+
+  const contactInfo = [
+    { icon: <Mail size={20} />, title: 'E-posta', detail: email, sub: 'Genel sorular' },
+    { icon: <Mail size={20} />, title: 'Klinisyen Hattı', detail: clinicianEmail, sub: 'Profesyonel destek' },
+    { icon: <Phone size={20} />, title: 'Telefon', detail: phone, sub: 'Hafta içi 09–18' },
+    { icon: <Clock size={20} />, title: 'Destek Saatleri', detail: hours, sub: 'Türkiye saati' },
+  ];
+
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
 
@@ -22,8 +32,8 @@ export default function ContactPage() {
       {/* Hero */}
       <section className="py-16 lg:py-20" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 100%)' }}>
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">İletişim</h1>
-          <p className="text-blue-200 text-lg">Size nasıl yardımcı olabileceğimizi öğrenmek isteriz.</p>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
+          <p className="text-blue-200 text-lg">{heroSubtitle}</p>
         </div>
       </section>
 
@@ -131,22 +141,22 @@ export default function ContactPage() {
                   <MapPin size={18} className="text-teal-600 flex-shrink-0 mt-0.5" />
                   <div>
                     <div className="font-semibold text-gray-900 text-sm">Adres</div>
-                    <div className="text-sm text-gray-600">Teknokent Binası, Blok A No:12<br />Ankara / Türkiye</div>
+                    <div className="text-sm text-gray-600" style={{ whiteSpace: 'pre-line' }}>{address}</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Phone size={18} className="text-teal-600 flex-shrink-0 mt-0.5" />
                   <div>
                     <div className="font-semibold text-gray-900 text-sm">Telefon</div>
-                    <div className="text-sm text-gray-600">0850 123 45 67</div>
+                    <div className="text-sm text-gray-600">{phone}</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Mail size={18} className="text-teal-600 flex-shrink-0 mt-0.5" />
                   <div>
                     <div className="font-semibold text-gray-900 text-sm">E-posta</div>
-                    <div className="text-sm text-gray-600">info@pelvicare.com</div>
-                    <div className="text-sm text-gray-600">klinisyen@pelvicare.com</div>
+                    <div className="text-sm text-gray-600">{email}</div>
+                    <div className="text-sm text-gray-600">{clinicianEmail}</div>
                   </div>
                 </div>
               </div>

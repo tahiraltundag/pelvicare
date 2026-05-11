@@ -8,6 +8,13 @@ const DEFAULT_STUDIES = [
   { modalite: 'EMS · E-03', endikasyon: 'Erektil Disfonksiyon', sonuc: 'İntrakavernal basınç artışı (RCT)', kaynak: 'Capogrosso et al. 2018', tag: 'RCT' },
 ];
 
+const DEFAULT_HERO_STATS = [
+  { value: '50+', label: 'Klinik Araştırma' },
+  { value: '%95', label: 'İnkontinansta İyileşme' },
+  { value: '%100', label: 'Prolapsus POP-Q' },
+  { value: '%74', label: 'Dismenore Rahatlaması' },
+];
+
 const DEFAULT_DIFFS = [
   { title: 'Non-invazif Perineal Yerleşim', desc: 'Vücut dışında, iç çamaşırı gibi kullanım. Vajinal veya rektal prob gerektirmez.' },
   { title: 'Üç Bölgeli Hidrojel Yapısı', desc: 'Dört ayrı hidrojel bölgesi, anatomik alanlara optimum enerji iletimi sağlar.' },
@@ -24,6 +31,7 @@ export default function SciencePage() {
   const { get, getJson } = useCms();
   const heroTitle = get('science_hero_title', 'Bilimsel Kanıtlar');
   const heroSubtitle = get('science_hero_subtitle', 'PelviCare\'in etkinliği 50\'den fazla randomize kontrollü klinik çalışma ile desteklenmektedir.');
+  const heroStats = getJson('science_hero_stats', DEFAULT_HERO_STATS);
   const clinicalStudies = getJson('science_studies', DEFAULT_STUDIES);
   const differentiators = getJson('science_differentiators', DEFAULT_DIFFS);
 
@@ -37,12 +45,7 @@ export default function SciencePage() {
             {heroSubtitle}
           </p>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {[
-              { value: '50+', label: 'Klinik Araştırma' },
-              { value: '%95', label: 'İnkontinansta İyileşme' },
-              { value: '%100', label: 'Prolapsus POP-Q' },
-              { value: '%74', label: 'Dismenore Rahatlaması' },
-            ].map((stat) => (
+            {heroStats.map((stat) => (
               <div key={stat.value} className="bg-white/10 rounded-2xl p-4">
                 <div className="text-3xl font-bold text-teal-400">{stat.value}</div>
                 <div className="text-sm text-blue-200 mt-1">{stat.label}</div>

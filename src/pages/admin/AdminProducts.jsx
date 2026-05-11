@@ -288,7 +288,7 @@ export default function AdminProducts() {
                 <tr className="bg-gray-50 border-b border-gray-100">
                   <th className="text-left px-4 py-3 font-semibold text-gray-600">Ürün</th>
                   <th className="text-left px-4 py-3 font-semibold text-gray-600">Fiyat</th>
-                  <th className="text-left px-4 py-3 font-semibold text-gray-600">Stok</th>
+                  <th className="hidden sm:table-cell text-left px-4 py-3 font-semibold text-gray-600">Stok</th>
                   <th className="text-left px-4 py-3 font-semibold text-gray-600">Durum</th>
                   <th className="text-right px-4 py-3 font-semibold text-gray-600">İşlemler</th>
                 </tr>
@@ -313,7 +313,7 @@ export default function AdminProducts() {
                         <div className="font-bold text-gray-900">{p.price.toLocaleString('tr-TR')} ₺</div>
                         {p.comparePrice && <div className="text-xs text-gray-400 line-through">{p.comparePrice.toLocaleString('tr-TR')} ₺</div>}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="hidden sm:table-cell px-4 py-3">
                         <span className={p.stock <= p.lowStockThreshold ? 'text-red-600 font-bold' : 'text-gray-700'}>{p.stock}</span>
                       </td>
                       <td className="px-4 py-3">

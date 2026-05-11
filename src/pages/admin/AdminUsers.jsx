@@ -78,9 +78,9 @@ export default function AdminUsers() {
                 <tr className="bg-gray-50 border-b border-gray-100">
                   <th className="text-left px-4 py-3 font-semibold text-gray-600">Kullanıcı</th>
                   <th className="text-left px-4 py-3 font-semibold text-gray-600">Rol</th>
-                  <th className="text-left px-4 py-3 font-semibold text-gray-600">Siparişler</th>
+                  <th className="hidden sm:table-cell text-left px-4 py-3 font-semibold text-gray-600">Siparişler</th>
                   <th className="text-left px-4 py-3 font-semibold text-gray-600">Durum</th>
-                  <th className="text-left px-4 py-3 font-semibold text-gray-600">Kayıt Tarihi</th>
+                  <th className="hidden sm:table-cell text-left px-4 py-3 font-semibold text-gray-600">Kayıt Tarihi</th>
                   <th className="text-right px-4 py-3 font-semibold text-gray-600">İşlemler</th>
                 </tr>
               </thead>
@@ -106,13 +106,13 @@ export default function AdminUsers() {
                           {role?.label || u.role}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-gray-600">{u._count?.orders || 0}</td>
+                      <td className="hidden sm:table-cell px-4 py-3 text-gray-600">{u._count?.orders || 0}</td>
                       <td className="px-4 py-3">
                         <span className={`inline-block px-2.5 py-1 rounded-full text-xs font-semibold ${u.isActive ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}>
                           {u.isActive ? 'Aktif' : 'Askıya Alındı'}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-gray-500">{new Date(u.createdAt).toLocaleDateString('tr-TR')}</td>
+                      <td className="hidden sm:table-cell px-4 py-3 text-gray-500">{new Date(u.createdAt).toLocaleDateString('tr-TR')}</td>
                       <td className="px-4 py-3">
                         {!isMe && (
                           <div className="flex items-center gap-1 justify-end">

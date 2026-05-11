@@ -32,7 +32,7 @@ function OrderRow({ order, onStatusChange }) {
           <div className="font-medium text-gray-900">{order.user?.name || `${addr.firstName || ''} ${addr.lastName || ''}`.trim() || 'Misafir'}</div>
           <div className="text-xs text-gray-400">{order.user?.email || addr.email || ''}</div>
         </td>
-        <td className="px-4 py-3 font-bold text-gray-900">{order.total.toLocaleString('tr-TR')} ₺</td>
+        <td className="hidden sm:table-cell px-4 py-3 font-bold text-gray-900">{order.total.toLocaleString('tr-TR')} ₺</td>
         <td className="px-4 py-3">
           <select
             value={order.status}
@@ -44,7 +44,7 @@ function OrderRow({ order, onStatusChange }) {
             {STATUS_OPTIONS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
           </select>
         </td>
-        <td className="px-4 py-3 text-gray-500">{new Date(order.createdAt).toLocaleDateString('tr-TR')}</td>
+        <td className="hidden sm:table-cell px-4 py-3 text-gray-500">{new Date(order.createdAt).toLocaleDateString('tr-TR')}</td>
         <td className="px-4 py-3 text-gray-400">
           {open ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
         </td>
@@ -140,9 +140,9 @@ export default function AdminOrders() {
                 <tr className="bg-gray-50 border-b border-gray-100">
                   <th className="text-left px-4 py-3 font-semibold text-gray-600">Sipariş No</th>
                   <th className="text-left px-4 py-3 font-semibold text-gray-600">Müşteri</th>
-                  <th className="text-left px-4 py-3 font-semibold text-gray-600">Tutar</th>
+                  <th className="hidden sm:table-cell text-left px-4 py-3 font-semibold text-gray-600">Tutar</th>
                   <th className="text-left px-4 py-3 font-semibold text-gray-600">Durum</th>
-                  <th className="text-left px-4 py-3 font-semibold text-gray-600">Tarih</th>
+                  <th className="hidden sm:table-cell text-left px-4 py-3 font-semibold text-gray-600">Tarih</th>
                   <th className="px-4 py-3" />
                 </tr>
               </thead>

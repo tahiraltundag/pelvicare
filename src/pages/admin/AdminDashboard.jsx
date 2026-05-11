@@ -87,7 +87,7 @@ export default function AdminDashboard() {
                   <th className="text-left px-5 py-3 font-semibold text-gray-600">Müşteri</th>
                   <th className="text-left px-5 py-3 font-semibold text-gray-600">Tutar</th>
                   <th className="text-left px-5 py-3 font-semibold text-gray-600">Durum</th>
-                  <th className="text-left px-5 py-3 font-semibold text-gray-600">Tarih</th>
+                  <th className="hidden sm:table-cell text-left px-5 py-3 font-semibold text-gray-600">Tarih</th>
                 </tr>
               </thead>
               <tbody>
@@ -104,7 +104,7 @@ export default function AdminDashboard() {
                         {STATUS_LABELS[order.status] || order.status}
                       </span>
                     </td>
-                    <td className="px-5 py-3 text-gray-500">{new Date(order.createdAt).toLocaleDateString('tr-TR')}</td>
+                    <td className="hidden sm:table-cell px-5 py-3 text-gray-500">{new Date(order.createdAt).toLocaleDateString('tr-TR')}</td>
                   </tr>
                 ))}
               </tbody>

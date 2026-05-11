@@ -59,7 +59,7 @@ function UserMenu({ user, logout, isAdmin }) {
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
-  const { count, setSidebarOpen } = useCart();
+  const { count, sidebarOpen, setSidebarOpen } = useCart();
   const { user, logout, isAdmin } = useAuth();
   const navigate = useNavigate();
 
@@ -115,7 +115,7 @@ export default function Header() {
 
           {/* CTA + Cart + Auth */}
           <div className="hidden lg:flex items-center gap-2">
-            <button onClick={() => setSidebarOpen(true)} className="relative p-2 text-gray-500 hover:text-teal-600 transition-colors">
+            <button onClick={() => setSidebarOpen(!sidebarOpen)} className="relative p-2 text-gray-500 hover:text-teal-600 transition-colors">
               <ShoppingCart size={20} />
               {count > 0 && (
                 <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full text-white text-[10px] font-bold flex items-center justify-center" style={{ backgroundColor: '#0d9488' }}>
@@ -146,7 +146,7 @@ export default function Header() {
 
           {/* Mobile toggle */}
           <div className="lg:hidden flex items-center gap-2">
-            <button onClick={() => setSidebarOpen(true)} className="relative p-2 text-gray-500">
+            <button onClick={() => setSidebarOpen(!sidebarOpen)} className="relative p-2 text-gray-500">
               <ShoppingCart size={20} />
               {count > 0 && (
                 <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full text-white text-[10px] font-bold flex items-center justify-center" style={{ backgroundColor: '#0d9488' }}>

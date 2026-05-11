@@ -62,7 +62,11 @@ const SECTIONS = [
     title: 'Ana Sayfa',
     icon: '🏠',
     desc: 'Hero bölümü ve giriş içerikleri',
-    keys: ['hero_title', 'hero_subtitle', 'hero_description', 'hero_cta', 'hero_image'],
+    keys: [
+      'hero_title', 'hero_subtitle',
+      { key: 'hero_description', label: 'Açıklama Paragrafı', default: 'EMS + Elektromanyetik Enerji + Vibrasyon. Üç güç, bir cihaz. 17 hastalık modunda klinik düzey rehabilitasyon artık evinizde.' },
+      'hero_cta', 'hero_image',
+    ],
   },
   {
     title: 'Klinisyenler',
@@ -416,7 +420,7 @@ export default function AdminCms() {
     const key = isObj ? keyEntry.key : keyEntry;
     const type = isObj ? keyEntry.type : (cms[key]?.type || 'text');
     const label = isObj ? keyEntry.label : (cms[key]?.label || key);
-    const val = getValue(key);
+    const val = getValue(key) || (isObj && keyEntry.default) || '';
     const changed = key in changes;
 
     return (

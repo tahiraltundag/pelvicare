@@ -62,7 +62,7 @@ const SECTIONS = [
     title: 'Ana Sayfa',
     icon: '🏠',
     desc: 'Hero bölümü ve giriş içerikleri',
-    keys: ['hero_title', 'hero_subtitle', 'hero_cta', 'hero_image'],
+    keys: ['hero_title', 'hero_subtitle', 'hero_description', 'hero_cta', 'hero_image'],
   },
   {
     title: 'Klinisyenler',

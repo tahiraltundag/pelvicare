@@ -4,6 +4,7 @@ import { CheckCircle, Star, ArrowRight, Shield, Zap, Activity } from 'lucide-rea
 import DeviceModel3D from '../components/DeviceModel3D';
 import AnimateInView from '../components/AnimateInView';
 import { stats, modalities, clinicalResults, reviews } from '../data/product';
+import { useCms } from '../hooks/useCms';
 
 const PRODUCT_IMAGES = [
   '/images/urun-sistem-genel.jpg',
@@ -62,6 +63,9 @@ function StarRating({ rating }) {
 
 export default function HomePage() {
   const navigate = useNavigate();
+  const { get } = useCms();
+  const heroDescription = get('hero_description', 'EMS + Elektromanyetik Enerji + Vibrasyon. Üç güç, bir cihaz. 17 hastalık modunda klinik düzey rehabilitasyon artık evinizde.');
+
   const [heroView, setHeroView] = useState('photos');
   const [photoIndex, setPhotoIndex] = useState(0);
 
@@ -99,7 +103,7 @@ export default function HomePage() {
                 <span className="text-teal-400">Müdahalesiz.</span> Kolay.
               </h1>
               <p className="text-lg text-blue-200 mb-8 leading-relaxed">
-                EMS + Elektromanyetik Enerji + Vibrasyon. Üç güç, bir cihaz. 17 hastalık modunda klinik düzey rehabilitasyon artık evinizde.
+                {heroDescription}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mb-10">
                 <button

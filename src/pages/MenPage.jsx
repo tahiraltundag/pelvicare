@@ -15,10 +15,6 @@ export default function MenPage() {
   const heroTitle = get('men_hero_title', 'Erkek Pelvik Sağlığı');
   const heroSubtitle = get('men_hero_subtitle', '7 bilimsel protokol. Erektil disfonksiyondan prostatik ağrıya, erken boşalmadan idrar kaçırmaya kapsamlı erkek pelvik rehabilitasyonu.');
   const targetProfiles = getJson('men_profiles', DEFAULT_PROFILES);
-  const modesTitle = get('men_modes_title', '7 Erkek Tedavi Protokolü');
-  const modesSubtitle = get('men_modes_subtitle', 'Her hastalık için bilimsel parametreler ve klinik kanıt altyapısı');
-  const ctaTitle = get('men_cta_title', 'Erkek Pelvik Sağlığında Yeni Dönem');
-  const ctaSubtitle = get('men_cta_subtitle', 'Gizlilikle, evinizde, klinik kanıtlı protokollerle.');
 
   return (
     <div>
@@ -56,8 +52,8 @@ export default function MenPage() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>{modesTitle}</h2>
-            <p className="text-gray-500">{modesSubtitle}</p>
+            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>7 Erkek Tedavi Protokolü</h2>
+            <p className="text-gray-500">Her hastalık için bilimsel parametreler ve klinik kanıt altyapısı</p>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             {maleModes.map((mode) => (
@@ -186,8 +182,8 @@ export default function MenPage() {
       {/* CTA */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-3xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4" style={{ color: '#1e3a5f' }}>{ctaTitle}</h2>
-          <p className="text-gray-500 mb-8">{ctaSubtitle}</p>
+          <h2 className="text-3xl font-bold mb-4" style={{ color: '#1e3a5f' }}>Erkek Pelvik Sağlığında Yeni Dönem</h2>
+          <p className="text-gray-500 mb-8">Gizlilikle, evinizde, klinik kanıtlı protokollerle.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/urun/pelvicare"

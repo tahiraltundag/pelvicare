@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { CheckCircle, Star, Shield, Truck, RotateCcw, ArrowRight } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import DeviceModel3D from '../components/DeviceModel3D';
-import { useCms } from '../hooks/useCms';
 
 const galleryImages = [
   { src: '/images/urun-sistem-genel.jpg', alt: 'PelviCare Sistem Genel Görünüm', label: 'Sistem Genel' },
@@ -67,47 +66,78 @@ function ProductGallery() {
   );
 }
 
-const DEFAULT_PACKAGES = [
+const packages = [
   {
-    id: 'pkg-starter', name: 'Başlangıç Paketi', icon: '🩺',
-    variant: 'PelviCare Cihazı + 2 Pad', price: 4990, displayPrice: '₺4.990',
-    oldPrice: '', badge: '',
-    features: 'PelviCare Ana Cihaz\n2 Adet Elektrod Pad (10 seans)\nMobil Uygulama Erişimi\nTürkçe Kullanım Kılavuzu\n1 Yıl Garanti',
-    cta: 'Sepete Ekle', highlighted: false,
+    id: 'pkg-starter',
+    name: 'Başlangıç Paketi',
+    icon: '🩺',
+    variant: 'PelviCare Cihazı + 2 Pad',
+    price: 4990,
+    displayPrice: '₺4.990',
+    oldPrice: null,
+    badge: null,
+    features: [
+      'PelviCare Ana Cihaz',
+      '2 Adet Elektrod Pad (10 seans)',
+      'Mobil Uygulama Erişimi',
+      'Türkçe Kullanım Kılavuzu',
+      '1 Yıl Garanti',
+    ],
+    cta: 'Sepete Ekle',
+    highlighted: false,
   },
   {
-    id: 'pkg-premium', name: 'Premium Paket', icon: '⭐',
-    variant: 'PelviCare Cihazı + 4 Pad + Şarj', price: 6490, displayPrice: '₺6.490',
-    oldPrice: '₺7.990', badge: 'En Popüler',
-    features: 'PelviCare Ana Cihaz\n4 Adet Elektrod Pad (20 seans)\nMobil Uygulama Erişimi (Premium)\nTürkçe Kullanım Kılavuzu\n2 Yıl Garanti\nÖncelikli Destek\nŞarj Ünitesi',
-    cta: 'Sepete Ekle', highlighted: true,
+    id: 'pkg-premium',
+    name: 'Premium Paket',
+    icon: '⭐',
+    variant: 'PelviCare Cihazı + 4 Pad + Şarj',
+    price: 6490,
+    displayPrice: '₺6.490',
+    oldPrice: '₺7.990',
+    badge: 'En Popüler',
+    features: [
+      'PelviCare Ana Cihaz',
+      '4 Adet Elektrod Pad (20 seans)',
+      'Mobil Uygulama Erişimi (Premium)',
+      'Türkçe Kullanım Kılavuzu',
+      '2 Yıl Garanti',
+      'Öncelikli Destek',
+      'Şarj Ünitesi',
+    ],
+    cta: 'Sepete Ekle',
+    highlighted: true,
   },
   {
-    id: 'pkg-pro', name: 'Profesyonel Paket', icon: '🏥',
-    variant: 'Klinisyen — 2 Cihaz + 10 Pad', price: 8990, displayPrice: '₺8.990',
-    oldPrice: '', badge: 'Klinisyen İçin',
-    features: 'PelviCare Ana Cihaz (x2)\n10 Adet Elektrod Pad (50 seans)\nKlinisyen Yönetim Paneli\nHasta Takip Sistemi\nTeknik Destek Hattı\n3 Yıl Garanti\nEğitim Materyalleri',
-    cta: 'Bilgi Al', highlighted: false,
+    id: 'pkg-pro',
+    name: 'Profesyonel Paket',
+    icon: '🏥',
+    variant: 'Klinisyen — 2 Cihaz + 10 Pad',
+    price: 8990,
+    displayPrice: '₺8.990',
+    oldPrice: null,
+    badge: 'Klinisyen İçin',
+    features: [
+      'PelviCare Ana Cihaz (x2)',
+      '10 Adet Elektrod Pad (50 seans)',
+      'Klinisyen Yönetim Paneli',
+      'Hasta Takip Sistemi',
+      'Teknik Destek Hattı',
+      '3 Yıl Garanti',
+      'Eğitim Materyalleri',
+    ],
+    cta: 'Bilgi Al',
+    highlighted: false,
   },
 ];
 
-const DEFAULT_GUARANTEES = [
-  { icon: '🛡️', title: '60 Gün Para İade', desc: 'Memnun kalmazsanız iade garantisi' },
-  { icon: '🚚', title: 'Ücretsiz Kargo', desc: '₺500 üzeri siparişlerde' },
-  { icon: '🔄', title: '2 Yıl Garanti', desc: 'Premium pakette uzatılmış garanti' },
-  { icon: '✅', title: 'CE Belgeli', desc: 'Tıbbi sınıf ürün' },
+const guarantees = [
+  { icon: <Shield size={22} />, title: '60 Gün Para İade', desc: 'Memnun kalmazsanız iade garantisi' },
+  { icon: <Truck size={22} />, title: 'Ücretsiz Kargo', desc: '₺500 üzeri siparişlerde' },
+  { icon: <RotateCcw size={22} />, title: '2 Yıl Garanti', desc: 'Premium pakette uzatılmış garanti' },
+  { icon: <CheckCircle size={22} />, title: 'CE Belgeli', desc: 'Tıbbi sınıf ürün' },
 ];
 
-const DEFAULT_FEATURES = [
-  { icon: '🩹', title: 'Non-invazif Tasarım', desc: 'Prob gerektirmez. İç çamaşırı gibi giyin. Giysi altında görünmez.' },
-  { icon: '📱', title: 'Tam Mobil Kontrol', desc: 'iOS ve Android uyumlu uygulama. 17 hazır mod, manuel kontrol imkânı.' },
-  { icon: '⚡', title: '3 Sinerjik Modalite', desc: 'EMS + Elektromanyetik Enerji + Vibrasyon. Kombinasyon tedavisi.' },
-  { icon: '👥', title: 'Kadın & Erkek', desc: '10 kadın + 7 erkek protokolü. Anatomiye özel tasarım.' },
-  { icon: '📊', title: 'İlerleme Takibi', desc: 'Seans geçmişi, grafik ve faz tabanlı otomatik ilerleme.' },
-  { icon: '🔬', title: 'Klinik Kanıtlı', desc: '50+ klinik araştırma. RCT ve Cochrane meta-analiz destekli.' },
-];
-
-const DEFAULT_PAD_SPECS = [
+const padDetails = [
   { label: 'Kullanım', value: '3–5 seans / pad' },
   { label: 'Yapı', value: 'Hidrojel (glisérin, su, tuz, poliakrilik asit)' },
   { label: 'Yapışkanlık', value: 'Hafif yapışkan, tüy çekmez' },
@@ -130,29 +160,6 @@ function StarRating({ rating }) {
 export default function ProductPage() {
   const { addToCart } = useCart();
   const location = useLocation();
-  const { get, getJson } = useCms();
-
-  const heroBadge = get('product_hero_badge', 'CE Belgeli · Tıbbi Sınıf');
-  const heroTitle = get('product_hero_title', 'PelviCare');
-  const heroSubtitle = get('product_hero_subtitle', 'Akıllı Hibrit Pelvik Taban Rehabilitasyon Sistemi');
-  const heroTagline = get('product_hero_tagline', '"Üç güç. Bir cihaz. Sonsuz özgürlük."');
-  const ratingText = get('product_rating_text', '4.8/5 · 500+ değerlendirme');
-  const featuresTitle = get('product_features_title', 'Temel Özellikler');
-  const packagesTitle = get('product_packages_title', 'Paket Seçenekleri');
-  const packagesSubtitle = get('product_packages_subtitle', 'İhtiyacınıza en uygun paketi seçin.');
-  const padTitle = get('product_pad_title', 'PelviCare Elektrod Pad');
-  const padDesc = get('product_pad_desc', 'Özel hidrojel formülasyonu, yüksek iletkenlik ve vücut uyumu sağlar. Tüy çekmez, hafif yapışkan yüzeyi ile konforlu kullanım sunar.');
-  const padPrice = get('product_pad_price', '₺290');
-
-  const rawPackages = getJson('product_packages', DEFAULT_PACKAGES);
-  const packages = rawPackages.map(p => ({
-    ...p,
-    price: Number(p.price),
-    features: typeof p.features === 'string' ? p.features.split('\n').filter(s => s.trim()) : (p.features || []),
-  }));
-  const guarantees = getJson('product_guarantees', DEFAULT_GUARANTEES);
-  const productFeatures = getJson('product_features', DEFAULT_FEATURES);
-  const padSpecs = getJson('product_pad_specs', DEFAULT_PAD_SPECS);
 
   const handleAdd = (pkg) => {
     if (pkg.cta === 'Bilgi Al') {
@@ -170,14 +177,14 @@ export default function ProductPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-white">
               <div className="inline-block bg-teal-500/20 border border-teal-400/30 rounded-full px-4 py-1.5 mb-4">
-                <span className="text-teal-300 text-sm font-medium">{heroBadge}</span>
+                <span className="text-teal-300 text-sm font-medium">CE Belgeli · Tıbbi Sınıf</span>
               </div>
-              <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
-              <p className="text-lg text-blue-200 mb-2">{heroSubtitle}</p>
-              <p className="text-blue-300 text-sm mb-6">{heroTagline}</p>
+              <h1 className="text-4xl lg:text-5xl font-bold mb-4">PelviCare</h1>
+              <p className="text-lg text-blue-200 mb-2">Akıllı Hibrit Pelvik Taban Rehabilitasyon Sistemi</p>
+              <p className="text-blue-300 text-sm mb-6">"Üç güç. Bir cihaz. Sonsuz özgürlük."</p>
               <div className="flex items-center gap-3 mb-6">
                 <StarRating rating={5} />
-                <span className="text-blue-200 text-sm">{ratingText}</span>
+                <span className="text-blue-200 text-sm">4.8/5 · 500+ değerlendirme</span>
               </div>
               <div className="grid grid-cols-3 gap-4 mb-6">
                 {['⚡ EMS', '🧲 Manyetik', '📳 Vibrasyon'].map((mod) => (
@@ -232,10 +239,17 @@ export default function ProductPage() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>{featuresTitle}</h2>
+            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>Temel Özellikler</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {productFeatures.map((f) => (
+            {[
+              { icon: '🩹', title: 'Non-invazif Tasarım', desc: 'Prob gerektirmez. İç çamaşırı gibi giyin. Giysi altında görünmez.' },
+              { icon: '📱', title: 'Tam Mobil Kontrol', desc: 'iOS ve Android uyumlu uygulama. 17 hazır mod, manuel kontrol imkânı.' },
+              { icon: '⚡', title: '3 Sinerjik Modalite', desc: 'EMS + Elektromanyetik Enerji + Vibrasyon. Kombinasyon tedavisi.' },
+              { icon: '👥', title: 'Kadın & Erkek', desc: '10 kadın + 7 erkek protokolü. Anatomiye özel tasarım.' },
+              { icon: '📊', title: 'İlerleme Takibi', desc: 'Seans geçmişi, grafik ve faz tabanlı otomatik ilerleme.' },
+              { icon: '🔬', title: 'Klinik Kanıtlı', desc: '50+ klinik araştırma. RCT ve Cochrane meta-analiz destekli.' },
+            ].map((f) => (
               <div key={f.title} className="flex gap-4 p-5 rounded-2xl bg-gray-50 border border-gray-100 hover:border-teal-200 hover:bg-teal-50/30 transition-all">
                 <div className="text-3xl flex-shrink-0">{f.icon}</div>
                 <div>
@@ -252,8 +266,8 @@ export default function ProductPage() {
       <section id="paketler" className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>{packagesTitle}</h2>
-            <p className="text-gray-500">{packagesSubtitle}</p>
+            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>Paket Seçenekleri</h2>
+            <p className="text-gray-500">İhtiyacınıza en uygun paketi seçin.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {packages.map((pkg) => (
@@ -309,10 +323,12 @@ export default function ProductPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="inline-block bg-teal-50 text-teal-700 text-xs font-semibold px-3 py-1 rounded-full mb-4">Aksesuar</div>
-              <h2 className="text-3xl font-bold mb-4" style={{ color: '#1e3a5f' }}>{padTitle}</h2>
-              <p className="text-gray-600 mb-6 leading-relaxed">{padDesc}</p>
+              <h2 className="text-3xl font-bold mb-4" style={{ color: '#1e3a5f' }}>PelviCare Elektrod Pad</h2>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                Özel hidrojel formülasyonu, yüksek iletkenlik ve vücut uyumu sağlar. Tüy çekmez, hafif yapışkan yüzeyi ile konforlu kullanım sunar.
+              </p>
               <div className="space-y-3">
-                {padSpecs.map((d) => (
+                {padDetails.map((d) => (
                   <div key={d.label} className="flex justify-between items-center py-2 border-b border-gray-100">
                     <span className="text-sm font-medium text-gray-600">{d.label}</span>
                     <span className="text-sm text-gray-900">{d.value}</span>
@@ -321,7 +337,7 @@ export default function ProductPage() {
               </div>
               <div className="mt-6 flex items-center gap-4">
                 <div>
-                  <div className="text-2xl font-bold" style={{ color: '#1e3a5f' }}>{padPrice}</div>
+                  <div className="text-2xl font-bold" style={{ color: '#1e3a5f' }}>₺290</div>
                   <div className="text-xs text-gray-500">5'li paket (15–25 seans)</div>
                 </div>
                 <button

@@ -52,7 +52,11 @@ export default function CartSidebar() {
           ) : (
             <div className="space-y-4">
               {items.map((item) => (
-                <div key={item.id} className="flex gap-3 p-3 rounded-2xl bg-gray-50 border border-gray-100">
+                <div
+                  key={item.id + item.variant}
+                  className={`flex gap-3 p-3 rounded-2xl bg-gray-50 border border-gray-100 ${item.path ? 'cursor-pointer hover:bg-gray-100 transition-colors' : ''}`}
+                  onClick={() => { if (item.path) { setSidebarOpen(false); navigate(item.path); } }}
+                >
                   <div className="w-14 h-14 rounded-xl flex items-center justify-center text-2xl flex-shrink-0" style={{ backgroundColor: '#f0fdfa' }}>
                     {item.icon}
                   </div>
@@ -62,14 +66,14 @@ export default function CartSidebar() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-1">
                         <button
-                          onClick={() => updateQty(item.id, item.qty - 1)}
+                          onClick={(e) => { e.stopPropagation(); updateQty(item.id, item.variant, item.qty - 1); }}
                           className="w-6 h-6 rounded-full flex items-center justify-center border border-gray-300 hover:border-teal-500 text-gray-600 hover:text-teal-600 transition-colors"
                         >
                           <Minus size={10} />
                         </button>
                         <span className="w-6 text-center text-sm font-medium">{item.qty}</span>
                         <button
-                          onClick={() => updateQty(item.id, item.qty + 1)}
+                          onClick={(e) => { e.stopPropagation(); updateQty(item.id, item.variant, item.qty + 1); }}
                           className="w-6 h-6 rounded-full flex items-center justify-center border border-gray-300 hover:border-teal-500 text-gray-600 hover:text-teal-600 transition-colors"
                         >
                           <Plus size={10} />
@@ -80,7 +84,7 @@ export default function CartSidebar() {
                           {(item.price * item.qty).toLocaleString('tr-TR')} ₺
                         </span>
                         <button
-                          onClick={() => removeFromCart(item.id)}
+                          onClick={(e) => { e.stopPropagation(); removeFromCart(item.id, item.variant); }}
                           className="text-red-400 hover:text-red-600 transition-colors"
                         >
                           <Trash2 size={14} />

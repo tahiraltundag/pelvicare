@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { CheckCircle, Star, Shield, Truck, RotateCcw, ArrowRight } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import DeviceModel3D from '../components/DeviceModel3D';
@@ -159,13 +159,14 @@ function StarRating({ rating }) {
 
 export default function ProductPage() {
   const { addToCart } = useCart();
+  const location = useLocation();
 
   const handleAdd = (pkg) => {
     if (pkg.cta === 'Bilgi Al') {
       window.location.href = '/iletisim';
       return;
     }
-    addToCart({ id: pkg.id, name: pkg.name, icon: pkg.icon, variant: pkg.variant, price: pkg.price });
+    addToCart({ id: pkg.id, name: pkg.name, icon: pkg.icon, variant: pkg.variant, price: pkg.price, path: location.pathname });
   };
 
   return (
@@ -340,7 +341,7 @@ export default function ProductPage() {
                   <div className="text-xs text-gray-500">5'li paket (15–25 seans)</div>
                 </div>
                 <button
-                  onClick={() => addToCart({ id: 'pad-5pack', name: 'Elektrod Pad', icon: '🔋', variant: '5\'li Paket (15–25 seans)', price: 290 })}
+                  onClick={() => addToCart({ id: 'pad-5pack', name: 'Elektrod Pad', icon: '🔋', variant: '5\'li Paket (15–25 seans)', price: 290, path: '/urun/elektrod-pad' })}
                   className="px-6 py-2.5 rounded-xl font-semibold text-sm text-white hover:opacity-90 active:scale-95 transition-all"
                   style={{ backgroundColor: '#0d9488' }}
                 >

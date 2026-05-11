@@ -64,7 +64,9 @@ function StarRating({ rating }) {
 export default function HomePage() {
   const navigate = useNavigate();
   const { get } = useCms();
+  const heroTitle = get('hero_title', 'Pelvik Taban Terapisi. Müdahalesiz. Kolay.');
   const heroDescription = get('hero_subtitle', 'EMS + Elektromanyetik Enerji + Vibrasyon. Üç güç, bir cihaz. 17 hastalık modunda klinik düzey rehabilitasyon artık evinizde.');
+  const heroCta = get('hero_cta', 'Fiyatı Gör');
 
   const [heroView, setHeroView] = useState('photos');
   const [photoIndex, setPhotoIndex] = useState(0);
@@ -99,8 +101,7 @@ export default function HomePage() {
                 <span className="text-teal-300 text-sm font-medium">CE Belgeli · Tıbbi Sınıf Cihaz</span>
               </div>
               <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-6">
-                Pelvik Taban Terapisi.<br />
-                <span className="text-teal-400">Müdahalesiz.</span> Kolay.
+                {heroTitle}
               </h1>
               <p className="text-lg text-blue-200 mb-8 leading-relaxed">
                 {heroDescription}
@@ -111,7 +112,7 @@ export default function HomePage() {
                   className="inline-flex items-center justify-center gap-2 px-6 py-3.5 font-semibold text-white rounded-xl transition-all hover:opacity-90 active:scale-95"
                   style={{ backgroundColor: '#0d9488' }}
                 >
-                  Fiyatı Gör
+                  {heroCta}
                   <ArrowRight size={18} />
                 </button>
                 <Link

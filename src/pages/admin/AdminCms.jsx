@@ -416,7 +416,7 @@ export default function AdminCms() {
     const key = isObj ? keyEntry.key : keyEntry;
     const type = isObj ? keyEntry.type : (cms[key]?.type || 'text');
     const label = isObj ? keyEntry.label : (cms[key]?.label || key);
-    const val = getValue(key) || (isObj && keyEntry.default) || '';
+    const val = getValue(key);
     const changed = key in changes;
 
     return (

@@ -22,6 +22,7 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import CheckoutPage from './pages/CheckoutPage';
 import ShopPage from './pages/ShopPage';
+import ProductDetailPage from './pages/ProductDetailPage';
 import OrdersPage from './pages/OrdersPage';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
@@ -102,6 +103,7 @@ export default function App() {
             <Route path="/nasil-calisir" element={<PublicLayout><HowItWorksPage /></PublicLayout>} />
             <Route path="/urun/pelvicare" element={<PublicLayout><ProductPage /></PublicLayout>} />
             <Route path="/urun/elektrod-pad" element={<PublicLayout><ProductPage /></PublicLayout>} />
+            <Route path="/urun/:slug" element={<PublicLayout><ProductDetailPage /></PublicLayout>} />
             <Route path="/kadin" element={<PublicLayout><WomenPage /></PublicLayout>} />
             <Route path="/erkek" element={<PublicLayout><MenPage /></PublicLayout>} />
             <Route path="/klinik-kanit" element={<PublicLayout><SciencePage /></PublicLayout>} />

@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { Search, SlidersHorizontal, ShoppingCart, Package, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import api from '../api/client';
@@ -17,9 +18,11 @@ function ProductCard({ product }) {
   const discount = product.comparePrice ? Math.round((1 - product.price / product.comparePrice) * 100) : null;
   const img = product.images?.[0];
 
+  const detailPath = product.slug ? `/urun/${product.slug}` : '/magaza';
+
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow group">
-      <div className="aspect-square bg-gray-50 relative overflow-hidden">
+      <Link to={detailPath} className="block aspect-square bg-gray-50 relative overflow-hidden">
         {img ? (
           <img src={img} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
         ) : (
@@ -37,12 +40,14 @@ function ProductCard({ product }) {
             <span className="text-sm font-semibold text-gray-500">Stok Tükendi</span>
           </div>
         )}
-      </div>
+      </Link>
       <div className="p-4">
         {product.category && (
           <div className="text-xs text-teal-600 font-medium mb-1">{product.category.name}</div>
         )}
-        <h3 className="font-bold text-gray-900 text-sm mb-2 line-clamp-2">{product.name}</h3>
+        <Link to={detailPath}>
+          <h3 className="font-bold text-gray-900 text-sm mb-2 line-clamp-2 hover:text-teal-600 transition-colors">{product.name}</h3>
+        </Link>
         <div className="flex items-center gap-2 mb-3">
           <span className="text-lg font-bold" style={{ color: '#1e3a5f' }}>{product.price.toLocaleString('tr-TR')} ₺</span>
           {product.comparePrice && (
@@ -51,7 +56,7 @@ function ProductCard({ product }) {
         </div>
         <button
           disabled={product.stock <= 0}
-          onClick={() => addToCart({ id: product.id, name: product.name, price: product.price, icon: '📦', variant: '', path: product.slug ? `/urun/${product.slug}` : '/magaza' })}
+          onClick={() => addToCart({ id: product.id, name: product.name, price: product.price, icon: '📦', variant: '', path: detailPath })}
           className="w-full py-2.5 rounded-xl text-sm font-bold text-white flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.98] transition disabled:opacity-40 disabled:cursor-not-allowed"
           style={{ backgroundColor: '#0d9488' }}
         >

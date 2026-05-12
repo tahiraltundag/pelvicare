@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Plus, Search, Trash2, ChevronRight } from 'lucide-react';
 import api from '../../api/client';
 
@@ -83,6 +83,7 @@ export default function ClinicianPatients() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     api.get('/clinician/patients').then(res => {
@@ -141,7 +142,8 @@ export default function ClinicianPatients() {
             </thead>
             <tbody className="divide-y divide-gray-50">
               {filtered.map(p => (
-                <tr key={p.id} className="hover:bg-gray-50 transition-colors">
+                <tr key={p.id} className="hover:bg-gray-50 transition-colors cursor-pointer"
+                  onClick={() => navigate(`/klinisyen/hastalar/${p.id}`)}>
                   <td className="px-6 py-4">
                     <div className="font-medium text-gray-900">{p.name}</div>
                     {p.email && <div className="text-xs text-gray-400">{p.email}</div>}
@@ -151,8 +153,9 @@ export default function ClinicianPatients() {
                   <td className="px-6 py-4 text-sm text-gray-400">{new Date(p.createdAt).toLocaleDateString('tr-TR')}</td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2 justify-end">
-                      <button onClick={() => handleDelete(p.id)} className="p-2 rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-500 transition-colors"><Trash2 size={15} /></button>
-                      <Link to={`/klinisyen/hastalar/${p.id}`} className="p-2 rounded-lg text-gray-400 hover:bg-teal-50 hover:text-teal-600 transition-colors"><ChevronRight size={15} /></Link>
+                      <button onClick={e => { e.stopPropagation(); handleDelete(p.id); }}
+                        className="p-2 rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-500 transition-colors"><Trash2 size={15} /></button>
+                      <ChevronRight size={15} className="text-gray-400" />
                     </div>
                   </td>
                 </tr>
@@ -171,7 +174,8 @@ export default function ClinicianPatients() {
             {search ? 'Arama sonucu bulunamadı.' : 'Henüz hasta eklenmemiş.'}
           </div>
         ) : filtered.map(p => (
-          <div key={p.id} className="bg-white rounded-2xl border border-gray-200 p-4">
+          <div key={p.id} className="bg-white rounded-2xl border border-gray-200 p-4 cursor-pointer hover:shadow-sm transition-shadow"
+            onClick={() => navigate(`/klinisyen/hastalar/${p.id}`)}>
             <div className="flex items-start justify-between mb-3">
               <div className="min-w-0 mr-2">
                 <div className="font-semibold text-gray-900 truncate">{p.name}</div>
@@ -185,8 +189,9 @@ export default function ClinicianPatients() {
             <div className="flex items-center justify-between">
               <span className="text-xs text-gray-400">{new Date(p.createdAt).toLocaleDateString('tr-TR')}</span>
               <div className="flex gap-2">
-                <button onClick={() => handleDelete(p.id)} className="p-2 rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
-                <Link to={`/klinisyen/hastalar/${p.id}`} className="p-2 rounded-lg text-gray-400 hover:bg-teal-50 hover:text-teal-600 transition-colors"><ChevronRight size={16} /></Link>
+                <button onClick={e => { e.stopPropagation(); handleDelete(p.id); }}
+                  className="p-2 rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
+                <ChevronRight size={16} className="text-gray-400 self-center" />
               </div>
             </div>
           </div>

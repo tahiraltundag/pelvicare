@@ -28,8 +28,8 @@ function AddPatientModal({ onClose, onAdded }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md">
+    <div className="fixed inset-0 bg-black/40 flex items-end sm:items-center justify-center z-50 p-0 sm:p-4">
+      <div className="bg-white rounded-t-3xl sm:rounded-2xl shadow-xl w-full sm:max-w-md max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
           <h2 className="font-bold text-gray-900">Yeni Hasta Ekle</h2>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-xl leading-none">&times;</button>
@@ -102,26 +102,28 @@ export default function ClinicianPatients() {
   );
 
   return (
-    <div className="p-8">
-      <div className="flex items-center justify-between mb-6">
+    <div className="p-4 sm:p-8">
+      <div className="flex items-center justify-between mb-5">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Hastalar</h1>
-          <p className="text-gray-500 mt-1">{patients.length} hasta kayıtlı</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Hastalar</h1>
+          <p className="text-gray-500 mt-0.5 text-sm">{patients.length} hasta kayıtlı</p>
         </div>
         <button onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-white font-semibold text-sm hover:opacity-90 transition"
+          className="flex items-center gap-2 px-3 sm:px-4 py-2.5 rounded-xl text-white font-semibold text-sm hover:opacity-90 transition"
           style={{ backgroundColor: '#0d9488' }}>
-          <Plus size={18} /> Hasta Ekle
+          <Plus size={18} />
+          <span className="hidden sm:inline">Hasta Ekle</span>
         </button>
       </div>
 
-      <div className="relative mb-5">
+      <div className="relative mb-4">
         <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
         <input className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100"
           placeholder="Hasta adı veya tanı ara..." value={search} onChange={e => setSearch(e.target.value)} />
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+      {/* Desktop table */}
+      <div className="hidden sm:block bg-white rounded-2xl border border-gray-200 overflow-hidden">
         {loading ? (
           <div className="p-10 text-center text-gray-400">Yükleniyor...</div>
         ) : filtered.length === 0 ? (
@@ -145,18 +147,12 @@ export default function ClinicianPatients() {
                     {p.email && <div className="text-xs text-gray-400">{p.email}</div>}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600">{p.diagnosis || '—'}</td>
-                  <td className="px-6 py-4">
-                    <span className="text-sm font-medium text-teal-600">{p._count?.sessions || 0}</span>
-                  </td>
+                  <td className="px-6 py-4"><span className="text-sm font-medium text-teal-600">{p._count?.sessions || 0}</span></td>
                   <td className="px-6 py-4 text-sm text-gray-400">{new Date(p.createdAt).toLocaleDateString('tr-TR')}</td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2 justify-end">
-                      <button onClick={() => handleDelete(p.id)} className="p-2 rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-500 transition-colors">
-                        <Trash2 size={15} />
-                      </button>
-                      <Link to={`/klinisyen/hastalar/${p.id}`} className="p-2 rounded-lg text-gray-400 hover:bg-teal-50 hover:text-teal-600 transition-colors">
-                        <ChevronRight size={15} />
-                      </Link>
+                      <button onClick={() => handleDelete(p.id)} className="p-2 rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-500 transition-colors"><Trash2 size={15} /></button>
+                      <Link to={`/klinisyen/hastalar/${p.id}`} className="p-2 rounded-lg text-gray-400 hover:bg-teal-50 hover:text-teal-600 transition-colors"><ChevronRight size={15} /></Link>
                     </div>
                   </td>
                 </tr>
@@ -164,6 +160,37 @@ export default function ClinicianPatients() {
             </tbody>
           </table>
         )}
+      </div>
+
+      {/* Mobile card list */}
+      <div className="sm:hidden space-y-3">
+        {loading ? (
+          <div className="p-8 text-center text-gray-400">Yükleniyor...</div>
+        ) : filtered.length === 0 ? (
+          <div className="p-8 text-center text-gray-400">
+            {search ? 'Arama sonucu bulunamadı.' : 'Henüz hasta eklenmemiş.'}
+          </div>
+        ) : filtered.map(p => (
+          <div key={p.id} className="bg-white rounded-2xl border border-gray-200 p-4">
+            <div className="flex items-start justify-between mb-3">
+              <div className="min-w-0 mr-2">
+                <div className="font-semibold text-gray-900 truncate">{p.name}</div>
+                {p.email && <div className="text-xs text-gray-400 truncate">{p.email}</div>}
+              </div>
+              <span className="text-sm font-medium text-teal-600 bg-teal-50 px-2 py-0.5 rounded-lg flex-shrink-0">
+                {p._count?.sessions || 0} seans
+              </span>
+            </div>
+            <div className="text-sm text-gray-500 mb-3">{p.diagnosis || 'Tanı girilmedi'}</div>
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-gray-400">{new Date(p.createdAt).toLocaleDateString('tr-TR')}</span>
+              <div className="flex gap-2">
+                <button onClick={() => handleDelete(p.id)} className="p-2 rounded-lg text-gray-400 hover:bg-red-50 hover:text-red-500 transition-colors"><Trash2 size={16} /></button>
+                <Link to={`/klinisyen/hastalar/${p.id}`} className="p-2 rounded-lg text-gray-400 hover:bg-teal-50 hover:text-teal-600 transition-colors"><ChevronRight size={16} /></Link>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
 
       {showModal && <AddPatientModal onClose={() => setShowModal(false)} onAdded={(p) => { setPatients(ps => [{ ...p, _count: { sessions: 0 } }, ...ps]); setShowModal(false); }} />}

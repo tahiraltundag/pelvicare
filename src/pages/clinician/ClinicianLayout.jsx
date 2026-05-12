@@ -22,7 +22,7 @@ export default function ClinicianLayout({ children }) {
     <div className="flex min-h-screen bg-gray-50">
 
       {/* Desktop sidebar */}
-      <aside className="hidden md:flex w-60 flex-shrink-0 bg-white border-r border-gray-200 flex-col">
+      <aside className="hidden md:flex w-60 flex-shrink-0 bg-white border-r border-gray-200 flex-col sticky top-0 h-screen">
         <div className="p-5 border-b border-gray-100">
           <PelvicAirLogotype iconSize={28} />
           <div className="mt-2 text-xs text-teal-600 font-semibold">Klinisyen Portalı</div>

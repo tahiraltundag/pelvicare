@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const { body, validationResult } = require('express-validator');
 const { PrismaClient } = require('@prisma/client');
 const { verifyToken, requireRole } = require('../middleware/auth');
@@ -178,6 +179,102 @@ router.delete('/patients/:patientId/sessions/:sessionId', auth, async (req, res)
     res.json({ success: true, data: null });
   } catch {
     res.status(500).json({ success: false, error: 'Silme sırasında hata oluştu' });
+  }
+});
+
+// Generate link code for patient (mobile app uses this to connect)
+router.post('/patients/:id/link-code', auth, async (req, res) => {
+  try {
+    const profile = await prisma.clinicianProfile.findUnique({ where: { userId: req.user.id } });
+    const patient = await prisma.clinicianPatient.findFirst({ where: { id: req.params.id, clinicianId: profile?.id } });
+    if (!patient) return res.status(404).json({ success: false, error: 'Hasta bulunamadı' });
+
+    const linkCode = crypto.randomBytes(3).toString('hex').toUpperCase(); // 6-char hex e.g. "A3F9B2"
+    const linkExpiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
+
+    await prisma.clinicianPatient.update({
+      where: { id: req.params.id },
+      data: { linkCode, linkExpiresAt },
+    });
+
+    res.json({ success: true, data: { linkCode, linkExpiresAt } });
+  } catch {
+    res.status(500).json({ success: false, error: 'Kod oluşturulamadı' });
+  }
+});
+
+// Get device sessions for a patient (from mobile app)
+router.get('/patients/:id/device-sessions', auth, async (req, res) => {
+  try {
+    const profile = await prisma.clinicianProfile.findUnique({ where: { userId: req.user.id } });
+    const patient = await prisma.clinicianPatient.findFirst({ where: { id: req.params.id, clinicianId: profile?.id } });
+    if (!patient) return res.status(404).json({ success: false, error: 'Hasta bulunamadı' });
+
+    const sessions = await prisma.deviceSession.findMany({
+      where: { patientId: req.params.id },
+      orderBy: { startedAt: 'desc' },
+    });
+
+    // Build daily usage map for last 30 days
+    const now = new Date();
+    const dailyMap = {};
+    for (let i = 0; i < 30; i++) {
+      const d = new Date(now);
+      d.setDate(d.getDate() - i);
+      dailyMap[d.toISOString().slice(0, 10)] = 0;
+    }
+    sessions.forEach(s => {
+      const day = new Date(s.startedAt).toISOString().slice(0, 10);
+      if (day in dailyMap) dailyMap[day]++;
+    });
+    const dailyUsage = Object.entries(dailyMap)
+      .map(([date, count]) => ({ date, count }))
+      .sort((a, b) => a.date.localeCompare(b.date));
+
+    // Streak: count consecutive days with at least 1 session (from today backwards)
+    const sortedDays = Object.keys(dailyMap).sort((a, b) => b.localeCompare(a));
+    let streak = 0;
+    for (const day of sortedDays) {
+      if (dailyMap[day] > 0) streak++;
+      else break;
+    }
+
+    const today = now.toISOString().slice(0, 10);
+    const weekAgo = new Date(now); weekAgo.setDate(weekAgo.getDate() - 7);
+
+    res.json({
+      success: true,
+      data: {
+        sessions,
+        stats: {
+          total: sessions.length,
+          today: dailyMap[today] || 0,
+          thisWeek: sessions.filter(s => new Date(s.startedAt) > weekAgo).length,
+          streak,
+          lastActive: sessions[0]?.startedAt || null,
+          isLinked: !!patient.deviceToken,
+          linkCode: patient.linkCode,
+          linkExpiresAt: patient.linkExpiresAt,
+        },
+        dailyUsage,
+      },
+    });
+  } catch {
+    res.status(500).json({ success: false, error: 'Sunucu hatası' });
+  }
+});
+
+// Revoke device token (unlink mobile)
+router.delete('/patients/:id/device-token', auth, async (req, res) => {
+  try {
+    const profile = await prisma.clinicianProfile.findUnique({ where: { userId: req.user.id } });
+    const patient = await prisma.clinicianPatient.findFirst({ where: { id: req.params.id, clinicianId: profile?.id } });
+    if (!patient) return res.status(404).json({ success: false, error: 'Hasta bulunamadı' });
+
+    await prisma.clinicianPatient.update({ where: { id: req.params.id }, data: { deviceToken: null } });
+    res.json({ success: true, data: null });
+  } catch {
+    res.status(500).json({ success: false, error: 'Sunucu hatası' });
   }
 });
 

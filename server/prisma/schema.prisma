@@ -115,17 +115,35 @@ model ClinicianProfile {
 }
 
 model ClinicianPatient {
-  id          String           @id @default(cuid())
-  clinicianId String
-  clinician   ClinicianProfile @relation(fields: [clinicianId], references: [id])
-  name        String
-  email       String           @default("")
-  birthYear   Int?
-  gender      String           @default("")
-  diagnosis   String           @default("")
-  notes       String           @default("")
-  createdAt   DateTime         @default(now())
-  sessions    PatientSession[]
+  id             String          @id @default(cuid())
+  clinicianId    String
+  clinician      ClinicianProfile @relation(fields: [clinicianId], references: [id])
+  name           String
+  email          String          @default("")
+  birthYear      Int?
+  gender         String          @default("")
+  diagnosis      String          @default("")
+  notes          String          @default("")
+  linkCode       String?
+  linkExpiresAt  DateTime?
+  deviceToken    String?         @unique
+  createdAt      DateTime        @default(now())
+  sessions       PatientSession[]
+  deviceSessions DeviceSession[]
+}
+
+model DeviceSession {
+  id             String           @id @default(cuid())
+  patientId      String
+  patient        ClinicianPatient @relation(fields: [patientId], references: [id])
+  protocol       String
+  startedAt      DateTime
+  duration       Int              @default(20)
+  intensity      Int              @default(5)
+  modalitiesUsed String           @default("[]")
+  completedFully Boolean          @default(true)
+  source         String           @default("mobile")
+  createdAt      DateTime         @default(now())
 }
 
 model PatientSession {

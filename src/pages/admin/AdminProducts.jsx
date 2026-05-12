@@ -128,11 +128,11 @@ function ProductModal({ product, categories, onClose, onSave }) {
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <label className="text-xs font-semibold text-gray-600 block mb-1">Ürün Adı *</label>
-                <input className={inp} value={form.name} onChange={e => { set('name', e.target.value); if (!product) set('slug', slugify(e.target.value)); }} required placeholder="PelviCare Pro" />
+                <input className={inp} value={form.name} onChange={e => { set('name', e.target.value); if (!product) set('slug', slugify(e.target.value)); }} required placeholder="PelvicAir Pro" />
               </div>
               <div>
                 <label className="text-xs font-semibold text-gray-600 block mb-1">Slug *</label>
-                <input className={inp} value={form.slug} onChange={e => set('slug', e.target.value)} required placeholder="pelvicare-pro" />
+                <input className={inp} value={form.slug} onChange={e => set('slug', e.target.value)} required placeholder="pelvicair-pro" />
               </div>
             </div>
 

@@ -2,15 +2,15 @@ import { Link } from 'react-router-dom';
 import { CheckCircle, ArrowRight, Download } from 'lucide-react';
 
 const prescribeSteps = [
-  { step: '1', title: 'Hastayı Değerlendirin', desc: 'Pelvik taban bozukluğunu tanımlayın ve PelviCare kontrendikasyonlarını dışlayın.' },
-  { step: '2', title: 'Protokol Seçin', desc: 'Mobil uygulamadan veya PelviCare Klinisyen Portalı\'ndan uygun hastalık modunu (K-01 ila E-07) önerin.' },
+  { step: '1', title: 'Hastayı Değerlendirin', desc: 'Pelvik taban bozukluğunu tanımlayın ve PelvicAir kontrendikasyonlarını dışlayın.' },
+  { step: '2', title: 'Protokol Seçin', desc: 'Mobil uygulamadan veya PelvicAir Klinisyen Portalı\'ndan uygun hastalık modunu (K-01 ila E-07) önerin.' },
   { step: '3', title: 'Hastayı Yönlendirin', desc: 'Reçete veya öneri mektubu yazın. Hasta web sitesinden veya yetkili satıcıdan temin edebilir.' },
 ];
 
 const clinicalEvidence = [
-  { title: '%25 Hatalı Kegel', desc: 'Kadınların %25\'i Kegel egzersizini hatalı yapıyor — etki sıfır. PelviCare pasif Kegel ile bu sorunu ortadan kaldırır.', source: 'Bø K. et al. 2012' },
-  { title: '%13 PT Tamamlama', desc: 'Pelvik taban fizyoterapisi seanslarını tamamlama oranı sadece %13. Evde PelviCare ile uyum dramatik artar.', source: 'Klotz T. et al. 2019' },
-  { title: 'OAB İlaç Yan Etkileri', desc: 'Antikolinerjik ilaçların %40 bırakma oranı. PelviCare farmakolojik olmayan bir alternatif sunar.', source: 'Chapple CR. et al. 2021' },
+  { title: '%25 Hatalı Kegel', desc: 'Kadınların %25\'i Kegel egzersizini hatalı yapıyor — etki sıfır. PelvicAir pasif Kegel ile bu sorunu ortadan kaldırır.', source: 'Bø K. et al. 2012' },
+  { title: '%13 PT Tamamlama', desc: 'Pelvik taban fizyoterapisi seanslarını tamamlama oranı sadece %13. Evde PelvicAir ile uyum dramatik artar.', source: 'Klotz T. et al. 2019' },
+  { title: 'OAB İlaç Yan Etkileri', desc: 'Antikolinerjik ilaçların %40 bırakma oranı. PelvicAir farmakolojik olmayan bir alternatif sunar.', source: 'Chapple CR. et al. 2021' },
 ];
 
 const downloads = [
@@ -33,7 +33,7 @@ export default function ClinicianPage() {
               </div>
               <h1 className="text-4xl lg:text-5xl font-bold mb-4">Hastanız İçin Yeni Bir Seçenek</h1>
               <p className="text-xl text-blue-200 leading-relaxed mb-6">
-                PelviCare, klinik fizyoterapiye ek veya monoterapi olarak reçete edebileceğiniz, CE belgeli, klinik kanıtlı non-invazif bir cihaz.
+                PelvicAir, klinik fizyoterapiye ek veya monoterapi olarak reçete edebileceğiniz, CE belgeli, klinik kanıtlı non-invazif bir cihaz.
               </p>
               <div className="grid grid-cols-3 gap-4 mb-6">
                 {[
@@ -69,11 +69,11 @@ export default function ClinicianPage() {
         </div>
       </section>
 
-      {/* Why PelviCare */}
+      {/* Why PelvicAir */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>Neden PelviCare'i Önerin?</h2>
+            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>Neden PelvicAir'i Önerin?</h2>
             <p className="text-gray-500">Mevcut tedavi seçeneklerinin sınırlılıklarına karşı kanıtlanmış bir alternatif</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
@@ -93,7 +93,7 @@ export default function ClinicianPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>Reçete / Öneri Süreci</h2>
-            <p className="text-gray-500">3 adımda hastanıza PelviCare'i önerin</p>
+            <p className="text-gray-500">3 adımda hastanıza PelvicAir'i önerin</p>
           </div>
           <div className="space-y-6">
             {prescribeSteps.map((s) => (
@@ -206,10 +206,10 @@ export default function ClinicianPage() {
               İletişime Geç <ArrowRight size={16} />
             </Link>
             <a
-              href="mailto:klinisyen@pelvicare.com"
+              href="mailto:klinisyen@pelvicair.com"
               className="inline-flex items-center justify-center gap-2 px-8 py-3.5 font-semibold text-white rounded-xl border border-white/30 hover:bg-white/10 transition-all"
             >
-              klinisyen@pelvicare.com
+              klinisyen@pelvicair.com
             </a>
           </div>
         </div>

@@ -1,7 +1,7 @@
 {
-  "name": "pelvicare-server",
+  "name": "pelvicair-server",
   "version": "1.0.0",
-  "description": "PelviCare API Server",
+  "description": "PelvicAir API Server",
   "main": "index.js",
   "scripts": {
     "dev": "node --watch index.js",

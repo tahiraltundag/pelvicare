@@ -41,13 +41,13 @@ const steps = [
 ];
 
 const comparisonData = [
-  { feature: 'Non-invazif', pelvicare: true, internal: false, surgery: false, pt: true, pads: true },
-  { feature: 'Evde kullanım', pelvicare: true, internal: true, surgery: false, pt: false, pads: true },
-  { feature: 'Erkek & kadın', pelvicare: true, internal: false, surgery: true, pt: true, pads: true },
-  { feature: 'Klinik etkinlik', pelvicare: true, internal: true, surgery: true, pt: true, pads: false },
-  { feature: 'Mobil kontrol', pelvicare: true, internal: false, surgery: false, pt: false, pads: false },
-  { feature: '3 modalite', pelvicare: true, internal: false, surgery: false, pt: false, pads: false },
-  { feature: 'Uygun maliyet', pelvicare: true, internal: false, surgery: false, pt: false, pads: true },
+  { feature: 'Non-invazif', pelvicair: true, internal: false, surgery: false, pt: true, pads: true },
+  { feature: 'Evde kullanım', pelvicair: true, internal: true, surgery: false, pt: false, pads: true },
+  { feature: 'Erkek & kadın', pelvicair: true, internal: false, surgery: true, pt: true, pads: true },
+  { feature: 'Klinik etkinlik', pelvicair: true, internal: true, surgery: true, pt: true, pads: false },
+  { feature: 'Mobil kontrol', pelvicair: true, internal: false, surgery: false, pt: false, pads: false },
+  { feature: '3 modalite', pelvicair: true, internal: false, surgery: false, pt: false, pads: false },
+  { feature: 'Uygun maliyet', pelvicair: true, internal: false, surgery: false, pt: false, pads: true },
 ];
 
 function StarRating({ rating }) {
@@ -66,7 +66,7 @@ export default function HomePage() {
   const [photoIndex, setPhotoIndex] = useState(0);
 
   const goToPrice = () => {
-    navigate('/urun/pelvicare');
+    navigate('/urun/pelvicair');
     setTimeout(() => {
       document.getElementById('paketler')?.scrollIntoView({ behavior: 'smooth' });
     }, 150);
@@ -152,7 +152,7 @@ export default function HomePage() {
                       <img
                         key={photoIndex}
                         src={PRODUCT_IMAGES[photoIndex]}
-                        alt="PelviCare ürün fotoğrafı"
+                        alt="PelvicAir ürün fotoğrafı"
                         className="w-full h-full object-contain p-4"
                         style={{ animation: 'fadeIn 0.3s ease' }}
                       />
@@ -214,7 +214,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>Pelvik Sağlık: Sessiz Kriz</h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">Milyonlar tedavi aramaktan çekinmekte. PelviCare bu boşluğu klinik etkinlik ve ev erişilebilirliğiyle kapatıyor.</p>
+            <p className="text-gray-500 max-w-2xl mx-auto">Milyonlar tedavi aramaktan çekinmekte. PelvicAir bu boşluğu klinik etkinlik ve ev erişilebilirliğiyle kapatıyor.</p>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, i) => (
@@ -318,15 +318,15 @@ export default function HomePage() {
       <section className="py-16 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>PelviCare vs. Diğer Yöntemler</h2>
-            <p className="text-gray-500">Neden PelviCare? Bir karşılaştırma.</p>
+            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>PelvicAir vs. Diğer Yöntemler</h2>
+            <p className="text-gray-500">Neden PelvicAir? Bir karşılaştırma.</p>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr>
                   <th className="text-left py-3 px-4 text-gray-500 font-medium">Özellik</th>
-                  <th className="py-3 px-4 font-bold text-teal-600 bg-teal-50 rounded-t-xl">PelviCare</th>
+                  <th className="py-3 px-4 font-bold text-teal-600 bg-teal-50 rounded-t-xl">PelvicAir</th>
                   <th className="py-3 px-4 font-medium text-gray-500">İnternal Cihazlar</th>
                   <th className="py-3 px-4 font-medium text-gray-500">Cerrahi</th>
                   <th className="py-3 px-4 font-medium text-gray-500">Fizyoterapi</th>
@@ -337,7 +337,7 @@ export default function HomePage() {
                 {comparisonData.map((row, i) => (
                   <tr key={row.feature} className={i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
                     <td className="py-3 px-4 font-medium text-gray-700">{row.feature}</td>
-                    {[row.pelvicare, row.internal, row.surgery, row.pt, row.pads].map((val, j) => (
+                    {[row.pelvicair, row.internal, row.surgery, row.pt, row.pads].map((val, j) => (
                       <td key={j} className={`py-3 px-4 text-center ${j === 0 ? 'bg-teal-50' : ''}`}>
                         {val
                           ? <CheckCircle size={18} className="inline text-teal-500" />

@@ -5,14 +5,14 @@ import { useCart } from '../context/CartContext';
 import DeviceModel3D from '../components/DeviceModel3D';
 
 const galleryImages = [
-  { src: '/images/urun-sistem-genel.jpg', alt: 'PelviCare Sistem Genel Görünüm', label: 'Sistem Genel' },
-  { src: '/images/urun-elektrod-pad.jpg', alt: 'PelviCare Elektrod Pad Detay', label: 'Elektrod Pad' },
-  { src: '/images/cihaz.png',   alt: 'PelviCare Cihaz Yan Görünüm', label: 'Yan Görünüm' },
-  { src: '/images/cihaz-2.png', alt: 'PelviCare Cihaz Üst Görünüm', label: 'Üst Görünüm' },
-  { src: '/images/cihaz-3.png', alt: 'PelviCare Cihaz Ön Görünüm', label: 'Ön Görünüm' },
-  { src: '/images/cihaz-4.png', alt: 'PelviCare Cihaz Boyutları', label: 'Boyutlar' },
-  { src: '/images/cihaz-5.png', alt: 'PelviCare Cihaz Arka Görünüm', label: 'Arka Görünüm' },
-  { src: '/images/cihaz-6.png', alt: 'PelviCare Cihaz LED Panel', label: 'LED Panel' },
+  { src: '/images/urun-sistem-genel.jpg', alt: 'PelvicAir Sistem Genel Görünüm', label: 'Sistem Genel' },
+  { src: '/images/urun-elektrod-pad.jpg', alt: 'PelvicAir Elektrod Pad Detay', label: 'Elektrod Pad' },
+  { src: '/images/cihaz.png',   alt: 'PelvicAir Cihaz Yan Görünüm', label: 'Yan Görünüm' },
+  { src: '/images/cihaz-2.png', alt: 'PelvicAir Cihaz Üst Görünüm', label: 'Üst Görünüm' },
+  { src: '/images/cihaz-3.png', alt: 'PelvicAir Cihaz Ön Görünüm', label: 'Ön Görünüm' },
+  { src: '/images/cihaz-4.png', alt: 'PelvicAir Cihaz Boyutları', label: 'Boyutlar' },
+  { src: '/images/cihaz-5.png', alt: 'PelvicAir Cihaz Arka Görünüm', label: 'Arka Görünüm' },
+  { src: '/images/cihaz-6.png', alt: 'PelvicAir Cihaz LED Panel', label: 'LED Panel' },
 ];
 
 function ProductGallery() {
@@ -71,13 +71,13 @@ const packages = [
     id: 'pkg-starter',
     name: 'Başlangıç Paketi',
     icon: '🩺',
-    variant: 'PelviCare Cihazı + 2 Pad',
+    variant: 'PelvicAir Cihazı + 2 Pad',
     price: 4990,
     displayPrice: '₺4.990',
     oldPrice: null,
     badge: null,
     features: [
-      'PelviCare Ana Cihaz',
+      'PelvicAir Ana Cihaz',
       '2 Adet Elektrod Pad (10 seans)',
       'Mobil Uygulama Erişimi',
       'Türkçe Kullanım Kılavuzu',
@@ -90,13 +90,13 @@ const packages = [
     id: 'pkg-premium',
     name: 'Premium Paket',
     icon: '⭐',
-    variant: 'PelviCare Cihazı + 4 Pad + Şarj',
+    variant: 'PelvicAir Cihazı + 4 Pad + Şarj',
     price: 6490,
     displayPrice: '₺6.490',
     oldPrice: '₺7.990',
     badge: 'En Popüler',
     features: [
-      'PelviCare Ana Cihaz',
+      'PelvicAir Ana Cihaz',
       '4 Adet Elektrod Pad (20 seans)',
       'Mobil Uygulama Erişimi (Premium)',
       'Türkçe Kullanım Kılavuzu',
@@ -117,7 +117,7 @@ const packages = [
     oldPrice: null,
     badge: 'Klinisyen İçin',
     features: [
-      'PelviCare Ana Cihaz (x2)',
+      'PelvicAir Ana Cihaz (x2)',
       '10 Adet Elektrod Pad (50 seans)',
       'Klinisyen Yönetim Paneli',
       'Hasta Takip Sistemi',
@@ -179,7 +179,7 @@ export default function ProductPage() {
               <div className="inline-block bg-teal-500/20 border border-teal-400/30 rounded-full px-4 py-1.5 mb-4">
                 <span className="text-teal-300 text-sm font-medium">CE Belgeli · Tıbbi Sınıf</span>
               </div>
-              <h1 className="text-4xl lg:text-5xl font-bold mb-4">PelviCare</h1>
+              <h1 className="text-4xl lg:text-5xl font-bold mb-4">PelvicAir</h1>
               <p className="text-lg text-blue-200 mb-2">Akıllı Hibrit Pelvik Taban Rehabilitasyon Sistemi</p>
               <p className="text-blue-300 text-sm mb-6">"Üç güç. Bir cihaz. Sonsuz özgürlük."</p>
               <div className="flex items-center gap-3 mb-6">
@@ -323,7 +323,7 @@ export default function ProductPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="inline-block bg-teal-50 text-teal-700 text-xs font-semibold px-3 py-1 rounded-full mb-4">Aksesuar</div>
-              <h2 className="text-3xl font-bold mb-4" style={{ color: '#1e3a5f' }}>PelviCare Elektrod Pad</h2>
+              <h2 className="text-3xl font-bold mb-4" style={{ color: '#1e3a5f' }}>PelvicAir Elektrod Pad</h2>
               <p className="text-gray-600 mb-6 leading-relaxed">
                 Özel hidrojel formülasyonu, yüksek iletkenlik ve vücut uyumu sağlar. Tüy çekmez, hafif yapışkan yüzeyi ile konforlu kullanım sunar.
               </p>
@@ -352,7 +352,7 @@ export default function ProductPage() {
             <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: '#f0fdfa' }}>
               <img
                 src="/images/urun-elektrod-pad.jpg"
-                alt="PelviCare Elektrod Pad"
+                alt="PelvicAir Elektrod Pad"
                 className="w-full h-full object-contain"
               />
             </div>

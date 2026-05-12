@@ -101,7 +101,7 @@ export default function App() {
             {/* Public Routes */}
             <Route path="/" element={<PublicLayout><HomePage /></PublicLayout>} />
             <Route path="/nasil-calisir" element={<PublicLayout><HowItWorksPage /></PublicLayout>} />
-            <Route path="/urun/pelvicare" element={<PublicLayout><ProductPage /></PublicLayout>} />
+            <Route path="/urun/pelvicair" element={<PublicLayout><ProductPage /></PublicLayout>} />
             <Route path="/urun/elektrod-pad" element={<PublicLayout><ProductPage /></PublicLayout>} />
             <Route path="/urun/:slug" element={<PublicLayout><ProductDetailPage /></PublicLayout>} />
             <Route path="/kadin" element={<PublicLayout><WomenPage /></PublicLayout>} />

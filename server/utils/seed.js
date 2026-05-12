@@ -12,15 +12,15 @@ async function seed() {
   const superPass = await bcrypt.hash('Super123!', 12);
 
   await prisma.user.upsert({
-    where: { email: 'admin@pelvicare.com' },
+    where: { email: 'admin@pelvicair.com' },
     update: {},
-    create: { email: 'admin@pelvicare.com', password: adminPass, name: 'Admin', role: 'admin' },
+    create: { email: 'admin@pelvicair.com', password: adminPass, name: 'Admin', role: 'admin' },
   });
 
   await prisma.user.upsert({
-    where: { email: 'superadmin@pelvicare.com' },
+    where: { email: 'superadmin@pelvicair.com' },
     update: {},
-    create: { email: 'superadmin@pelvicare.com', password: superPass, name: 'Süper Admin', role: 'superadmin' },
+    create: { email: 'superadmin@pelvicair.com', password: superPass, name: 'Süper Admin', role: 'superadmin' },
   });
 
   console.log('Admin users created.');
@@ -43,9 +43,9 @@ async function seed() {
   // Products
   const products = [
     {
-      name: 'PelviCare Pro Cihaz',
-      slug: 'pelvicare-pro-cihaz',
-      description: '<p>PelviCare Pro, pelvik taban rehabilitasyonu için geliştirilmiş 3-modaliteli (EMS + Elektromanyetik + Vibrasyon) ev cihazıdır. 17 bilimsel protokol, mobil uygulama desteği ve 2 yıl garanti.</p>',
+      name: 'PelvicAir Pro Cihaz',
+      slug: 'pelvicair-pro-cihaz',
+      description: '<p>PelvicAir Pro, pelvik taban rehabilitasyonu için geliştirilmiş 3-modaliteli (EMS + Elektromanyetik + Vibrasyon) ev cihazıdır. 17 bilimsel protokol, mobil uygulama desteği ve 2 yıl garanti.</p>',
       price: 4990,
       comparePrice: 6490,
       categoryId: createdCats['cihazlar'].id,
@@ -61,7 +61,7 @@ async function seed() {
     {
       name: 'Elektrod Pad (3\'lü Paket)',
       slug: 'elektrod-pad-3-lu-paket',
-      description: '<p>PelviCare cihazı ile uyumlu hidrojel elektrod padler. Her pad 3-5 seans kullanıma uygundur. Resealable poşette saklanır.</p>',
+      description: '<p>PelvicAir cihazı ile uyumlu hidrojel elektrod padler. Her pad 3-5 seans kullanıma uygundur. Resealable poşette saklanır.</p>',
       price: 299,
       comparePrice: 399,
       categoryId: createdCats['elektrod-padler'].id,
@@ -73,9 +73,9 @@ async function seed() {
       status: 'aktif',
     },
     {
-      name: 'PelviCare Başlangıç Paketi',
-      slug: 'pelvicare-baslangic-paketi',
-      description: '<p>PelviCare Pro cihaz + 2 paket elektrod pad + taşıma çantası. Yeni kullanıcılar için en uygun başlangıç seti.</p>',
+      name: 'PelvicAir Başlangıç Paketi',
+      slug: 'pelvicair-baslangic-paketi',
+      description: '<p>PelvicAir Pro cihaz + 2 paket elektrod pad + taşıma çantası. Yeni kullanıcılar için en uygun başlangıç seti.</p>',
       price: 5490,
       comparePrice: 7290,
       categoryId: createdCats['cihazlar'].id,
@@ -97,33 +97,33 @@ async function seed() {
   // CMS content
   const cmsItems = [
     { key: 'hero_title', value: 'Pelvik Taban Rehabilitasyonunda Yeni Nesil Teknoloji', type: 'text', label: 'Ana Sayfa - Hero Başlık' },
-    { key: 'hero_subtitle', value: 'PelviCare Pro ile EMS, Elektromanyetik ve Vibrasyon teknolojilerini bir arada kullanın. Evde, kolayca, bilimsel olarak kanıtlanmış yöntemlerle.', type: 'text', label: 'Ana Sayfa - Hero Alt Başlık' },
+    { key: 'hero_subtitle', value: 'PelvicAir Pro ile EMS, Elektromanyetik ve Vibrasyon teknolojilerini bir arada kullanın. Evde, kolayca, bilimsel olarak kanıtlanmış yöntemlerle.', type: 'text', label: 'Ana Sayfa - Hero Alt Başlık' },
     { key: 'hero_cta', value: 'Hemen Keşfet', type: 'text', label: 'Ana Sayfa - Hero Buton' },
     { key: 'hero_image', value: '', type: 'image', label: 'Ana Sayfa - Hero Görsel' },
-    { key: 'about_title', value: 'PelviCare Hakkında', type: 'text', label: 'Hakkımızda - Başlık' },
-    { key: 'about_content', value: '<p>PelviCare, pelvik taban rehabilitasyonunu herkes için erişilebilir kılmak amacıyla kurulmuştur. Fizyoterapistler, ürologlar ve biyomedikal mühendislerden oluşan ekibimiz, klinik araştırmalarla desteklenen çözümler geliştirmektedir.</p>', type: 'html', label: 'Hakkımızda - İçerik' },
+    { key: 'about_title', value: 'PelvicAir Hakkında', type: 'text', label: 'Hakkımızda - Başlık' },
+    { key: 'about_content', value: '<p>PelvicAir, pelvik taban rehabilitasyonunu herkes için erişilebilir kılmak amacıyla kurulmuştur. Fizyoterapistler, ürologlar ve biyomedikal mühendislerden oluşan ekibimiz, klinik araştırmalarla desteklenen çözümler geliştirmektedir.</p>', type: 'html', label: 'Hakkımızda - İçerik' },
     { key: 'footer_address', value: 'Maslak Mah. AOS 55. Sok. 42 Maslak Residence, No: 4/B Sarıyer / İstanbul', type: 'text', label: 'Footer - Adres' },
     { key: 'footer_phone', value: '+90 212 000 00 00', type: 'text', label: 'Footer - Telefon' },
-    { key: 'footer_email', value: 'info@pelvicare.com', type: 'text', label: 'Footer - E-posta' },
+    { key: 'footer_email', value: 'info@pelvicair.com', type: 'text', label: 'Footer - E-posta' },
     { key: 'contact_title', value: 'Bize Ulaşın', type: 'text', label: 'İletişim - Başlık' },
     { key: 'contact_subtitle', value: 'Sorularınız için uzman ekibimiz size yardımcı olmaktan memnuniyet duyar.', type: 'text', label: 'İletişim - Alt Başlık' },
     { key: 'announcement_bar', value: '', type: 'text', label: 'Duyuru Çubuğu' },
     { key: 'logo_url', value: '', type: 'image', label: 'Logo Görseli' },
     { key: 'clinician_title', value: 'Klinisyenler İçin', type: 'text', label: 'Klinisyenler - Başlık' },
-    { key: 'clinician_content', value: '<p>PelviCare, klinik ortamlarda kullanım için özel toplu satış ve reçete programları sunmaktadır. Hastalarınıza en iyi bakımı sağlamak için bizimle iletişime geçin.</p>', type: 'html', label: 'Klinisyenler - İçerik' },
+    { key: 'clinician_content', value: '<p>PelvicAir, klinik ortamlarda kullanım için özel toplu satış ve reçete programları sunmaktadır. Hastalarınıza en iyi bakımı sağlamak için bizimle iletişime geçin.</p>', type: 'html', label: 'Klinisyenler - İçerik' },
     // SSS
     { key: 'faq_hero_title', value: 'Sık Sorulan Sorular', type: 'text', label: 'SSS - Başlık' },
-    { key: 'faq_hero_subtitle', value: 'PelviCare hakkında merak ettiklerinizin yanıtları', type: 'text', label: 'SSS - Alt Başlık' },
+    { key: 'faq_hero_subtitle', value: 'PelvicAir hakkında merak ettiklerinizin yanıtları', type: 'text', label: 'SSS - Alt Başlık' },
     { key: 'faq_categories', type: 'json', label: 'SSS - Kategoriler', value: JSON.stringify([
       { category: 'Cihaz Kullanımı', questions: [
-        { q: 'PelviCare nasıl kullanılır?', a: 'Elektrod pedi iç çamaşırınızın üzerine perineal bölgeye yerleştiriyorsunuz. Mobil uygulama üzerinden hastalık modunuzu seçiyorsunuz ve 20 dakikalık seanslara başlıyorsunuz. Cihaz Bluetooth ile telefonunuza bağlı olarak çalışır.' },
+        { q: 'PelvicAir nasıl kullanılır?', a: 'Elektrod pedi iç çamaşırınızın üzerine perineal bölgeye yerleştiriyorsunuz. Mobil uygulama üzerinden hastalık modunuzu seçiyorsunuz ve 20 dakikalık seanslara başlıyorsunuz. Cihaz Bluetooth ile telefonunuza bağlı olarak çalışır.' },
         { q: 'Seans süresi ne kadar?', a: 'Standart seans süresi 20 dakikadır. Günde 1-2 seans önerilir. Tedavi fazına göre (F1: Fortifikasyon, F2: Güçlendirme, F3: İdame) uygulama otomatik ilerler.' },
-        { q: 'Cihaz ağrı verir mi?', a: 'Hayır. PelviCare non-invazif tasarımıyla ağrısız çalışır. EMS sırasında hafif titreşim veya kasılma hissedilebilir; bu normaldir ve şiddet mobil uygulama üzerinden ayarlanabilir.' },
+        { q: 'Cihaz ağrı verir mi?', a: 'Hayır. PelvicAir non-invazif tasarımıyla ağrısız çalışır. EMS sırasında hafif titreşim veya kasılma hissedilebilir; bu normaldir ve şiddet mobil uygulama üzerinden ayarlanabilir.' },
         { q: 'Elektrod pad ne kadar dayanır?', a: 'Her elektrod pad 3-5 seans kullanıma uygundur. Hidrojel yüzey kuru kalmadığı sürece iletkenliği korunur. Resealable poşette saklanmalıdır.' },
       ]},
-      { category: 'PelviCare Bana Uygun mu?', questions: [
+      { category: 'PelvicAir Bana Uygun mu?', questions: [
         { q: 'Hangi durumlarda kullanmamalıyım?', a: 'Kalp pili (pacemaker) veya aktif implant kullananlar, hamileler, aktif enfeksiyonu olanlar, ameliyat bölgesinde açık yara olanlar ve epilepsi hastaları cihazı kullanmamalıdır.' },
-        { q: 'Erkekler de kullanabilir mi?', a: 'Evet. PelviCare hem kadın hem erkek anatomisine özel tasarlanmıştır. Erkeklere özel 7 protokol (E-01 ila E-07) erektil disfonksiyon, erken boşalma, prostatik ağrı ve idrar kaçırma gibi durumları kapsar.' },
+        { q: 'Erkekler de kullanabilir mi?', a: 'Evet. PelvicAir hem kadın hem erkek anatomisine özel tasarlanmıştır. Erkeklere özel 7 protokol (E-01 ila E-07) erektil disfonksiyon, erken boşalma, prostatik ağrı ve idrar kaçırma gibi durumları kapsar.' },
         { q: 'Doğum sonrası ne zaman başlayabilirim?', a: 'Normal doğum sonrası genellikle 6-8 hafta, sezaryen sonrası ise 12 hafta beklenmesi önerilir. Başlamadan önce mutlaka doktorunuza danışın.' },
         { q: 'Kaç haftada sonuç alırım?', a: 'İdrar kaçırma için klinik çalışmalar 6 haftada %95 iyileşme bildirmektedir. Dismenore için sonuç 20 dakika içinde hissedilebilir. Bireysel sonuçlar hastalığın şiddetine ve düzenli kullanıma göre değişir.' },
       ]},
@@ -133,7 +133,7 @@ async function seed() {
         { q: 'SGK veya özel sigorta kapsamında mı?', a: 'Henüz SGK kapsamında değildir. Ancak bazı özel sigorta şirketleri tıbbi gereklilik belgesiyle karşılayabilir. Fatura kesilmektedir.' },
       ]},
       { category: 'Teknik Sorular', questions: [
-        { q: 'Uygulama hangi işletim sistemleriyle uyumlu?', a: 'PelviCare uygulaması iOS 14+ ve Android 8.0+ ile tam uyumludur. App Store ve Google Play\'den ücretsiz indirilebilir.' },
+        { q: 'Uygulama hangi işletim sistemleriyle uyumlu?', a: 'PelvicAir uygulaması iOS 14+ ve Android 8.0+ ile tam uyumludur. App Store ve Google Play\'den ücretsiz indirilebilir.' },
         { q: 'Cihazın pil ömrü ne kadar?', a: 'Tam şarjda 5–7 seans (yaklaşık 100–140 dakika) kullanım sağlar. USB-C ile şarj edilir ve 90 dakikada tam şarj olur.' },
         { q: 'Cihazı temizlemek için ne kullanmalıyım?', a: 'Nemli bez ile silin. Sıvı solventler, alkol veya su ile temizlemeyin. Elektrod pad bağlantı noktalarına nem girmesinden kaçının.' },
         { q: 'Bluetooth menzili ne kadar?', a: 'Bluetooth 5.0 ile 10 metreye kadar kararlı bağlantı sağlar. Seans sırasında telefonunuzun yakında olması önerilir.' },
@@ -141,7 +141,7 @@ async function seed() {
     ]) },
     // Nasıl Çalışır
     { key: 'how_hero_title', value: 'Nasıl Çalışır?', type: 'text', label: 'Nasıl Çalışır - Başlık' },
-    { key: 'how_hero_subtitle', value: 'PelviCare, üç tedavi modalitesini tek bir giyilebilir cihazda birleştirerek klinik düzey pelvik taban rehabilitasyonunu evinize taşır.', type: 'text', label: 'Nasıl Çalışır - Alt Başlık' },
+    { key: 'how_hero_subtitle', value: 'PelvicAir, üç tedavi modalitesini tek bir giyilebilir cihazda birleştirerek klinik düzey pelvik taban rehabilitasyonunu evinize taşır.', type: 'text', label: 'Nasıl Çalışır - Alt Başlık' },
     { key: 'how_phases', type: 'json', label: 'Nasıl Çalışır - Tedavi Fazları', value: JSON.stringify([
       { code: 'F1', name: 'Fortifikasyon', duration: '1–2 Hafta', desc: 'Düşük yoğunlukta kas aktivasyonu ve nöromusküler bağlantı kurma. Vücut cihaza adapte olur.' },
       { code: 'F2', name: 'Güçlendirme', duration: '3–6 Hafta', desc: 'Artan şiddet ve frekansla klinik etkinlik bölgesine geçiş. Kas kuvveti ve dayanıklılık artar.' },
@@ -173,7 +173,7 @@ async function seed() {
     ]) },
     // Bilim
     { key: 'science_hero_title', value: 'Bilimsel Kanıtlar', type: 'text', label: 'Bilim - Başlık' },
-    { key: 'science_hero_subtitle', value: 'PelviCare\'in etkinliği 50\'den fazla randomize kontrollü klinik çalışma ile desteklenmektedir.', type: 'text', label: 'Bilim - Alt Başlık' },
+    { key: 'science_hero_subtitle', value: 'PelvicAir\'in etkinliği 50\'den fazla randomize kontrollü klinik çalışma ile desteklenmektedir.', type: 'text', label: 'Bilim - Alt Başlık' },
     { key: 'science_studies', type: 'json', label: 'Bilim - Klinik Çalışmalar', value: JSON.stringify([
       { modalite: 'EMS · K-01', endikasyon: 'İdrar Kaçırma', sonuc: '%95 sızıntı azalması', kaynak: 'Stania M. et al. 2022 RCT', tag: 'RCT' },
       { modalite: 'Manyetik · K-03', endikasyon: 'Prolapsus', sonuc: '%100 POP-Q evre iyileşmesi (20 seans)', kaynak: 'Xu J. et al. 2023 RCT', tag: 'RCT' },
@@ -243,8 +243,8 @@ async function seed() {
   console.log('CMS content created.');
   console.log('');
   console.log('=== Seed tamamlandı ===');
-  console.log('Admin giriş: admin@pelvicare.com / Admin123!');
-  console.log('Süper Admin: superadmin@pelvicare.com / Super123!');
+  console.log('Admin giriş: admin@pelvicair.com / Admin123!');
+  console.log('Süper Admin: superadmin@pelvicair.com / Super123!');
 }
 
 seed()

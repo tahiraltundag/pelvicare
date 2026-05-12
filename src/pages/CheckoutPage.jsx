@@ -95,7 +95,7 @@ export default function CheckoutPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4 text-gray-500">
         <p className="text-lg font-medium">Sepetiniz boş.</p>
-        <button onClick={() => navigate('/urun/pelvicare')} className="px-6 py-2.5 rounded-xl text-white font-semibold" style={{ backgroundColor: '#0d9488' }}>
+        <button onClick={() => navigate('/urun/pelvicair')} className="px-6 py-2.5 rounded-xl text-white font-semibold" style={{ backgroundColor: '#0d9488' }}>
           Ürünlere Git
         </button>
       </div>
@@ -273,7 +273,7 @@ export default function CheckoutPage() {
 
                       {/* Kart Önizleme */}
                       <div className="rounded-2xl p-5 mb-5 text-white relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #1e3a5f 0%, #0d9488 100%)' }}>
-                        <div className="text-xs opacity-60 mb-6">PelviCare Güvenli Ödeme</div>
+                        <div className="text-xs opacity-60 mb-6">PelvicAir Güvenli Ödeme</div>
                         <div className="text-lg font-mono tracking-widest mb-4">
                           {card.number || '•••• •••• •••• ••••'}
                         </div>
@@ -331,7 +331,7 @@ export default function CheckoutPage() {
                       <div className="space-y-3 text-sm">
                         {[
                           { label: 'Banka', value: 'Ziraat Bankası' },
-                          { label: 'Hesap Adı', value: 'PelviCare Medikal A.Ş.' },
+                          { label: 'Hesap Adı', value: 'PelvicAir Medikal A.Ş.' },
                           { label: 'IBAN', value: 'TR00 0001 0001 0000 0000 0000 00' },
                           { label: 'Açıklama', value: `Sipariş #${orderNumber}` },
                         ].map(row => (

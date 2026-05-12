@@ -1,4 +1,4 @@
-export function PelviCareIcon({ size = 36, className = '' }) {
+export function PelvicAirIcon({ size = 36, className = '' }) {
   return (
     <svg
       width={size}
@@ -33,10 +33,10 @@ export function PelviCareIcon({ size = 36, className = '' }) {
   );
 }
 
-export function PelviCareLogotype({ iconSize = 36, dark = false }) {
+export function PelvicAirLogotype({ iconSize = 36, dark = false }) {
   return (
     <div className="flex items-center gap-2.5">
-      <PelviCareIcon size={iconSize} />
+      <PelvicAirIcon size={iconSize} />
       <span
         className="font-extrabold tracking-tight"
         style={{

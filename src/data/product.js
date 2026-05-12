@@ -78,17 +78,17 @@ export const faqItems = [
   {
     category: 'Cihaz Kullanımı',
     questions: [
-      { q: 'PelviCare nasıl kullanılır?', a: 'Elektrod pedi iç çamaşırınızın üzerine perineal bölgeye yerleştiriyorsunuz. Mobil uygulama üzerinden hastalık modunuzu seçiyorsunuz ve 20 dakikalık seanslara başlıyorsunuz. Cihaz Bluetooth ile telefonunuza bağlı olarak çalışır.' },
+      { q: 'PelvicAir nasıl kullanılır?', a: 'Elektrod pedi iç çamaşırınızın üzerine perineal bölgeye yerleştiriyorsunuz. Mobil uygulama üzerinden hastalık modunuzu seçiyorsunuz ve 20 dakikalık seanslara başlıyorsunuz. Cihaz Bluetooth ile telefonunuza bağlı olarak çalışır.' },
       { q: 'Seans süresi ne kadar?', a: 'Standart seans süresi 20 dakikadır. Günde 1-2 seans önerilir. Tedavi fazına göre (F1: Fortifikasyon, F2: Güçlendirme, F3: İdame) uygulama otomatik ilerler.' },
-      { q: 'Cihaz ağrı verir mi?', a: 'Hayır. PelviCare non-invazif tasarımıyla ağrısız çalışır. EMS sırasında hafif titreşim veya kasılma hissedilebilir; bu normaldir ve şiddet mobil uygulama üzerinden ayarlanabilir.' },
+      { q: 'Cihaz ağrı verir mi?', a: 'Hayır. PelvicAir non-invazif tasarımıyla ağrısız çalışır. EMS sırasında hafif titreşim veya kasılma hissedilebilir; bu normaldir ve şiddet mobil uygulama üzerinden ayarlanabilir.' },
       { q: 'Elektrod pad ne kadar dayanır?', a: 'Her elektrod pad 3-5 seans kullanıma uygundur. Hidrojel yüzey kuru kalmadığı sürece iletkenliği korunur. Resealable poşette saklanmalıdır.' },
     ],
   },
   {
-    category: 'PelviCare Bana Uygun mu?',
+    category: 'PelvicAir Bana Uygun mu?',
     questions: [
       { q: 'Hangi durumlarda kullanmamalıyım?', a: 'Kalp pili (pacemaker) veya aktif implant kullananlar, hamileler, aktif enfeksiyonu olanlar, ameliyat bölgesinde açık yara olanlar ve epilepsi hastaları cihazı kullanmamalıdır. Ayrıntılı kontrendikasyon listesi için hekiminize danışın.' },
-      { q: 'Erkekler de kullanabilir mi?', a: 'Evet. PelviCare hem kadın hem erkek anatomisine özel tasarlanmıştır. Erkeklere özel 7 protokol (E-01 ila E-07) erektil disfonksiyon, erken boşalma, prostatik ağrı ve idrar kaçırma gibi durumları kapsar.' },
+      { q: 'Erkekler de kullanabilir mi?', a: 'Evet. PelvicAir hem kadın hem erkek anatomisine özel tasarlanmıştır. Erkeklere özel 7 protokol (E-01 ila E-07) erektil disfonksiyon, erken boşalma, prostatik ağrı ve idrar kaçırma gibi durumları kapsar.' },
       { q: 'Doğum sonrası ne zaman başlayabilirim?', a: 'Normal doğum sonrası genellikle 6-8 hafta, sezaryen sonrası ise 12 hafta beklenmesi önerilir. Başlamadan önce mutlaka doktorunuza danışın.' },
       { q: 'Kaç haftada sonuç alırım?', a: 'İdrar kaçırma için klinik çalışmalar 6 haftada %95 iyileşme bildirmektedir. Dismenore için sonuç 20 dakika içinde hissedilebilir. Bireysel sonuçlar hastalığın şiddetine ve düzenli kullanıma göre değişir.' },
     ],

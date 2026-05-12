@@ -26,7 +26,7 @@ const APP_FEATURE_ICONS = [<Activity size={20} />, <Zap size={20} />, <Waves siz
 export default function HowItWorksPage() {
   const { get, getJson } = useCms();
   const heroTitle = get('how_hero_title', 'Nasıl Çalışır?');
-  const heroSubtitle = get('how_hero_subtitle', 'PelviCare, üç tedavi modalitesini tek bir giyilebilir cihazda birleştirerek klinik düzey pelvik taban rehabilitasyonunu evinize taşır.');
+  const heroSubtitle = get('how_hero_subtitle', 'PelvicAir, üç tedavi modalitesini tek bir giyilebilir cihazda birleştirerek klinik düzey pelvik taban rehabilitasyonunu evinize taşır.');
   const phases = getJson('how_phases', DEFAULT_PHASES);
   const appFeatures = getJson('how_app_features', DEFAULT_APP_FEATURES);
 
@@ -70,7 +70,7 @@ export default function HowItWorksPage() {
             </div>
             <div className="rounded-2xl p-8 text-center" style={{ backgroundColor: '#f0fdfa' }}>
               <div className="text-8xl mb-6">📱</div>
-              <h3 className="text-xl font-bold mb-2" style={{ color: '#1e3a5f' }}>PelviCare Mobil App</h3>
+              <h3 className="text-xl font-bold mb-2" style={{ color: '#1e3a5f' }}>PelvicAir Mobil App</h3>
               <p className="text-gray-600 text-sm mb-4">iOS & Android uyumlu. Türkçe arayüz.</p>
               <div className="flex justify-center gap-3">
                 <div className="bg-gray-900 text-white rounded-xl px-4 py-2 text-xs font-medium">App Store</div>

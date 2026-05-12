@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Mail, Phone, Clock, MapPin, CheckCircle } from 'lucide-react';
 
 const contactInfo = [
-  { icon: <Mail size={20} />, title: 'E-posta', detail: 'info@pelvicare.com', sub: 'Genel sorular' },
-  { icon: <Mail size={20} />, title: 'Klinisyen Hattı', detail: 'klinisyen@pelvicare.com', sub: 'Profesyonel destek' },
+  { icon: <Mail size={20} />, title: 'E-posta', detail: 'info@pelvicair.com', sub: 'Genel sorular' },
+  { icon: <Mail size={20} />, title: 'Klinisyen Hattı', detail: 'klinisyen@pelvicair.com', sub: 'Profesyonel destek' },
   { icon: <Phone size={20} />, title: 'Telefon', detail: '0850 123 45 67', sub: 'Hafta içi 09–18' },
   { icon: <Clock size={20} />, title: 'Destek Saatleri', detail: 'Pzt–Cum: 09:00–18:00', sub: 'Türkiye saati' },
 ];
@@ -145,8 +145,8 @@ export default function ContactPage() {
                   <Mail size={18} className="text-teal-600 flex-shrink-0 mt-0.5" />
                   <div>
                     <div className="font-semibold text-gray-900 text-sm">E-posta</div>
-                    <div className="text-sm text-gray-600">info@pelvicare.com</div>
-                    <div className="text-sm text-gray-600">klinisyen@pelvicare.com</div>
+                    <div className="text-sm text-gray-600">info@pelvicair.com</div>
+                    <div className="text-sm text-gray-600">klinisyen@pelvicair.com</div>
                   </div>
                 </div>
               </div>

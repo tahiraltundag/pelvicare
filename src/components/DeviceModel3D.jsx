@@ -137,7 +137,7 @@ function Device() {
         <meshStandardMaterial color="#c5d2df" roughness={0.3} />
       </mesh>
 
-      {/* PelviCare yazısı için ince mavi çizgi detayı */}
+      {/* PelvicAir yazısı için ince mavi çizgi detayı */}
       <mesh position={[0, -0.38, 0.278]}>
         <boxGeometry args={[0.55, 0.018, 0.01]} />
         <meshStandardMaterial color="#0d9488" roughness={0.2} emissive="#0d9488" emissiveIntensity={0.4} />

@@ -194,7 +194,7 @@ export default function WomenPage() {
           <p className="text-blue-300 mb-8">Klinik kanıtlı protokollerle, evinizin konforunda.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/urun/pelvicare"
+              to="/urun/pelvicair"
               className="inline-flex items-center justify-center gap-2 px-8 py-3.5 font-semibold text-white rounded-xl hover:opacity-90 transition-all"
               style={{ backgroundColor: '#0d9488' }}
             >

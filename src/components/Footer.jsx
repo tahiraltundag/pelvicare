@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Mail, Phone } from 'lucide-react';
-import { PelviCareIcon } from './PelviCareLogo';
+import { PelvicAirIcon } from './PelvicAirLogo';
 
 const IconInstagram = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -20,7 +20,7 @@ const IconFacebook = () => (
 
 const footerLinks = {
   Ürünler: [
-    { label: 'PelviCare Cihazı', path: '/urun/pelvicare' },
+    { label: 'PelvicAir Cihazı', path: '/urun/pelvicair' },
     { label: 'Kadın Modları', path: '/kadin' },
     { label: 'Erkek Modları', path: '/erkek' },
     { label: 'Elektrod Padler', path: '/urun/elektrod-pad' },
@@ -52,7 +52,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-              <PelviCareIcon size={36} />
+              <PelvicAirIcon size={36} />
               <span className="text-xl font-extrabold tracking-tight" style={{ letterSpacing: '-0.02em' }}>
                 Pelvi<span className="text-teal-400">Care</span>
               </span>
@@ -91,9 +91,9 @@ export default function Footer() {
         <div className="mt-12 pt-8 border-t border-blue-800">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex flex-col sm:flex-row gap-4 text-sm text-blue-300">
-              <a href="mailto:info@pelvicare.com" className="flex items-center gap-2 hover:text-teal-400 transition-colors">
+              <a href="mailto:info@pelvicair.com" className="flex items-center gap-2 hover:text-teal-400 transition-colors">
                 <Mail size={14} />
-                info@pelvicare.com
+                info@pelvicair.com
               </a>
               <a href="tel:+908501234567" className="flex items-center gap-2 hover:text-teal-400 transition-colors">
                 <Phone size={14} />
@@ -101,7 +101,7 @@ export default function Footer() {
               </a>
             </div>
             <p className="text-xs text-blue-400">
-              © 2026 PelviCare. Tüm hakları saklıdır.
+              © 2026 PelvicAir. Tüm hakları saklıdır.
             </p>
           </div>
         </div>

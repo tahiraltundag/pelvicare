@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, ShoppingCart, ChevronDown, User, LogOut, Settings, Package } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import { PelviCareIcon } from './PelviCareLogo';
+import { PelvicAirIcon } from './PelvicAirLogo';
 
 const navItems = [
   { label: 'Nasıl Çalışır', path: '/nasil-calisir' },
@@ -14,7 +14,7 @@ const navItems = [
   {
     label: 'Ürünler',
     children: [
-      { label: 'PelviCare Cihazı', path: '/urun/pelvicare' },
+      { label: 'PelvicAir Cihazı', path: '/urun/pelvicair' },
       { label: 'Kadın Modları', path: '/kadin' },
       { label: 'Erkek Modları', path: '/erkek' },
       { label: 'Elektrod Padler', path: '/urun/elektrod-pad' },
@@ -67,7 +67,7 @@ export default function Header() {
   const goToPrice = () => {
     setMobileOpen(false);
     setSidebarOpen(false);
-    navigate('/urun/pelvicare');
+    navigate('/urun/pelvicair');
     setTimeout(() => document.getElementById('paketler')?.scrollIntoView({ behavior: 'smooth' }), 150);
   };
 
@@ -79,7 +79,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" onClick={() => setSidebarOpen(false)} className="flex items-center gap-2.5">
-            <PelviCareIcon size={36} />
+            <PelvicAirIcon size={36} />
             <span className="text-xl font-extrabold tracking-tight" style={{ color: '#1e3a5f', letterSpacing: '-0.02em' }}>
               Pelvi<span style={{ color: '#0d9488' }}>Care</span>
             </span>

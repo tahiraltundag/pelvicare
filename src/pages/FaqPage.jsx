@@ -5,9 +5,9 @@ import { useCms } from '../hooks/useCms';
 
 const DEFAULT_CATEGORIES = [
   { category: 'Cihaz Kullanımı', questions: [
-    { q: 'PelviCare nasıl kullanılır?', a: 'Elektrod pedi iç çamaşırınızın üzerine perineal bölgeye yerleştiriyorsunuz. Mobil uygulama üzerinden hastalık modunuzu seçiyorsunuz ve 20 dakikalık seanslara başlıyorsunuz.' },
+    { q: 'PelvicAir nasıl kullanılır?', a: 'Elektrod pedi iç çamaşırınızın üzerine perineal bölgeye yerleştiriyorsunuz. Mobil uygulama üzerinden hastalık modunuzu seçiyorsunuz ve 20 dakikalık seanslara başlıyorsunuz.' },
     { q: 'Seans süresi ne kadar?', a: 'Standart seans süresi 20 dakikadır. Günde 1-2 seans önerilir.' },
-    { q: 'Cihaz ağrı verir mi?', a: 'Hayır. PelviCare non-invazif tasarımıyla ağrısız çalışır.' },
+    { q: 'Cihaz ağrı verir mi?', a: 'Hayır. PelvicAir non-invazif tasarımıyla ağrısız çalışır.' },
     { q: 'Elektrod pad ne kadar dayanır?', a: 'Her elektrod pad 3-5 seans kullanıma uygundur.' },
   ]},
 ];
@@ -30,7 +30,7 @@ function FaqItem({ question, answer }) {
 export default function FaqPage() {
   const { get, getJson } = useCms();
   const heroTitle = get('faq_hero_title', 'Sık Sorulan Sorular');
-  const heroSubtitle = get('faq_hero_subtitle', 'PelviCare hakkında merak ettiklerinizin yanıtları');
+  const heroSubtitle = get('faq_hero_subtitle', 'PelvicAir hakkında merak ettiklerinizin yanıtları');
   const categories = getJson('faq_categories', DEFAULT_CATEGORIES);
 
   return (
@@ -78,8 +78,8 @@ export default function FaqPage() {
             <Link to="/iletisim" className="inline-flex items-center justify-center px-6 py-3 font-semibold text-white rounded-xl hover:opacity-90 transition-all" style={{ backgroundColor: '#0d9488' }}>
               Bize Ulaşın
             </Link>
-            <a href="mailto:info@pelvicare.com" className="inline-flex items-center justify-center px-6 py-3 font-semibold rounded-xl border-2 hover:bg-gray-50 transition-all" style={{ borderColor: '#1e3a5f', color: '#1e3a5f' }}>
-              info@pelvicare.com
+            <a href="mailto:info@pelvicair.com" className="inline-flex items-center justify-center px-6 py-3 font-semibold rounded-xl border-2 hover:bg-gray-50 transition-all" style={{ borderColor: '#1e3a5f', color: '#1e3a5f' }}>
+              info@pelvicair.com
             </a>
           </div>
         </div>

@@ -68,9 +68,14 @@ export default function ClinicianPage() {
                     Panele Git
                   </button>
                 ) : (
-                  <button onClick={() => navigate('/klinisyen/kayit')} className="px-5 py-2 text-sm font-semibold text-white rounded-lg border border-white/40 hover:bg-white/10 transition-all">
-                    Kayıt Ol
-                  </button>
+                  <div className="flex gap-2 justify-center">
+                    <button onClick={() => navigate('/klinisyen/kayit')} className="px-5 py-2 text-sm font-semibold text-white rounded-lg border border-white/40 hover:bg-white/10 transition-all">
+                      Kayıt Ol
+                    </button>
+                    <button onClick={() => navigate('/giris')} className="px-5 py-2 text-sm font-semibold rounded-lg transition-all" style={{ backgroundColor: '#0d9488', color: 'white' }}>
+                      Giriş Yap
+                    </button>
+                  </div>
                 )}
               </div>
             </div>

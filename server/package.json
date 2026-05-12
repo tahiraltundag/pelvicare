@@ -13,7 +13,7 @@
     "db:studio": "npx prisma studio",
     "setup": "npm install && npx prisma db push && node utils/seed.js",
     "postinstall": "npx prisma generate",
-    "vercel-build": "npx prisma db push && node utils/seed.js"
+    "vercel-build": "npx prisma db push --accept-data-loss && node utils/seed.js"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",

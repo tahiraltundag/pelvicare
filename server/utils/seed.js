@@ -237,7 +237,7 @@ async function seed() {
   ];
 
   for (const item of cmsItems) {
-    await prisma.cmsContent.upsert({ where: { key: item.key }, update: {}, create: item });
+    await prisma.cmsContent.upsert({ where: { key: item.key }, update: { value: item.value }, create: item });
   }
 
   console.log('CMS content created.');

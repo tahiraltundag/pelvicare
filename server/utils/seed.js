@@ -40,6 +40,11 @@ async function seed() {
 
   console.log('Categories created.');
 
+  // Remove legacy PelviCare-branded products
+  await prisma.product.deleteMany({
+    where: { slug: { in: ['pelvicare-pro-cihaz', 'pelvicare-baslangic-paketi', 'pelvicare-elektrod-pad'] } },
+  });
+
   // Products
   const products = [
     {

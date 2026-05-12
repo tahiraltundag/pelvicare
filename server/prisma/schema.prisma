@@ -8,16 +8,17 @@ datasource db {
 }
 
 model User {
-  id            String         @id @default(cuid())
-  email         String         @unique
-  password      String
-  name          String
-  role          String         @default("user")
-  isActive      Boolean        @default(true)
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  orders        Order[]
-  refreshTokens RefreshToken[]
+  id               String            @id @default(cuid())
+  email            String            @unique
+  password         String
+  name             String
+  role             String            @default("user")
+  isActive         Boolean           @default(true)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  orders           Order[]
+  refreshTokens    RefreshToken[]
+  clinicianProfile ClinicianProfile?
 }
 
 model Product {
@@ -98,4 +99,54 @@ model PasswordReset {
   expiresAt DateTime
   used      Boolean  @default(false)
   createdAt DateTime @default(now())
+}
+
+model ClinicianProfile {
+  id          String             @id @default(cuid())
+  userId      String             @unique
+  user        User               @relation(fields: [userId], references: [id])
+  specialty   String             @default("")
+  license     String             @default("")
+  institution String             @default("")
+  phone       String             @default("")
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  patients    ClinicianPatient[]
+}
+
+model ClinicianPatient {
+  id          String           @id @default(cuid())
+  clinicianId String
+  clinician   ClinicianProfile @relation(fields: [clinicianId], references: [id])
+  name        String
+  email       String           @default("")
+  birthYear   Int?
+  gender      String           @default("")
+  diagnosis   String           @default("")
+  notes       String           @default("")
+  createdAt   DateTime         @default(now())
+  sessions    PatientSession[]
+}
+
+model PatientSession {
+  id        String           @id @default(cuid())
+  patientId String
+  patient   ClinicianPatient @relation(fields: [patientId], references: [id])
+  protocol  String
+  date      DateTime         @default(now())
+  duration  Int              @default(20)
+  notes     String           @default("")
+  createdAt DateTime         @default(now())
+}
+
+model BulkOrderRequest {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  institution String
+  phone       String   @default("")
+  quantity    Int      @default(1)
+  message     String   @default("")
+  status      String   @default("beklemede")
+  createdAt   DateTime @default(now())
 }

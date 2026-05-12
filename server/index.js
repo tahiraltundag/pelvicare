@@ -23,6 +23,7 @@ app.use('/api/categories', require('./routes/categories'));
 app.use('/api/orders', require('./routes/orders'));
 app.use('/api/cms', require('./routes/cms'));
 app.use('/api/admin', require('./routes/admin'));
+app.use('/api/clinician', require('./routes/clinician'));
 app.use('/api/uploads', require('./routes/uploads'));
 
 app.use((err, req, res, next) => {

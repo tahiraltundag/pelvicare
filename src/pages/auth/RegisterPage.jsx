@@ -63,7 +63,7 @@ export default function RegisterPage() {
               <span className="text-white font-bold">P</span>
             </div>
             <span className="text-2xl font-bold" style={{ color: '#1e3a5f' }}>
-              Pelvi<span style={{ color: '#0d9488' }}>Care</span>
+              Pelvic<span style={{ color: '#0d9488' }}>Air</span>
             </span>
           </Link>
           <h1 className="text-2xl font-bold text-gray-900">Hesap Oluştur</h1>

@@ -64,6 +64,17 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
+  const registerClinician = useCallback(async (data) => {
+    setLoading(true);
+    try {
+      const res = await api.post('/clinician/register', data);
+      if (!res.success) throw new Error(res.error);
+      return res.data;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   const logout = useCallback(async () => {
     const { refreshToken } = api.getTokens();
     await api.post('/auth/logout', { refreshToken }).catch(() => {});
@@ -73,9 +84,10 @@ export function AuthProvider({ children }) {
 
   const isAdmin = user && ['admin', 'superadmin'].includes(user.role);
   const isSuperAdmin = user?.role === 'superadmin';
+  const isClinician = user?.role === 'clinician';
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, isAdmin, isSuperAdmin }}>
+    <AuthContext.Provider value={{ user, loading, login, register, registerClinician, logout, isAdmin, isSuperAdmin, isClinician }}>
       {children}
     </AuthContext.Provider>
   );

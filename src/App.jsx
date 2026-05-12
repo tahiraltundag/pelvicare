@@ -33,6 +33,12 @@ import AdminOrders from './pages/admin/AdminOrders';
 import AdminCms from './pages/admin/AdminCms';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminAnalytics from './pages/admin/AdminAnalytics';
+import ClinicianLayout from './pages/clinician/ClinicianLayout';
+import ClinicianRegisterPage from './pages/clinician/ClinicianRegisterPage';
+import ClinicianDashboard from './pages/clinician/ClinicianDashboard';
+import ClinicianPatients from './pages/clinician/ClinicianPatients';
+import ClinicianPatientDetail from './pages/clinician/ClinicianPatientDetail';
+import ClinicianBulkOrder from './pages/clinician/ClinicianBulkOrder';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -90,6 +96,29 @@ export default function App() {
             <Route path="/admin/analitik" element={
               <ProtectedRoute roles={['admin', 'superadmin']}>
                 <AdminLayout><AdminAnalytics /></AdminLayout>
+              </ProtectedRoute>
+            } />
+
+            {/* Clinician Routes */}
+            <Route path="/klinisyen/kayit" element={<ClinicianRegisterPage />} />
+            <Route path="/klinisyen/panel" element={
+              <ProtectedRoute roles={['clinician']}>
+                <ClinicianLayout><ClinicianDashboard /></ClinicianLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/klinisyen/hastalar" element={
+              <ProtectedRoute roles={['clinician']}>
+                <ClinicianLayout><ClinicianPatients /></ClinicianLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/klinisyen/hastalar/:id" element={
+              <ProtectedRoute roles={['clinician']}>
+                <ClinicianLayout><ClinicianPatientDetail /></ClinicianLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/klinisyen/toplu-siparis" element={
+              <ProtectedRoute roles={['clinician']}>
+                <ClinicianLayout><ClinicianBulkOrder /></ClinicianLayout>
               </ProtectedRoute>
             } />
 

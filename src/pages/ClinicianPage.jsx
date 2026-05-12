@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { CheckCircle, ArrowRight, Download } from 'lucide-react';
 
 const prescribeSteps = [
@@ -21,6 +22,8 @@ const downloads = [
 ];
 
 export default function ClinicianPage() {
+  const { user, isClinician } = useAuth();
+  const navigate = useNavigate();
   return (
     <div>
       {/* Hero */}
@@ -60,9 +63,15 @@ export default function ClinicianPage() {
                 <div className="text-6xl mb-4">👨‍⚕️</div>
                 <div className="text-lg font-bold text-teal-300 mb-2">Klinisyen Portalı</div>
                 <p className="text-sm text-blue-200 mb-4">Hastalarınızın seans takibini yapın, protokol önerin, ilerlemeyi izleyin.</p>
-                <button className="px-5 py-2 text-sm font-semibold text-white rounded-lg border border-white/40 hover:bg-white/10 transition-all">
-                  Kayıt Ol
-                </button>
+                {isClinician ? (
+                  <button onClick={() => navigate('/klinisyen/panel')} className="px-5 py-2 text-sm font-semibold text-white rounded-lg border border-white/40 hover:bg-white/10 transition-all">
+                    Panele Git
+                  </button>
+                ) : (
+                  <button onClick={() => navigate('/klinisyen/kayit')} className="px-5 py-2 text-sm font-semibold text-white rounded-lg border border-white/40 hover:bg-white/10 transition-all">
+                    Kayıt Ol
+                  </button>
+                )}
               </div>
             </div>
           </div>

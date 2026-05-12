@@ -23,7 +23,8 @@ export default function LoginPage() {
     try {
       const user = await login(form.email, form.password, form.rememberMe);
       await mergeGuestCart();
-      navigate(user.role === 'user' ? from : '/admin', { replace: true });
+      if (user.role === 'clinician') navigate('/klinisyen/panel', { replace: true });
+      else navigate(user.role === 'user' ? from : '/admin', { replace: true });
     } catch (err) {
       setError(err.message);
     } finally {

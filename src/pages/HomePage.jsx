@@ -94,7 +94,7 @@ export default function HomePage() {
                 <span className="w-2 h-2 bg-teal-400 rounded-full"></span>
                 <span className="text-teal-300 text-sm font-medium">CE Belgeli · Tıbbi Sınıf Cihaz</span>
               </div>
-              <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-6">
+              <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-6 mt-6">
                 Pelvik Taban Terapisi.<br />
                 <span className="text-teal-400">Müdahalesiz.</span> Kolay.
               </h1>

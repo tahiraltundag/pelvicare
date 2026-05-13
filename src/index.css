@@ -68,18 +68,18 @@
   }
   html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
   body {
     font-family: 'Inter', system-ui, sans-serif;
     color: #1f2937;
     background: #ffffff;
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
   #root {
     width: 100%;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
   /* Prevent iOS Safari from auto-zooming on input focus */
   @media screen and (max-width: 768px) {

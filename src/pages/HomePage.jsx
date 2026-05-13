@@ -4,7 +4,6 @@ import { CheckCircle, Star, ArrowRight, Shield, Zap, Activity } from 'lucide-rea
 import DeviceModel3D from '../components/DeviceModel3D';
 import AnimateInView from '../components/AnimateInView';
 import { stats, modalities, clinicalResults, reviews } from '../data/product';
-import { useCms } from '../hooks/useCms';
 
 const PRODUCT_IMAGES = [
   '/images/urun-sistem-genel.jpg',
@@ -65,9 +64,6 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [heroView, setHeroView] = useState('photos');
   const [photoIndex, setPhotoIndex] = useState(0);
-  const { get } = useCms();
-  const heroTitle = get('hero_title', '');
-  const heroSubtitle = get('hero_subtitle', '');
 
   const goToPrice = () => {
     navigate('/urun/pelvicair');
@@ -99,10 +95,11 @@ export default function HomePage() {
                 <span className="text-teal-300 text-sm font-medium">CE Belgeli · Tıbbi Sınıf Cihaz</span>
               </div>
               <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-6">
-                {heroTitle || (<>Pelvik Taban Terapisi.<br /><span className="text-teal-400">Müdahalesiz.</span> Kolay.</>)}
+                Pelvik Taban Terapisi.<br />
+                <span className="text-teal-400">Müdahalesiz.</span> Kolay.
               </h1>
               <p className="text-lg text-blue-200 mb-8 leading-relaxed">
-                {heroSubtitle || 'EMS + Elektromanyetik Enerji + Vibrasyon. Üç güç, bir cihaz. 17 hastalık modunda klinik düzey rehabilitasyon artık evinizde.'}
+                EMS + Elektromanyetik Enerji + Vibrasyon. Üç güç, bir cihaz. 17 hastalık modunda klinik düzey rehabilitasyon artık evinizde.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mb-10">
                 <button

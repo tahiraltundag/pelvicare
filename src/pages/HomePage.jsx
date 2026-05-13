@@ -90,7 +90,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-12 lg:pt-6 lg:pb-16">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div className="text-white">
-              <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-400/30 rounded-full px-4 py-1.5 mb-6 mt-12">
+              <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-400/30 rounded-full px-4 py-1.5 mb-6 mt-24">
                 <span className="w-2 h-2 bg-teal-400 rounded-full"></span>
                 <span className="text-teal-300 text-sm font-medium">CE Belgeli · Tıbbi Sınıf Cihaz</span>
               </div>

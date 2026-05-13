@@ -88,7 +88,7 @@ export default function HomePage() {
           />
         ))}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-0 pb-10 lg:pt-0 lg:pb-14">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div className="text-white">
               <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-400/30 rounded-full px-4 py-1.5 mb-6">
                 <span className="w-2 h-2 bg-teal-400 rounded-full"></span>
@@ -128,7 +128,7 @@ export default function HomePage() {
             </div>
 
             {/* Product visual */}
-            <div className="flex justify-center lg:justify-end">
+            <div className="flex justify-center lg:justify-end lg:pt-10">
               <div className="relative w-full max-w-md flex flex-col gap-3">
                 {/* Tab buttons — ürün sayfasıyla aynı stil */}
                 <div className="flex gap-2">

@@ -175,7 +175,7 @@ export default function ProductPage() {
       <section className="py-16 lg:py-20" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 100%)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-white">
+            <div className="text-white -mt-[3px]">
               <div className="inline-block bg-teal-500/20 border border-teal-400/30 rounded-full px-4 py-1.5 mb-4">
                 <span className="text-teal-300 text-sm font-medium">CE Belgeli · Tıbbi Sınıf</span>
               </div>

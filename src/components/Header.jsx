@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { PelvicAirIcon } from './PelvicAirLogo';
 
 const navItems = [
-  { label: 'Nasıl Çalışır', path: '/nasil-calisir' },
+  { label: 'Nasıl Çalışır?', path: '/nasil-calisir' },
   { label: 'Mağaza', path: '/magaza' },
   { label: 'SSS', path: '/sss' },
   { label: 'Yorumlar', path: '/yorumlar' },

@@ -5,6 +5,11 @@ let cmsCache = null;
 let cacheTs = 0;
 const TTL = 5 * 60 * 1000;
 
+export function bustCmsCache() {
+  cmsCache = null;
+  cacheTs = 0;
+}
+
 export function useCms() {
   const [cms, setCms] = useState(cmsCache || {});
 

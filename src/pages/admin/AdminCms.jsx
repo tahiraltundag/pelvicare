@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import { Save, Eye, EyeOff, Upload, Type, FileText, Image, List, Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import api from '../../api/client';
+import { bustCmsCache } from '../../hooks/useCms';
 
 const PHASES_SCHEMA = [
   { key: 'code', label: 'Kod (F1, F2...)', type: 'text' },
@@ -392,6 +393,7 @@ export default function AdminCms() {
     try {
       const res = await api.put('/cms', { updates: changes });
       if (!res.success) throw new Error(res.error);
+      bustCmsCache();
       setCms(res.data); setChanges({});
       setSaved(true); setTimeout(() => setSaved(false), 3000);
     } catch (err) { alert('Kaydetme hatası: ' + err.message); }

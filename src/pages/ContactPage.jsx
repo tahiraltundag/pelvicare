@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Mail, Phone, Clock, MapPin, CheckCircle } from 'lucide-react';
+import { useCms } from '../hooks/useCms';
 
 const contactInfo = [
   { icon: <Mail size={20} />, title: 'E-posta', detail: 'info@pelvicair.com', sub: 'Genel sorular' },
@@ -11,6 +12,12 @@ const contactInfo = [
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
+  const { get } = useCms();
+  const contactTitle = get('contact_title', 'İletişim');
+  const contactSubtitle = get('contact_subtitle', 'Size nasıl yardımcı olabileceğimizi öğrenmek isteriz.');
+  const address = get('footer_address', 'Teknokent Binası, Blok A No:12 Ankara / Türkiye');
+  const phone = get('footer_phone', '0850 123 45 67');
+  const email = get('footer_email', 'info@pelvicair.com');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,8 +29,8 @@ export default function ContactPage() {
       {/* Hero */}
       <section className="py-16 lg:py-20" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 100%)' }}>
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">İletişim</h1>
-          <p className="text-blue-200 text-lg">Size nasıl yardımcı olabileceğimizi öğrenmek isteriz.</p>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4">{contactTitle}</h1>
+          <p className="text-blue-200 text-lg">{contactSubtitle}</p>
         </div>
       </section>
 
@@ -131,21 +138,21 @@ export default function ContactPage() {
                   <MapPin size={18} className="text-teal-600 flex-shrink-0 mt-0.5" />
                   <div>
                     <div className="font-semibold text-gray-900 text-sm">Adres</div>
-                    <div className="text-sm text-gray-600">Teknokent Binası, Blok A No:12<br />Ankara / Türkiye</div>
+                    <div className="text-sm text-gray-600">{address}</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Phone size={18} className="text-teal-600 flex-shrink-0 mt-0.5" />
                   <div>
                     <div className="font-semibold text-gray-900 text-sm">Telefon</div>
-                    <div className="text-sm text-gray-600">0850 123 45 67</div>
+                    <div className="text-sm text-gray-600">{phone}</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Mail size={18} className="text-teal-600 flex-shrink-0 mt-0.5" />
                   <div>
                     <div className="font-semibold text-gray-900 text-sm">E-posta</div>
-                    <div className="text-sm text-gray-600">info@pelvicair.com</div>
+                    <div className="text-sm text-gray-600">{email}</div>
                     <div className="text-sm text-gray-600">klinisyen@pelvicair.com</div>
                   </div>
                 </div>

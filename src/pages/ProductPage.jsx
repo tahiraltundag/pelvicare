@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { CheckCircle, Star, Shield, Truck, RotateCcw, ArrowRight } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import DeviceModel3D from '../components/DeviceModel3D';
+import { useCms } from '../hooks/useCms';
 
 const galleryImages = [
   { src: '/images/urun-sistem-genel.jpg', alt: 'PelvicAir Sistem Genel Görünüm', label: 'Sistem Genel' },
@@ -160,6 +161,13 @@ function StarRating({ rating }) {
 export default function ProductPage() {
   const { addToCart } = useCart();
   const location = useLocation();
+  const { get, getJson } = useCms();
+  const heroBadge = get('product_hero_badge', 'CE Belgeli · Tıbbi Sınıf');
+  const heroTitle = get('product_hero_title', 'PelvicAir');
+  const heroSubtitle = get('product_hero_subtitle', 'Akıllı Hibrit Pelvik Taban Rehabilitasyon Sistemi');
+  const heroTagline = get('product_hero_tagline', '"Üç güç. Bir cihaz. Sonsuz özgürlük."');
+  const cmsPackages = getJson('product_packages', null);
+  const packageList = cmsPackages || packages;
 
   const handleAdd = (pkg) => {
     if (pkg.cta === 'Bilgi Al') {
@@ -177,11 +185,11 @@ export default function ProductPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-white -mt-[60px]">
               <div className="inline-block bg-teal-500/20 border border-teal-400/30 rounded-full px-4 py-1.5 mb-4">
-                <span className="text-teal-300 text-sm font-medium">CE Belgeli · Tıbbi Sınıf</span>
+                <span className="text-teal-300 text-sm font-medium">{heroBadge}</span>
               </div>
-              <h1 className="text-4xl lg:text-5xl font-bold mb-4">PelvicAir</h1>
-              <p className="text-lg text-blue-200 mb-2">Akıllı Hibrit Pelvik Taban Rehabilitasyon Sistemi</p>
-              <p className="text-blue-300 text-sm mb-6">"Üç güç. Bir cihaz. Sonsuz özgürlük."</p>
+              <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
+              <p className="text-lg text-blue-200 mb-2">{heroSubtitle}</p>
+              <p className="text-blue-300 text-sm mb-6">{heroTagline}</p>
               <div className="flex items-center gap-3 mb-6">
                 <StarRating rating={5} />
                 <span className="text-blue-200 text-sm">4.8/5 · 500+ değerlendirme</span>
@@ -270,7 +278,7 @@ export default function ProductPage() {
             <p className="text-gray-500">İhtiyacınıza en uygun paketi seçin.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            {packages.map((pkg) => (
+            {packageList.map((pkg) => (
               <div
                 key={pkg.name}
                 className={`rounded-3xl p-8 ${

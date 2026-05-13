@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Mail, Phone } from 'lucide-react';
 import { PelvicAirIcon } from './PelvicAirLogo';
+import { useCms } from '../hooks/useCms';
 
 const IconInstagram = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -45,6 +46,10 @@ const footerLinks = {
 };
 
 export default function Footer() {
+  const { get } = useCms();
+  const phone = get('footer_phone', '0850 123 45 67');
+  const email = get('footer_email', 'info@pelvicair.com');
+
   return (
     <footer style={{ backgroundColor: '#1e3a5f' }} className="text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -91,13 +96,13 @@ export default function Footer() {
         <div className="mt-12 pt-8 border-t border-blue-800">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex flex-col sm:flex-row gap-4 text-sm text-blue-300">
-              <a href="mailto:info@pelvicair.com" className="flex items-center gap-2 hover:text-teal-400 transition-colors">
+              <a href={`mailto:${email}`} className="flex items-center gap-2 hover:text-teal-400 transition-colors">
                 <Mail size={14} />
-                info@pelvicair.com
+                {email}
               </a>
-              <a href="tel:+908501234567" className="flex items-center gap-2 hover:text-teal-400 transition-colors">
+              <a href={`tel:${phone.replace(/\s/g, '')}`} className="flex items-center gap-2 hover:text-teal-400 transition-colors">
                 <Phone size={14} />
-                0850 123 45 67
+                {phone}
               </a>
             </div>
             <p className="text-xs text-blue-400">

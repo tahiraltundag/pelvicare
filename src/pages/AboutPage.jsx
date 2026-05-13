@@ -1,4 +1,5 @@
 import { CheckCircle } from 'lucide-react';
+import { useCms } from '../hooks/useCms';
 
 const values = [
   { icon: '❤️', title: 'Empati', desc: 'Pelvik sağlık sorunları utanç değil, tıbbi bir gerçekliktir. Her hasta saygı ve anlayışla karşılanır.' },
@@ -24,12 +25,16 @@ const teamMembers = [
 ];
 
 export default function AboutPage() {
+  const { get } = useCms();
+  const heroTitle = get('about_title', 'Hakkımızda');
+  const missionContent = get('about_content', '');
+
   return (
     <div>
       {/* Hero */}
       <section className="py-16 lg:py-24" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 100%)' }}>
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">Hakkımızda</h1>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
           <p className="text-xl text-blue-200 leading-relaxed">
             PelvicAir, pelvik sağlık sorunlarının utanç kaynağı değil çözülebilir tıbbi durumlar olduğuna inanan bir ekip tarafından kurulmuştur.
           </p>
@@ -45,12 +50,17 @@ export default function AboutPage() {
               <h2 className="text-3xl font-bold mb-5" style={{ color: '#1e3a5f' }}>
                 Pelvik Sağlığı Herkes İçin Erişilebilir Kılmak
               </h2>
-              <p className="text-gray-600 leading-relaxed mb-5">
-                Dünya genelinde 500 milyondan fazla insan pelvik taban bozukluğuyla yaşıyor. Bunların %68'i utanç, bilinçsizlik veya erişim engeli nedeniyle hiç tedavi aramıyor. Tek bir klinik HIFEM seansının maliyeti ₺5.000'i aşabiliyor.
-              </p>
-              <p className="text-gray-600 leading-relaxed mb-6">
-                PelvicAir bu boşluğu kapatmak için kuruldu: Klinik etkinliği, ev erişilebilirliği ve hem kadın hem erkek kapsamıyla birleştiren, giyilebilir, non-invazif bir platform.
-              </p>
+              {missionContent
+                ? <div className="text-gray-600 leading-relaxed mb-6" dangerouslySetInnerHTML={{ __html: missionContent }} />
+                : <>
+                    <p className="text-gray-600 leading-relaxed mb-5">
+                      Dünya genelinde 500 milyondan fazla insan pelvik taban bozukluğuyla yaşıyor. Bunların %68'i utanç, bilinçsizlik veya erişim engeli nedeniyle hiç tedavi aramıyor. Tek bir klinik HIFEM seansının maliyeti ₺5.000'i aşabiliyor.
+                    </p>
+                    <p className="text-gray-600 leading-relaxed mb-6">
+                      PelvicAir bu boşluğu kapatmak için kuruldu: Klinik etkinliği, ev erişilebilirliği ve hem kadın hem erkek kapsamıyla birleştiren, giyilebilir, non-invazif bir platform.
+                    </p>
+                  </>
+              }
               <div className="space-y-3">
                 {[
                   'CE belgeli tıbbi sınıf cihaz',

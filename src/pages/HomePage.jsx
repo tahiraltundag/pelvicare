@@ -4,6 +4,7 @@ import { CheckCircle, Star, ArrowRight, Shield, Zap, Activity } from 'lucide-rea
 import DeviceModel3D from '../components/DeviceModel3D';
 import AnimateInView from '../components/AnimateInView';
 import { stats, modalities, clinicalResults, reviews } from '../data/product';
+import { useCms } from '../hooks/useCms';
 
 const PRODUCT_IMAGES = [
   '/images/urun-sistem-genel.jpg',
@@ -64,6 +65,10 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [heroView, setHeroView] = useState('photos');
   const [photoIndex, setPhotoIndex] = useState(0);
+  const { get } = useCms();
+  const heroTitle = get('hero_title', '');
+  const heroSubtitle = get('hero_subtitle', '');
+  const heroCta = get('hero_cta', 'Fiyatı Gör');
 
   const goToPrice = () => {
     navigate('/urun/pelvicair');
@@ -95,11 +100,10 @@ export default function HomePage() {
                 <span className="text-teal-300 text-sm font-medium">CE Belgeli · Tıbbi Sınıf Cihaz</span>
               </div>
               <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-6">
-                Pelvik Taban Terapisi.<br />
-                <span className="text-teal-400">Müdahalesiz.</span> Kolay.
+                {heroTitle || (<>Pelvik Taban Terapisi.<br /><span className="text-teal-400">Müdahalesiz.</span> Kolay.</>)}
               </h1>
               <p className="text-lg text-blue-200 mb-8 leading-relaxed">
-                EMS + Elektromanyetik Enerji + Vibrasyon. Üç güç, bir cihaz. 17 hastalık modunda klinik düzey rehabilitasyon artık evinizde.
+                {heroSubtitle || 'EMS + Elektromanyetik Enerji + Vibrasyon. Üç güç, bir cihaz. 17 hastalık modunda klinik düzey rehabilitasyon artık evinizde.'}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mb-10">
                 <button
@@ -107,7 +111,7 @@ export default function HomePage() {
                   className="inline-flex items-center justify-center gap-2 px-6 py-3.5 font-semibold text-white rounded-xl transition-all hover:opacity-90 active:scale-95"
                   style={{ backgroundColor: '#0d9488' }}
                 >
-                  Fiyatı Gör
+                  {heroCta}
                   <ArrowRight size={18} />
                 </button>
                 <Link

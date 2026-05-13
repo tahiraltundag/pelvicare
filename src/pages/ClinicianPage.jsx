@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { CheckCircle, ArrowRight, Download } from 'lucide-react';
+import { useCms } from '../hooks/useCms';
 
 const prescribeSteps = [
   { step: '1', title: 'Hastayı Değerlendirin', desc: 'Pelvik taban bozukluğunu tanımlayın ve PelvicAir kontrendikasyonlarını dışlayın.' },
@@ -24,6 +25,9 @@ const downloads = [
 export default function ClinicianPage() {
   const { user, isClinician } = useAuth();
   const navigate = useNavigate();
+  const { get } = useCms();
+  const heroTitle = get('clinician_title', 'Hastanız İçin Yeni Bir Seçenek');
+  const heroSubtitle = get('clinician_subtitle', 'PelvicAir, klinik fizyoterapiye ek veya monoterapi olarak reçete edebileceğiniz, CE belgeli, klinik kanıtlı non-invazif bir cihaz.');
   return (
     <div>
       {/* Hero */}
@@ -34,9 +38,9 @@ export default function ClinicianPage() {
               <div className="inline-block bg-teal-500/20 border border-teal-400/30 rounded-full px-4 py-1.5 mb-4">
                 <span className="text-teal-300 text-sm font-medium">Sağlık Profesyonelleri</span>
               </div>
-              <h1 className="text-4xl lg:text-5xl font-bold mb-4">Hastanız İçin Yeni Bir Seçenek</h1>
+              <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
               <p className="text-xl text-blue-200 leading-relaxed mb-6">
-                PelvicAir, klinik fizyoterapiye ek veya monoterapi olarak reçete edebileceğiniz, CE belgeli, klinik kanıtlı non-invazif bir cihaz.
+                {heroSubtitle}
               </p>
               <div className="grid grid-cols-3 gap-4 mb-6">
                 {[

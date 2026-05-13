@@ -45,6 +45,13 @@ const DOWNLOAD_SCHEMA = [
   { key: 'desc', label: 'Açıklama', type: 'textarea' },
   { key: 'format', label: 'Format (PDF/DOCX)', type: 'text' },
 ];
+const PACKAGE_SCHEMA = [
+  { key: 'name', label: 'Paket Adı', type: 'text' },
+  { key: 'price', label: 'Fiyat (örn: ₺4.990)', type: 'text' },
+  { key: 'desc', label: 'Kısa Açıklama', type: 'text' },
+  { key: 'badge', label: 'Rozet (örn: En Popüler)', type: 'text' },
+  { key: 'features', label: 'Özellikler (virgülle ayrılmış)', type: 'textarea' },
+];
 
 const SECTIONS = [
   {
@@ -66,10 +73,22 @@ const SECTIONS = [
     keys: ['hero_title', 'hero_subtitle', 'hero_cta', 'hero_image'],
   },
   {
+    title: 'Ürün Sayfası',
+    icon: '📦',
+    desc: 'PelvicAir ürün sayfası hero ve paketler',
+    keys: [
+      'product_hero_badge',
+      'product_hero_title',
+      'product_hero_subtitle',
+      'product_hero_tagline',
+      { key: 'product_packages', type: 'json-list', label: 'Ürün Paketleri', itemLabel: 'Paket', schema: PACKAGE_SCHEMA },
+    ],
+  },
+  {
     title: 'Klinisyenler',
     icon: '👨‍⚕️',
     desc: 'Klinisyen sayfası içerikleri',
-    keys: ['clinician_title', 'clinician_content'],
+    keys: ['clinician_title', 'clinician_subtitle', 'clinician_content'],
   },
   {
     title: 'SSS',

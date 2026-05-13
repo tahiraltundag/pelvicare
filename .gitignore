@@ -37,3 +37,4 @@ run_ast.py
 *.njsproj
 *.sln
 *.sw?
+.vercel

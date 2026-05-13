@@ -1,29 +1,14 @@
 import { useState, useEffect } from 'react';
 import api from '../api/client';
 
-let cmsCache = null;
-let cacheTs = 0;
-const TTL = 5 * 60 * 1000;
-
-export function bustCmsCache() {
-  cmsCache = null;
-  cacheTs = 0;
-}
+export function bustCmsCache() {}
 
 export function useCms() {
-  const [cms, setCms] = useState(cmsCache || {});
+  const [cms, setCms] = useState({});
 
   useEffect(() => {
-    if (cmsCache && Date.now() - cacheTs < TTL) {
-      setCms(cmsCache);
-      return;
-    }
     api.get('/cms').then(res => {
-      if (res.success) {
-        cmsCache = res.data;
-        cacheTs = Date.now();
-        setCms(res.data);
-      }
+      if (res.success) setCms(res.data);
     });
   }, []);
 

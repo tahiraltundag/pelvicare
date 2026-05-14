@@ -249,6 +249,130 @@ async function seed() {
         { title: 'Kronik Pelvik Ağrı Yönetimi', date: 'Şubat 2026', desc: 'Kronik pelvik ağrının multidisipliner yaklaşımı ve elektrostimülasyonun yeri.' },
       ]},
     ]) },
+    // Ana Sayfa - dinamik içerikler
+    { key: 'home_stats', type: 'json', label: 'Ana Sayfa - İstatistikler', value: JSON.stringify([
+      { value: '500M+', label: 'Küresel Hasta', desc: 'Pelvik taban bozukluğu yaşayan birey' },
+      { value: '%95', label: 'İyileşme Oranı', desc: 'İdrar kaçırmada 6 haftada iyileşme' },
+      { value: '50+', label: 'Klinik Araştırma', desc: 'RCT, meta-analiz ve Cochrane derlemeleri' },
+      { value: '17', label: 'Tanı Modu', desc: '10 Kadın + 7 Erkek bilimsel protokol' },
+    ]) },
+    { key: 'home_modalities', type: 'json', label: 'Ana Sayfa - Tedavi Modaliteleri', value: JSON.stringify([
+      { icon: '⚡', name: 'EMS', fullName: 'Elektromüsküler Stimülasyon', desc: '2–100 Hz geniş frekans aralığıyla Tip I Tonik ve Tip II Fazik lifleri hedefler. Pasif Kegel etkisi — kullanıcı çaba harcamadan motor sinir ve kas liflerini doğrudan aktive eder.', color: 'text-teal-600', bg: 'bg-teal-50', border: 'border-teal-200' },
+      { icon: '🧲', name: 'Elektromanyetik', fullName: 'Derin Penetrasyonlu Manyetik Alan', desc: 'S2–S4 sakral sinir köklerini uyarır. EMS\'in ulaşamadığı derin pelvik kasları hedefler. Non-invazif, deri ve giysi üzerinden etki eder. Klinik HIFEM\'in ev ortamındaki eşdeğeri.', color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-200' },
+      { icon: '📳', name: 'Vibrasyon', fullName: 'Proprioseptif Rehabilitasyon', desc: 'Mekanoreseptörler ile propriosepsiyon artışı sağlar. Vajinismus kademeli desensitizasyonu ve erken boşalma eşik yükseltme. EMS ve Manyetik\'in nöroplastisite boyutu.', color: 'text-purple-600', bg: 'bg-purple-50', border: 'border-purple-200' },
+    ]) },
+    { key: 'home_clinical_results', type: 'json', label: 'Ana Sayfa - Klinik Sonuçlar', value: JSON.stringify([
+      { value: '%95', label: 'İdrar Kaçırmada İyileşme', detail: '6 Hafta RCT', source: 'Stania M. et al. 2022' },
+      { value: '%100', label: 'Prolapsus POP-Q Evre İyileşmesi', detail: '20 Seans', source: 'Xu J. et al. 2023' },
+      { value: '%74', label: 'Dismenore Ağrı Rahatlaması', detail: '20 Dakika İçinde', source: 'Han S. Cochrane 2024' },
+      { value: '-%93', label: 'Analjezik Kullanımı Azalması', detail: 'Dismenore Tedavisinde', source: 'Han S. Cochrane 2024' },
+    ]) },
+    { key: 'home_steps', type: 'json', label: 'Ana Sayfa - 4 Adım', value: JSON.stringify([
+      { step: '01', title: 'Elektrod Pedi Takın', desc: 'İç çamaşırı konforu ile perineal bölgeye yerleştirin. Prob yok, girişim yok.' },
+      { step: '02', title: 'Modu Seçin', desc: 'Mobil uygulamadan 17 hastalık modundan birini seçin. Kadın ve erkek profilleri ayrı.' },
+      { step: '03', title: 'Seanı Başlatın', desc: '20 dakikalık bilimsel protokol otomatik çalışır. Günlük hayatınıza devam edin.' },
+      { step: '04', title: 'İlerlemenizi Takip Edin', desc: 'Uygulama seans geçmişinizi ve iyileşme grafiğinizi gösterir. F1→F2→F3 faz ilerlemesi.' },
+    ]) },
+    { key: 'home_comparison', type: 'json', label: 'Ana Sayfa - Karşılaştırma Tablosu', value: JSON.stringify([
+      { feature: 'Non-invazif', pelvicair: true, internal: false, surgery: false, pt: true, pads: true },
+      { feature: 'Evde kullanım', pelvicair: true, internal: true, surgery: false, pt: false, pads: true },
+      { feature: 'Erkek & kadın', pelvicair: true, internal: false, surgery: true, pt: true, pads: true },
+      { feature: 'Klinik etkinlik', pelvicair: true, internal: true, surgery: true, pt: true, pads: false },
+      { feature: 'Mobil kontrol', pelvicair: true, internal: false, surgery: false, pt: false, pads: false },
+      { feature: '3 modalite', pelvicair: true, internal: false, surgery: false, pt: false, pads: false },
+      { feature: 'Uygun maliyet', pelvicair: true, internal: false, surgery: false, pt: false, pads: true },
+    ]) },
+    { key: 'home_trust_badges', type: 'json', label: 'Ana Sayfa - Güven Rozetleri', value: JSON.stringify([
+      { icon: 'Shield', label: 'CE Belgeli', sub: 'Tıbbi Cihaz' },
+      { icon: 'Activity', label: '50+ Klinik Araştırma', sub: 'RCT Destekli' },
+      { icon: 'Star', label: '4.8/5 Puan', sub: '500+ Değerlendirme' },
+      { icon: 'CheckCircle', label: '60 Gün', sub: 'Para İade Garantisi' },
+    ]) },
+    // Tedavi modları
+    { key: 'female_modes', type: 'json', label: 'Kadın - Tedavi Modları', value: JSON.stringify([
+      { code: 'K-01', icon: '💧', name: 'İdrar Kaçırma', desc: 'Üriner İnkontinans', freq: '35–50 Hz (Stres) | 10 Hz (Urge)', result: '%95 olguda sızıntı azalması (6 hafta RCT)', source: 'Stania M. et al. 2022' },
+      { code: 'K-02', icon: '⚡', name: 'Aşırı Aktif Mesane', desc: 'Overactive Bladder (OAB)', freq: '10 Hz (nöromodülasyon)', result: 'Mesane aktivitesinde anlamlı azalma', source: 'Cochrane 2023' },
+      { code: 'K-03', icon: '🌸', name: 'Pelvik Organ Sarkması', desc: 'Prolapsus (POP)', freq: '50 Hz güçlendirme + Manyetik', result: '%100 POP-Q evre iyileşmesi (20 seans)', source: 'Xu J. et al. 2023 RCT' },
+      { code: 'K-04', icon: '🔻', name: 'Dismenore', desc: 'Ağrılı Adet', freq: '80–100 Hz (akut) | 2–4 Hz (endorfin)', result: '%74 olguda 20 dk içinde ağrı rahatlaması', source: 'Han S. et al. Cochrane 2024' },
+      { code: 'K-05', icon: '🛡', name: 'Vajinismus', desc: 'İstem Dışı Vajinal Kas Spazmı', freq: '2–10 Hz + Vibrasyon', result: 'Botulinum toksin ile kıyaslanabilir etkinlik', source: 'Yaraghi M. et al. 2019 RCT' },
+      { code: 'K-06', icon: '✨', name: 'Orgazm Bozukluğu', desc: 'Anorgazmi', freq: '80–100 Hz sensitizasyon', result: 'Pelvik kapasite artışı ve orgazmik yanıt', source: 'İlgili RCT verileri' },
+      { code: 'K-07', icon: '💫', name: 'Cinsel Uyarılma Bozukluğu', desc: 'Sexual Arousal Disorder', freq: 'Kombine modalite', result: 'Kan akışı ve duysal yanıt artışı', source: 'İlgili klinik veriler' },
+      { code: 'K-08', icon: '🤱', name: 'Postpartum Cinsel Disfonksiyon', desc: 'Doğum Sonrası Cinsel İlişkide Zorlanma', freq: '35–50 Hz güçlendirme', result: 'Pelvik taban kas tonusunun restorasyonu', source: 'İlgili RCT verileri' },
+      { code: 'K-09', icon: '🔄', name: 'Postpartum Pelvik Hipotonisi', desc: 'Doğum Sonrası Pelvik Kas Zayıflığı', freq: '50–80 Hz faz tabanlı', result: 'Levator ani ve pudendal nöropraksi rehabilitasyonu', source: 'İlgili klinik veriler' },
+      { code: 'K-10', icon: '🌿', name: 'Menopoz Sonrası Hipotonisi', desc: 'Pelvik Kas Zayıflığı', freq: '35–50 Hz idame', result: 'Östrojen düşüşüne bağlı pelvik atrofi yönetimi', source: 'İlgili meta-analizler' },
+    ]) },
+    { key: 'male_modes', type: 'json', label: 'Erkek - Tedavi Modları', value: JSON.stringify([
+      { code: 'E-01', icon: '💧', name: 'İdrar Kaçırma', desc: 'Üriner İnkontinans', freq: '35–50 Hz sfinkter güçlendirme', result: 'Prostatektomi sonrası hızlı iyileşme', source: 'İlgili RCT verileri' },
+      { code: 'E-02', icon: '⚡', name: 'Aşırı Aktif Mesane', desc: 'Overactive Bladder', freq: '10 Hz nöromodülasyon', result: 'Mesane kapasitesi artışı', source: 'İlgili klinik veriler' },
+      { code: 'E-03', icon: '🔷', name: 'Erektil Disfonksiyon', desc: 'Sertleşme Bozukluğu', freq: '50 Hz (periüretral) + 80 Hz (iskiokavernozus)', result: 'İntrakavernal basınç anlamlı artış; kavernöz sinir yenilenmesi', source: 'Capogrosso P. et al. 2018 RCT' },
+      { code: 'E-04', icon: '⏱', name: 'Erken Boşalma', desc: 'Prematür Ejakülasyon', freq: '20 Hz nöromodülasyon + Vibrasyon 80–100 Hz', result: 'IELT istatistiksel olarak anlamlı uzama (50+ hasta)', source: 'Tahmasbi F. et al. 2025' },
+      { code: 'E-05', icon: '🔄', name: 'Gecikmiş Boşalma', desc: 'Gecikmiş Ejakülasyon', freq: 'Kombine protokol', result: 'Ejakülasyon eşik normalizasyonu', source: 'İlgili klinik veriler' },
+      { code: 'E-06', icon: '🛡', name: 'Prostatik Pelvik Ağrı', desc: 'Kronik Prostatit / CPPS', freq: '10 Hz (ağrı inhibisyonu) → 50 Hz (kas modülasyonu)', result: 'NIH-CPSI 24 haftaya kadar anlamlı düzelme (12 seans)', source: 'Kim TH. et al. Urology 2013' },
+      { code: 'E-07', icon: '💪', name: 'Pelvik Taban Hipotonisi', desc: 'Pelvik Taban Kas Zayıflığı', freq: '50–80 Hz faz tabanlı güçlendirme', result: 'Kas kuvveti ve koordinasyon artışı', source: 'İlgili RCT verileri' },
+    ]) },
+    { key: 'tech_specs', type: 'json', label: 'Teknik Parametreler', value: JSON.stringify([
+      { param: 'EMS Frekans', value: '2–100 Hz (tam programlanabilir)' },
+      { param: 'EMS Puls Genişliği', value: '100–500 µs' },
+      { param: 'EMS Şiddet', value: '2–22 mA' },
+      { param: 'Manyetik Frekans', value: '1–50 Hz' },
+      { param: 'Manyetik Şiddet', value: '%25–85 maks tolerans' },
+      { param: 'Vibrasyon Frekansı', value: '10–100 Hz' },
+    ]) },
+    // Nasıl Çalışır - kullanım adımları ve kontrendikasyonlar
+    { key: 'how_steps', type: 'json', label: 'Nasıl Çalışır - Kullanım Adımları', value: JSON.stringify([
+      { num: '01', title: 'Elektrod Pedi Hazırlayın', desc: 'Resealable poşetten çıkarın. Hidrojel yüzeyinin nemliliğini kontrol edin. Her pad 3–5 seans kullanıma uygundur.' },
+      { num: '02', title: 'Pedi Yerleştirin', desc: 'İç çamaşırı konforu ile perineal bölgeye yerleştirin. Prob yok, girişim yok. Giysi altında tamamen görünmez.' },
+      { num: '03', title: 'Uygulamayı Açın', desc: 'Bluetooth ile cihaza bağlanın. Kadın veya erkek profilinizi seçin. Hastalık modunuzu belirleyin ve seanı başlatın.' },
+      { num: '04', title: 'Seanı Tamamlayın', desc: '20 dakikalık protokol otomatik çalışır. Günlük aktivitelerinize devam edebilirsiniz. Uygulama ilerlemenizi kaydeder.' },
+    ]) },
+    { key: 'how_contraindications', type: 'json', label: 'Nasıl Çalışır - Kontrendikasyonlar', value: JSON.stringify([
+      'Kalp pili (pacemaker) veya aktif implant',
+      'Gebelik',
+      'Aktif enfeksiyon veya açık yara',
+      'Epilepsi',
+      'Deri bütünlüğü bozuk bölge',
+      'İmplante edilmiş metalik cihaz (pelvik bölge)',
+      'Aktif kanser tedavisi',
+      'Kalp ritim bozukluğu',
+    ]) },
+    // Hakkımızda
+    { key: 'about_values', type: 'json', label: 'Hakkımızda - Temel Değerler', value: JSON.stringify([
+      { icon: '❤️', title: 'Empati', desc: 'Pelvik sağlık sorunları utanç değil, tıbbi bir gerçekliktir. Her hasta saygı ve anlayışla karşılanır.' },
+      { icon: '🔬', title: 'İnovasyon', desc: 'Klinik etkinliği ev erişilebilirliğiyle birleştiren teknolojiyi geliştiriyoruz. Durmaksızın.' },
+      { icon: '🛡', title: 'Güven', desc: 'CE belgeli, klinik kanıtlı, şeffaf. Müşterilerimiz her adımda bilgilendirilir.' },
+      { icon: '🌿', title: 'Özgürlük', desc: 'Pelvik sağlık sorunu yaşayan her birey, utanmadan, konforla iyileşme hakkına sahiptir.' },
+    ]) },
+    { key: 'about_certifications', type: 'json', label: 'Hakkımızda - Sertifikalar', value: JSON.stringify([
+      { title: 'CE Belgesi', detail: 'MDR 2017/745 uyumlu tıbbi cihaz' },
+      { title: 'ISO 13485:2016', detail: 'Tıbbi cihaz kalite yönetim sistemi' },
+      { title: 'ISO 10993', detail: 'Biyouyumluluk test sertifikası' },
+      { title: '5 Patent', detail: 'Türk Patent Enstitüsü tescilli' },
+    ]) },
+    { key: 'about_team', type: 'json', label: 'Hakkımızda - Ekip', value: JSON.stringify([
+      { name: 'Dr. Elif Yıldız', role: 'Kurucu & CEO', bg: '#0d9488' },
+      { name: 'Mhd. Tarık Demir', role: 'CTO / Ar-Ge', bg: '#1e3a5f' },
+      { name: 'Fzt. Ayşe Kılıç', role: 'Klinik Direktör', bg: '#0d9488' },
+      { name: 'Ahmet Şahin', role: 'Medikal İşler', bg: '#b87333' },
+      { name: 'Dr. Mehmet Can', role: 'Üroloji Danışmanı', bg: '#1e3a5f' },
+      { name: 'Selin Arslan', role: 'Ürün Yönetimi', bg: '#0d9488' },
+    ]) },
+    // Klinisyenler
+    { key: 'clinician_prescribe_steps', type: 'json', label: 'Klinisyenler - Reçete Adımları', value: JSON.stringify([
+      { step: '1', title: 'Hastayı Değerlendirin', desc: 'Pelvik taban bozukluğunu tanımlayın ve PelvicAir kontrendikasyonlarını dışlayın.' },
+      { step: '2', title: 'Protokol Seçin', desc: 'Mobil uygulamadan veya PelvicAir Klinisyen Portalı\'ndan uygun hastalık modunu (K-01 ila E-07) önerin.' },
+      { step: '3', title: 'Hastayı Yönlendirin', desc: 'Reçete veya öneri mektubu yazın. Hasta web sitesinden veya yetkili satıcıdan temin edebilir.' },
+    ]) },
+    { key: 'clinician_evidence', type: 'json', label: 'Klinisyenler - Klinik Kanıt Kartları', value: JSON.stringify([
+      { title: '%25 Hatalı Kegel', desc: 'Kadınların %25\'i Kegel egzersizini hatalı yapıyor — etki sıfır. PelvicAir pasif Kegel ile bu sorunu ortadan kaldırır.', source: 'Bø K. et al. 2012' },
+      { title: '%13 PT Tamamlama', desc: 'Pelvik taban fizyoterapisi seanslarını tamamlama oranı sadece %13. Evde PelvicAir ile uyum dramatik artar.', source: 'Klotz T. et al. 2019' },
+      { title: 'OAB İlaç Yan Etkileri', desc: 'Antikolinerjik ilaçların %40 bırakma oranı. PelvicAir farmakolojik olmayan bir alternatif sunar.', source: 'Chapple CR. et al. 2021' },
+    ]) },
+    { key: 'clinician_downloads', type: 'json', label: 'Klinisyenler - Profesyonel Kaynaklar', value: JSON.stringify([
+      { title: 'Klinisyen Reçete Rehberi', desc: 'Hastalık modları, kontrendikasyonlar ve dozaj parametreleri', format: 'PDF' },
+      { title: 'Klinik Kanıt Özeti', desc: '50+ çalışmanın özeti — RCT, meta-analiz, Cochrane', format: 'PDF' },
+      { title: 'Hasta Bilgi Broşürü', desc: 'Hastanıza verebileceğiniz Türkçe ürün tanıtım broşürü', format: 'PDF' },
+      { title: 'Toplu Satış Başvurusu', desc: 'Klinik ve hastane alımları için başvuru formu', format: 'FORM' },
+    ]) },
   ];
 
   for (const item of cmsItems) {

@@ -27,21 +27,28 @@ const HERO_DOTS = [
   { top: '92%', left: '38%', size: 5,  dur: '4.4s', delay: '1.3s'  },
 ];
 
-const trustBadges = [
-  { icon: <Shield size={20} />, label: 'CE Belgeli', sub: 'Tıbbi Cihaz' },
-  { icon: <Activity size={20} />, label: '50+ Klinik Araştırma', sub: 'RCT Destekli' },
-  { icon: <Star size={20} />, label: '4.8/5 Puan', sub: '500+ Değerlendirme' },
-  { icon: <CheckCircle size={20} />, label: '60 Gün', sub: 'Para İade Garantisi' },
+const DEFAULT_TRUST_BADGES = [
+  { icon: 'Shield', label: 'CE Belgeli', sub: 'Tıbbi Cihaz' },
+  { icon: 'Activity', label: '50+ Klinik Araştırma', sub: 'RCT Destekli' },
+  { icon: 'Star', label: '4.8/5 Puan', sub: '500+ Değerlendirme' },
+  { icon: 'CheckCircle', label: '60 Gün', sub: 'Para İade Garantisi' },
 ];
 
-const steps = [
+const ICON_MAP = {
+  Shield: <Shield size={20} />,
+  Activity: <Activity size={20} />,
+  Star: <Star size={20} />,
+  CheckCircle: <CheckCircle size={20} />,
+};
+
+const DEFAULT_STEPS = [
   { step: '01', title: 'Elektrod Pedi Takın', desc: 'İç çamaşırı konforu ile perineal bölgeye yerleştirin. Prob yok, girişim yok.' },
   { step: '02', title: 'Modu Seçin', desc: 'Mobil uygulamadan 17 hastalık modundan birini seçin. Kadın ve erkek profilleri ayrı.' },
   { step: '03', title: 'Seanı Başlatın', desc: '20 dakikalık bilimsel protokol otomatik çalışır. Günlük hayatınıza devam edin.' },
   { step: '04', title: 'İlerlemenizi Takip Edin', desc: 'Uygulama seans geçmişinizi ve iyileşme grafiğinizi gösterir. F1→F2→F3 faz ilerlemesi.' },
 ];
 
-const comparisonData = [
+const DEFAULT_COMPARISON = [
   { feature: 'Non-invazif', pelvicair: true, internal: false, surgery: false, pt: true, pads: true },
   { feature: 'Evde kullanım', pelvicair: true, internal: true, surgery: false, pt: false, pads: true },
   { feature: 'Erkek & kadın', pelvicair: true, internal: false, surgery: true, pt: true, pads: true },
@@ -65,10 +72,17 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [heroView, setHeroView] = useState('photos');
   const [photoIndex, setPhotoIndex] = useState(0);
-  const { get } = useCms();
+  const { get, getJson } = useCms();
   const heroTitle = get('hero_title', '');
   const heroSubtitle = get('hero_subtitle', '');
   const heroCta = get('hero_cta', 'Fiyatı Gör');
+  const cmsStats = getJson('home_stats', stats);
+  const cmsModalities = getJson('home_modalities', modalities);
+  const cmsClinicalResults = getJson('home_clinical_results', clinicalResults);
+  const cmsSteps = getJson('home_steps', DEFAULT_STEPS);
+  const cmsComparison = getJson('home_comparison', DEFAULT_COMPARISON);
+  const cmsTrustBadges = getJson('home_trust_badges', DEFAULT_TRUST_BADGES);
+  const cmsReviews = getJson('reviews_items', reviews).slice(0, 6);
 
   const goToPrice = () => {
     navigate('/urun/pelvicair');
@@ -198,10 +212,10 @@ export default function HomePage() {
       <section className="border-b border-gray-100 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-            {trustBadges.map((badge) => (
+            {cmsTrustBadges.map((badge) => (
               <div key={badge.label} className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#ccfbf1', color: '#0d9488' }}>
-                  {badge.icon}
+                  {ICON_MAP[badge.icon] || null}
                 </div>
                 <div>
                   <div className="text-sm font-semibold text-gray-900">{badge.label}</div>
@@ -221,7 +235,7 @@ export default function HomePage() {
             <p className="text-gray-500 max-w-2xl mx-auto">Milyonlar tedavi aramaktan çekinmekte. PelvicAir bu boşluğu klinik etkinlik ve ev erişilebilirliğiyle kapatıyor.</p>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, i) => (
+            {cmsStats.map((stat, i) => (
               <AnimateInView key={stat.value} delay={i * 100}>
                 <div className="text-center p-6 rounded-2xl bg-gray-50 h-full">
                   <div className="text-4xl font-bold mb-1" style={{ color: '#0d9488' }}>{stat.value}</div>
@@ -242,7 +256,7 @@ export default function HomePage() {
             <p className="text-gray-600 max-w-2xl mx-auto">Her modalite diğerinin etkisini güçlendiren sinerjik bir yapıda çalışır.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            {modalities.map((m, i) => (
+            {cmsModalities.map((m, i) => (
               <AnimateInView key={m.name} delay={i * 150} type="scale">
                 <div className={`rounded-2xl border-2 p-6 bg-white h-full ${m.border}`}>
                   <div className="text-4xl mb-4">{m.icon}</div>
@@ -271,7 +285,7 @@ export default function HomePage() {
             <p className="text-gray-500">Klinik düzey tedavi, evde basit adımlarla.</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {steps.map((s, i) => (
+            {cmsSteps.map((s, i) => (
               <AnimateInView key={s.step} delay={i * 110}>
                 <div className="text-center h-full">
                   <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white font-bold text-lg mx-auto mb-4" style={{ backgroundColor: '#0d9488' }}>
@@ -299,7 +313,7 @@ export default function HomePage() {
             <p className="text-blue-300">RCT, meta-analiz ve Cochrane derleme verileri</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {clinicalResults.map((r, i) => (
+            {cmsClinicalResults.map((r, i) => (
               <AnimateInView key={r.value} delay={i * 100}>
                 <div className="bg-white/10 backdrop-blur rounded-2xl p-6 text-center border border-white/10 h-full">
                   <div className="text-4xl font-bold text-teal-400 mb-2">{r.value}</div>
@@ -338,7 +352,7 @@ export default function HomePage() {
                 </tr>
               </thead>
               <tbody>
-                {comparisonData.map((row, i) => (
+                {cmsComparison.map((row, i) => (
                   <tr key={row.feature} className={i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
                     <td className="py-3 px-4 font-medium text-gray-700">{row.feature}</td>
                     {[row.pelvicair, row.internal, row.surgery, row.pt, row.pads].map((val, j) => (
@@ -368,7 +382,7 @@ export default function HomePage() {
             <h2 className="text-3xl font-bold" style={{ color: '#1e3a5f' }}>Kullanıcılarımız Ne Diyor?</h2>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {reviews.map((review, i) => (
+            {cmsReviews.map((review, i) => (
               <AnimateInView key={review.name} delay={i * 120}>
                 <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 h-full">
                   <div className="flex items-center justify-between mb-3">

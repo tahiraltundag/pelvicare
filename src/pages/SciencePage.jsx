@@ -26,6 +26,9 @@ export default function SciencePage() {
   const heroSubtitle = get('science_hero_subtitle', 'PelvicAir\'in etkinliği 50\'den fazla randomize kontrollü klinik çalışma ile desteklenmektedir.');
   const clinicalStudies = getJson('science_studies', DEFAULT_STUDIES);
   const differentiators = getJson('science_differentiators', DEFAULT_DIFFS);
+  const cmsClinicalResults = getJson('home_clinical_results', clinicalResults);
+  const cmsModalities = getJson('home_modalities', modalities);
+  const cmsSpecs = getJson('tech_specs', techSpecs);
 
   return (
     <div>
@@ -80,7 +83,7 @@ export default function SciencePage() {
             <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>Modalitelerin Bilimsel Temeli</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            {modalities.map((m) => (
+            {cmsModalities.map((m) => (
               <div key={m.name} className={`rounded-2xl border-2 p-6 bg-white ${m.border}`}>
                 <div className="text-4xl mb-4">{m.icon}</div>
                 <h3 className={`text-lg font-bold mb-2 ${m.color}`}>{m.name} — {m.fullName}</h3>
@@ -136,7 +139,7 @@ export default function SciencePage() {
             <h2 className="text-3xl font-bold text-white mb-3">Öne Çıkan Sonuçlar</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {clinicalResults.map((r) => (
+            {cmsClinicalResults.map((r) => (
               <div key={r.value} className="bg-white/10 backdrop-blur rounded-2xl p-6 text-center border border-white/10">
                 <div className="text-4xl font-bold text-teal-400 mb-2">{r.value}</div>
                 <div className="text-sm font-semibold text-white mb-1">{r.label}</div>
@@ -156,7 +159,7 @@ export default function SciencePage() {
             <p className="text-gray-500">Tam programlanabilir klinik düzey parametreler</p>
           </div>
           <div className="rounded-2xl border border-gray-200 overflow-hidden">
-            {techSpecs.map((spec, i) => (
+            {cmsSpecs.map((spec, i) => (
               <div key={spec.param} className={`flex justify-between items-center px-6 py-4 ${i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
                 <span className="text-sm font-medium text-gray-700">{spec.param}</span>
                 <span className="text-sm font-semibold" style={{ color: '#0d9488' }}>{spec.value}</span>

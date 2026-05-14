@@ -52,6 +52,94 @@ const PACKAGE_SCHEMA = [
   { key: 'badge', label: 'Rozet (örn: En Popüler)', type: 'text' },
   { key: 'features', label: 'Özellikler (virgülle ayrılmış)', type: 'textarea' },
 ];
+const STAT_SCHEMA = [
+  { key: 'value', label: 'Değer (örn: 500M+)', type: 'text' },
+  { key: 'label', label: 'Başlık', type: 'text' },
+  { key: 'desc', label: 'Açıklama', type: 'text' },
+];
+const MODALITY_SCHEMA = [
+  { key: 'icon', label: 'İkon (emoji)', type: 'text' },
+  { key: 'name', label: 'Kısa Ad (örn: EMS)', type: 'text' },
+  { key: 'fullName', label: 'Tam Ad', type: 'text' },
+  { key: 'desc', label: 'Açıklama', type: 'textarea' },
+  { key: 'color', label: 'Renk sınıfı (örn: text-teal-600)', type: 'text' },
+  { key: 'bg', label: 'Arkaplan sınıfı (örn: bg-teal-50)', type: 'text' },
+  { key: 'border', label: 'Kenarlık sınıfı (örn: border-teal-200)', type: 'text' },
+];
+const CLINICAL_RESULT_SCHEMA = [
+  { key: 'value', label: 'Değer (örn: %95)', type: 'text' },
+  { key: 'label', label: 'Başlık', type: 'text' },
+  { key: 'detail', label: 'Detay (örn: 6 Hafta RCT)', type: 'text' },
+  { key: 'source', label: 'Kaynak', type: 'text' },
+];
+const HOME_STEP_SCHEMA = [
+  { key: 'step', label: 'Adım Numarası (01, 02...)', type: 'text' },
+  { key: 'title', label: 'Başlık', type: 'text' },
+  { key: 'desc', label: 'Açıklama', type: 'textarea' },
+];
+const COMPARISON_SCHEMA = [
+  { key: 'feature', label: 'Özellik', type: 'text' },
+  { key: 'pelvicair', label: 'PelvicAir', type: 'boolean' },
+  { key: 'internal', label: 'İnternal Cihazlar', type: 'boolean' },
+  { key: 'surgery', label: 'Cerrahi', type: 'boolean' },
+  { key: 'pt', label: 'Fizyoterapi', type: 'boolean' },
+  { key: 'pads', label: 'Ped/İç Çamaşır', type: 'boolean' },
+];
+const TRUST_BADGE_SCHEMA = [
+  { key: 'icon', label: 'İkon adı (Shield/Activity/Star/CheckCircle)', type: 'text' },
+  { key: 'label', label: 'Başlık', type: 'text' },
+  { key: 'sub', label: 'Alt Başlık', type: 'text' },
+];
+const MODE_SCHEMA = [
+  { key: 'code', label: 'Kod (K-01 / E-01)', type: 'text' },
+  { key: 'icon', label: 'İkon (emoji)', type: 'text' },
+  { key: 'name', label: 'Ad', type: 'text' },
+  { key: 'desc', label: 'Tıbbi Tanım', type: 'text' },
+  { key: 'freq', label: 'Frekans Parametresi', type: 'text' },
+  { key: 'result', label: 'Klinik Sonuç', type: 'textarea' },
+  { key: 'source', label: 'Kaynak', type: 'text' },
+];
+const TECH_SPEC_SCHEMA = [
+  { key: 'param', label: 'Parametre', type: 'text' },
+  { key: 'value', label: 'Değer', type: 'text' },
+];
+const HOW_STEP_SCHEMA = [
+  { key: 'num', label: 'Numara (01, 02...)', type: 'text' },
+  { key: 'title', label: 'Başlık', type: 'text' },
+  { key: 'desc', label: 'Açıklama', type: 'textarea' },
+];
+const CONTRAINDICATION_SCHEMA = [
+  { key: 'item', label: 'Kontrendikasyon', type: 'text' },
+];
+const VALUE_SCHEMA = [
+  { key: 'icon', label: 'İkon (emoji)', type: 'text' },
+  { key: 'title', label: 'Başlık', type: 'text' },
+  { key: 'desc', label: 'Açıklama', type: 'textarea' },
+];
+const CERT_SCHEMA = [
+  { key: 'title', label: 'Sertifika Adı', type: 'text' },
+  { key: 'detail', label: 'Detay', type: 'text' },
+];
+const TEAM_SCHEMA = [
+  { key: 'name', label: 'Ad Soyad', type: 'text' },
+  { key: 'role', label: 'Görev', type: 'text' },
+  { key: 'bg', label: 'Renk (#hex)', type: 'text' },
+];
+const PRESCRIBE_STEP_SCHEMA = [
+  { key: 'step', label: 'Adım Numarası', type: 'text' },
+  { key: 'title', label: 'Başlık', type: 'text' },
+  { key: 'desc', label: 'Açıklama', type: 'textarea' },
+];
+const EVIDENCE_SCHEMA = [
+  { key: 'title', label: 'Başlık / İstatistik', type: 'text' },
+  { key: 'desc', label: 'Açıklama', type: 'textarea' },
+  { key: 'source', label: 'Kaynak', type: 'text' },
+];
+const CLINICIAN_DL_SCHEMA = [
+  { key: 'title', label: 'Başlık', type: 'text' },
+  { key: 'desc', label: 'Açıklama', type: 'textarea' },
+  { key: 'format', label: 'Format (PDF/FORM)', type: 'text' },
+];
 
 const SECTIONS = [
   {
@@ -62,15 +150,22 @@ const SECTIONS = [
       'announcement_bar',
       'logo_url',
       'footer_address', 'footer_phone', 'footer_email',
-      'about_title', 'about_content',
       'contact_title', 'contact_subtitle',
     ],
   },
   {
     title: 'Ana Sayfa',
     icon: '🏠',
-    desc: 'Hero bölümü ve giriş içerikleri',
-    keys: ['hero_title', 'hero_subtitle', 'hero_cta', 'hero_image'],
+    desc: 'Hero, istatistikler, adımlar ve karşılaştırma',
+    keys: [
+      'hero_title', 'hero_subtitle', 'hero_cta', 'hero_image',
+      { key: 'home_trust_badges', type: 'json-list', label: 'Güven Rozetleri', itemLabel: 'Rozet', schema: TRUST_BADGE_SCHEMA },
+      { key: 'home_stats', type: 'json-list', label: 'İstatistik Kartları', itemLabel: 'İstatistik', schema: STAT_SCHEMA },
+      { key: 'home_modalities', type: 'json-list', label: 'Tedavi Modaliteleri', itemLabel: 'Modalite', schema: MODALITY_SCHEMA },
+      { key: 'home_steps', type: 'json-list', label: '4 Adım', itemLabel: 'Adım', schema: HOME_STEP_SCHEMA },
+      { key: 'home_clinical_results', type: 'json-list', label: 'Klinik Sonuç Kartları', itemLabel: 'Sonuç', schema: CLINICAL_RESULT_SCHEMA },
+      { key: 'home_comparison', type: 'json-list', label: 'Karşılaştırma Tablosu', itemLabel: 'Satır', schema: COMPARISON_SCHEMA },
+    ],
   },
   {
     title: 'Ürün Sayfası',
@@ -85,10 +180,26 @@ const SECTIONS = [
     ],
   },
   {
+    title: 'Hakkımızda',
+    icon: '🏢',
+    desc: 'Misyon, değerler, ekip ve sertifikalar',
+    keys: [
+      'about_title', 'about_content',
+      { key: 'about_values', type: 'json-list', label: 'Temel Değerler', itemLabel: 'Değer', schema: VALUE_SCHEMA },
+      { key: 'about_team', type: 'json-list', label: 'Ekip Üyeleri', itemLabel: 'Üye', schema: TEAM_SCHEMA },
+      { key: 'about_certifications', type: 'json-list', label: 'Sertifikalar', itemLabel: 'Sertifika', schema: CERT_SCHEMA },
+    ],
+  },
+  {
     title: 'Klinisyenler',
     icon: '👨‍⚕️',
     desc: 'Klinisyen sayfası içerikleri',
-    keys: ['clinician_title', 'clinician_subtitle', 'clinician_content'],
+    keys: [
+      'clinician_title', 'clinician_subtitle', 'clinician_content',
+      { key: 'clinician_evidence', type: 'json-list', label: 'Klinik Kanıt Kartları', itemLabel: 'Kart', schema: EVIDENCE_SCHEMA },
+      { key: 'clinician_prescribe_steps', type: 'json-list', label: 'Reçete Adımları', itemLabel: 'Adım', schema: PRESCRIBE_STEP_SCHEMA },
+      { key: 'clinician_downloads', type: 'json-list', label: 'İndirilebilir Kaynaklar', itemLabel: 'Kaynak', schema: CLINICIAN_DL_SCHEMA },
+    ],
   },
   {
     title: 'SSS',
@@ -102,39 +213,44 @@ const SECTIONS = [
   {
     title: 'Nasıl Çalışır',
     icon: '⚙️',
-    desc: 'Tedavi fazları ve uygulama özellikleri',
+    desc: 'Kullanım adımları, fazlar ve uygulama özellikleri',
     keys: [
       'how_hero_title', 'how_hero_subtitle',
+      { key: 'how_steps', type: 'json-list', label: 'Kullanım Adımları', itemLabel: 'Adım', schema: HOW_STEP_SCHEMA },
       { key: 'how_phases', type: 'json-list', label: 'Tedavi Fazları', itemLabel: 'Faz', schema: PHASES_SCHEMA },
       { key: 'how_app_features', type: 'json-list', label: 'Uygulama Özellikleri', itemLabel: 'Özellik', schema: APP_FEATURES_SCHEMA },
+      { key: 'how_contraindications', type: 'json-list', label: 'Kontrendikasyonlar', itemLabel: 'Madde', schema: CONTRAINDICATION_SCHEMA },
     ],
   },
   {
     title: 'Kadın Sağlığı',
     icon: '👩',
-    desc: 'Kadın sayfası hedef profiller',
+    desc: 'Kadın sayfası profiller ve 10 tedavi modu',
     keys: [
       'women_hero_title', 'women_hero_subtitle',
       { key: 'women_profiles', type: 'json-list', label: 'Hedef Profiller', itemLabel: 'Profil', schema: PROFILE_SCHEMA },
+      { key: 'female_modes', type: 'json-list', label: '10 Kadın Tedavi Modu', itemLabel: 'Mod', schema: MODE_SCHEMA },
     ],
   },
   {
     title: 'Erkek Sağlığı',
     icon: '👨',
-    desc: 'Erkek sayfası hedef profiller',
+    desc: 'Erkek sayfası profiller ve 7 tedavi modu',
     keys: [
       'men_hero_title', 'men_hero_subtitle',
       { key: 'men_profiles', type: 'json-list', label: 'Hedef Profiller', itemLabel: 'Profil', schema: PROFILE_SCHEMA },
+      { key: 'male_modes', type: 'json-list', label: '7 Erkek Tedavi Modu', itemLabel: 'Mod', schema: MODE_SCHEMA },
     ],
   },
   {
     title: 'Bilim',
     icon: '🔬',
-    desc: 'Klinik araştırmalar ve kanıtlar',
+    desc: 'Klinik araştırmalar, kanıtlar ve teknik parametreler',
     keys: [
       'science_hero_title', 'science_hero_subtitle',
       { key: 'science_studies', type: 'json-list', label: 'Klinik Çalışmalar', itemLabel: 'Çalışma', schema: STUDY_SCHEMA },
       { key: 'science_differentiators', type: 'json-list', label: 'Farklılaştırıcılar', itemLabel: 'Madde', schema: DIFF_SCHEMA },
+      { key: 'tech_specs', type: 'json-list', label: 'Teknik Parametreler', itemLabel: 'Parametre', schema: TECH_SPEC_SCHEMA },
     ],
   },
   {

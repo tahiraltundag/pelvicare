@@ -3,19 +3,19 @@ import { useAuth } from '../context/AuthContext';
 import { CheckCircle, ArrowRight, Download } from 'lucide-react';
 import { useCms } from '../hooks/useCms';
 
-const prescribeSteps = [
+const DEFAULT_PRESCRIBE_STEPS = [
   { step: '1', title: 'Hastayı Değerlendirin', desc: 'Pelvik taban bozukluğunu tanımlayın ve PelvicAir kontrendikasyonlarını dışlayın.' },
   { step: '2', title: 'Protokol Seçin', desc: 'Mobil uygulamadan veya PelvicAir Klinisyen Portalı\'ndan uygun hastalık modunu (K-01 ila E-07) önerin.' },
   { step: '3', title: 'Hastayı Yönlendirin', desc: 'Reçete veya öneri mektubu yazın. Hasta web sitesinden veya yetkili satıcıdan temin edebilir.' },
 ];
 
-const clinicalEvidence = [
+const DEFAULT_CLINICAL_EVIDENCE = [
   { title: '%25 Hatalı Kegel', desc: 'Kadınların %25\'i Kegel egzersizini hatalı yapıyor — etki sıfır. PelvicAir pasif Kegel ile bu sorunu ortadan kaldırır.', source: 'Bø K. et al. 2012' },
   { title: '%13 PT Tamamlama', desc: 'Pelvik taban fizyoterapisi seanslarını tamamlama oranı sadece %13. Evde PelvicAir ile uyum dramatik artar.', source: 'Klotz T. et al. 2019' },
   { title: 'OAB İlaç Yan Etkileri', desc: 'Antikolinerjik ilaçların %40 bırakma oranı. PelvicAir farmakolojik olmayan bir alternatif sunar.', source: 'Chapple CR. et al. 2021' },
 ];
 
-const downloads = [
+const DEFAULT_DOWNLOADS = [
   { title: 'Klinisyen Reçete Rehberi', desc: 'Hastalık modları, kontrendikasyonlar ve dozaj parametreleri', format: 'PDF' },
   { title: 'Klinik Kanıt Özeti', desc: '50+ çalışmanın özeti — RCT, meta-analiz, Cochrane', format: 'PDF' },
   { title: 'Hasta Bilgi Broşürü', desc: 'Hastanıza verebileceğiniz Türkçe ürün tanıtım broşürü', format: 'PDF' },
@@ -25,9 +25,12 @@ const downloads = [
 export default function ClinicianPage() {
   const { user, isClinician } = useAuth();
   const navigate = useNavigate();
-  const { get } = useCms();
+  const { get, getJson } = useCms();
   const heroTitle = get('clinician_title', 'Hastanız İçin Yeni Bir Seçenek');
   const heroSubtitle = get('clinician_subtitle', 'PelvicAir, klinik fizyoterapiye ek veya monoterapi olarak reçete edebileceğiniz, CE belgeli, klinik kanıtlı non-invazif bir cihaz.');
+  const prescribeSteps = getJson('clinician_prescribe_steps', DEFAULT_PRESCRIBE_STEPS);
+  const clinicalEvidence = getJson('clinician_evidence', DEFAULT_CLINICAL_EVIDENCE);
+  const downloads = getJson('clinician_downloads', DEFAULT_DOWNLOADS);
   return (
     <div>
       {/* Hero */}

@@ -15,6 +15,7 @@ export default function WomenPage() {
   const heroTitle = get('women_hero_title', 'Kadın Pelvik Sağlığı');
   const heroSubtitle = get('women_hero_subtitle', '10 bilimsel protokol. İdrar kaçırmadan vajinismusa, dismenorenin anından menopoza kapsamlı kadın pelvik rehabilitasyonu.');
   const targetProfiles = getJson('women_profiles', DEFAULT_PROFILES);
+  const cmsFemModes = getJson('female_modes', femaleModes);
 
   return (
     <div>
@@ -60,7 +61,7 @@ export default function WomenPage() {
             <p className="text-gray-500">Her hastalık için bilimsel parametreler ve klinik kanıt altyapısı</p>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
-            {femaleModes.map((mode) => (
+            {cmsFemModes.map((mode) => (
               <div key={mode.code} className="rounded-2xl border border-gray-200 p-6 hover:border-teal-300 hover:shadow-sm transition-all">
                 <div className="flex items-start gap-4">
                   <div className="text-3xl flex-shrink-0">{mode.icon}</div>

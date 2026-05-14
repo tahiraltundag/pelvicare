@@ -1,21 +1,21 @@
 import { CheckCircle } from 'lucide-react';
 import { useCms } from '../hooks/useCms';
 
-const values = [
+const DEFAULT_VALUES = [
   { icon: '❤️', title: 'Empati', desc: 'Pelvik sağlık sorunları utanç değil, tıbbi bir gerçekliktir. Her hasta saygı ve anlayışla karşılanır.' },
   { icon: '🔬', title: 'İnovasyon', desc: 'Klinik etkinliği ev erişilebilirliğiyle birleştiren teknolojiyi geliştiriyoruz. Durmaksızın.' },
   { icon: '🛡', title: 'Güven', desc: 'CE belgeli, klinik kanıtlı, şeffaf. Müşterilerimiz her adımda bilgilendirilir.' },
   { icon: '🌿', title: 'Özgürlük', desc: 'Pelvik sağlık sorunu yaşayan her birey, utanmadan, konforla iyileşme hakkına sahiptir.' },
 ];
 
-const certifications = [
+const DEFAULT_CERTIFICATIONS = [
   { title: 'CE Belgesi', detail: 'MDR 2017/745 uyumlu tıbbi cihaz' },
   { title: 'ISO 13485:2016', detail: 'Tıbbi cihaz kalite yönetim sistemi' },
   { title: 'ISO 10993', detail: 'Biyouyumluluk test sertifikası' },
   { title: '5 Patent', detail: 'Türk Patent Enstitüsü tescilli' },
 ];
 
-const teamMembers = [
+const DEFAULT_TEAM = [
   { name: 'Dr. Elif Yıldız', role: 'Kurucu & CEO', bg: '#0d9488' },
   { name: 'Mhd. Tarık Demir', role: 'CTO / Ar-Ge', bg: '#1e3a5f' },
   { name: 'Fzt. Ayşe Kılıç', role: 'Klinik Direktör', bg: '#0d9488' },
@@ -25,9 +25,12 @@ const teamMembers = [
 ];
 
 export default function AboutPage() {
-  const { get } = useCms();
+  const { get, getJson } = useCms();
   const heroTitle = get('about_title', 'Hakkımızda');
   const missionContent = get('about_content', '');
+  const values = getJson('about_values', DEFAULT_VALUES);
+  const certifications = getJson('about_certifications', DEFAULT_CERTIFICATIONS);
+  const teamMembers = getJson('about_team', DEFAULT_TEAM);
 
   return (
     <div>

@@ -15,6 +15,7 @@ export default function MenPage() {
   const heroTitle = get('men_hero_title', 'Erkek Pelvik Sağlığı');
   const heroSubtitle = get('men_hero_subtitle', '7 bilimsel protokol. Erektil disfonksiyondan prostatik ağrıya, erken boşalmadan idrar kaçırmaya kapsamlı erkek pelvik rehabilitasyonu.');
   const targetProfiles = getJson('men_profiles', DEFAULT_PROFILES);
+  const cmsMalModes = getJson('male_modes', maleModes);
 
   return (
     <div>
@@ -56,7 +57,7 @@ export default function MenPage() {
             <p className="text-gray-500">Her hastalık için bilimsel parametreler ve klinik kanıt altyapısı</p>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
-            {maleModes.map((mode) => (
+            {cmsMalModes.map((mode) => (
               <div key={mode.code} className="rounded-2xl border border-gray-200 p-6 hover:border-teal-300 hover:shadow-sm transition-all">
                 <div className="flex items-start gap-4">
                   <div className="text-3xl flex-shrink-0">{mode.icon}</div>

@@ -21,6 +21,24 @@ const DEFAULT_APP_FEATURES = [
   { title: 'Bluetooth Bağlantı', desc: 'iOS ve Android uyumlu. Firmware güncelleme desteği. Cihaz durumu anlık izleme.' },
 ];
 
+const DEFAULT_HOW_STEPS = [
+  { num: '01', title: 'Elektrod Pedi Hazırlayın', desc: 'Resealable poşetten çıkarın. Hidrojel yüzeyinin nemliliğini kontrol edin. Her pad 3–5 seans kullanıma uygundur.' },
+  { num: '02', title: 'Pedi Yerleştirin', desc: 'İç çamaşırı konforu ile perineal bölgeye yerleştirin. Prob yok, girişim yok. Giysi altında tamamen görünmez.' },
+  { num: '03', title: 'Uygulamayı Açın', desc: 'Bluetooth ile cihaza bağlanın. Kadın veya erkek profilinizi seçin. Hastalık modunuzu belirleyin ve seanı başlatın.' },
+  { num: '04', title: 'Seanı Tamamlayın', desc: '20 dakikalık protokol otomatik çalışır. Günlük aktivitelerinize devam edebilirsiniz. Uygulama ilerlemenizi kaydeder.' },
+];
+
+const DEFAULT_CONTRAINDICATIONS = [
+  'Kalp pili (pacemaker) veya aktif implant',
+  'Gebelik',
+  'Aktif enfeksiyon veya açık yara',
+  'Epilepsi',
+  'Deri bütünlüğü bozuk bölge',
+  'İmplante edilmiş metalik cihaz (pelvik bölge)',
+  'Aktif kanser tedavisi',
+  'Kalp ritim bozukluğu',
+];
+
 const APP_FEATURE_ICONS = [<Activity size={20} />, <Zap size={20} />, <Waves size={20} />, <Smartphone size={20} />];
 
 export default function HowItWorksPage() {
@@ -29,6 +47,10 @@ export default function HowItWorksPage() {
   const heroSubtitle = get('how_hero_subtitle', 'PelvicAir, üç tedavi modalitesini tek bir giyilebilir cihazda birleştirerek klinik düzey pelvik taban rehabilitasyonunu evinize taşır.');
   const phases = getJson('how_phases', DEFAULT_PHASES);
   const appFeatures = getJson('how_app_features', DEFAULT_APP_FEATURES);
+  const howSteps = getJson('how_steps', DEFAULT_HOW_STEPS);
+  const contraindications = getJson('how_contraindications', DEFAULT_CONTRAINDICATIONS);
+  const cmsModalities = getJson('home_modalities', modalities);
+  const cmsSpecs = getJson('tech_specs', techSpecs);
 
   return (
     <div>
@@ -51,12 +73,7 @@ export default function HowItWorksPage() {
           </div>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              {[
-                { num: '01', title: 'Elektrod Pedi Hazırlayın', desc: 'Resealable poşetten çıkarın. Hidrojel yüzeyinin nemliliğini kontrol edin. Her pad 3–5 seans kullanıma uygundur.' },
-                { num: '02', title: 'Pedi Yerleştirin', desc: 'İç çamaşırı konforu ile perineal bölgeye yerleştirin. Prob yok, girişim yok. Giysi altında tamamen görünmez.' },
-                { num: '03', title: 'Uygulamayı Açın', desc: 'Bluetooth ile cihaza bağlanın. Kadın veya erkek profilinizi seçin. Hastalık modunuzu belirleyin ve seanı başlatın.' },
-                { num: '04', title: 'Seanı Tamamlayın', desc: '20 dakikalık protokol otomatik çalışır. Günlük aktivitelerinize devam edebilirsiniz. Uygulama ilerlemenizi kaydeder.' },
-              ].map((step) => (
+              {howSteps.map((step) => (
                 <div key={step.num} className="flex gap-4">
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold flex-shrink-0" style={{ backgroundColor: '#0d9488' }}>
                     {step.num}
@@ -126,7 +143,7 @@ export default function HowItWorksPage() {
             <p className="text-gray-500">Her modalite farklı mekanizma ile etki eder — birlikte kullanıldığında sinerjik etki sağlarlar.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            {modalities.map((m) => (
+            {cmsModalities.map((m) => (
               <div key={m.name} className="rounded-2xl border border-gray-200 p-6 hover:shadow-md transition-shadow">
                 <div className="text-5xl mb-4">{m.icon}</div>
                 <h3 className={`text-lg font-bold mb-1 ${m.color}`}>{m.name}</h3>
@@ -167,7 +184,7 @@ export default function HowItWorksPage() {
             <p className="text-gray-500">Tam programlanabilir, klinik düzey parametreler</p>
           </div>
           <div className="rounded-2xl border border-gray-200 overflow-hidden">
-            {techSpecs.map((spec, i) => (
+            {cmsSpecs.map((spec, i) => (
               <div key={spec.param} className={`flex justify-between items-center px-6 py-4 ${i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
                 <span className="text-sm font-medium text-gray-700">{spec.param}</span>
                 <span className="text-sm font-semibold" style={{ color: '#0d9488' }}>{spec.value}</span>
@@ -183,16 +200,7 @@ export default function HowItWorksPage() {
           <h2 className="text-xl font-bold text-amber-800 mb-4">⚠️ Kontrendikasyonlar</h2>
           <p className="text-amber-700 text-sm mb-4">Aşağıdaki durumlarda kullanmayınız. Herhangi bir şüphede hekiminize danışın.</p>
           <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Kalp pili (pacemaker) veya aktif implant',
-              'Gebelik',
-              'Aktif enfeksiyon veya açık yara',
-              'Epilepsi',
-              'Deri bütünlüğü bozuk bölge',
-              'İmplante edilmiş metalik cihaz (pelvik bölge)',
-              'Aktif kanser tedavisi',
-              'Kalp ritim bozukluğu',
-            ].map((item) => (
+            {contraindications.map((item) => (
               <div key={item} className="flex items-center gap-2 text-sm text-amber-800">
                 <span className="w-1.5 h-1.5 bg-amber-500 rounded-full flex-shrink-0"></span>
                 {item}

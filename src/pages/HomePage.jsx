@@ -73,7 +73,7 @@ export default function HomePage() {
   const [heroView, setHeroView] = useState('photos');
   const [photoIndex, setPhotoIndex] = useState(0);
   const { get, getJson } = useCms();
-  const heroTitle = get('hero_title', '');
+  const heroTitle = get('hero_title', 'Pelvik Taban Terapisi. Müdahalesiz. Kolay.');
   const heroSubtitle = get('hero_subtitle', '');
   const heroCta = get('hero_cta', 'Fiyatı Gör');
   const cmsStats = getJson('home_stats', stats);
@@ -114,7 +114,11 @@ export default function HomePage() {
                 <span className="text-teal-300 text-sm font-medium">CE Belgeli · Tıbbi Sınıf Cihaz</span>
               </div>
               <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-6">
-                {heroTitle || (<>Pelvik Taban Terapisi.<br /><span className="text-teal-400">Müdahalesiz.</span> Kolay.</>)}
+                {(() => {
+                  const parts = heroTitle.split('Müdahalesiz.');
+                  if (parts.length < 2) return heroTitle;
+                  return <>{parts[0]}<br /><span className="text-teal-400">Müdahalesiz.</span>{parts[1]}</>;
+                })()}
               </h1>
               <p className="text-lg text-blue-200 mb-8 leading-relaxed">
                 {heroSubtitle || 'EMS + Elektromanyetik Enerji + Vibrasyon. Üç güç, bir cihaz. 17 hastalık modunda klinik düzey rehabilitasyon artık evinizde.'}

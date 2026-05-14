@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { useCms } from './hooks/useCms';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -40,6 +41,15 @@ import ClinicianPatients from './pages/clinician/ClinicianPatients';
 import ClinicianPatientDetail from './pages/clinician/ClinicianPatientDetail';
 import ClinicianBulkOrder from './pages/clinician/ClinicianBulkOrder';
 
+function FontScaleApplier() {
+  const { get } = useCms();
+  const scale = get('font_size_scale', '100');
+  useEffect(() => {
+    document.documentElement.style.fontSize = scale + '%';
+  }, [scale]);
+  return null;
+}
+
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
@@ -65,6 +75,7 @@ export default function App() {
     <BrowserRouter>
       <AuthProvider>
         <CartProvider>
+          <FontScaleApplier />
           <ScrollToTop />
           <Routes>
             {/* Admin Routes */}

@@ -141,12 +141,60 @@ const CLINICIAN_DL_SCHEMA = [
   { key: 'format', label: 'Format (PDF/FORM)', type: 'text' },
 ];
 
+const FONT_SIZES = [
+  { label: 'XS', value: '85' },
+  { label: 'Küçük', value: '90' },
+  { label: 'Normal', value: '100' },
+  { label: 'Büyük', value: '110' },
+  { label: 'XL', value: '120' },
+  { label: 'XXL', value: '130' },
+];
+
+function FontScaleField({ value, onChange }) {
+  const current = value || '100';
+  return (
+    <div className="space-y-3">
+      <div className="flex gap-2 flex-wrap">
+        {FONT_SIZES.map(s => (
+          <button
+            key={s.value}
+            type="button"
+            onClick={() => onChange(s.value)}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
+              current === s.value
+                ? 'bg-teal-600 text-white border-teal-600'
+                : 'bg-white text-gray-700 border-gray-200 hover:border-teal-400'
+            }`}
+          >
+            {s.label}
+          </button>
+        ))}
+      </div>
+      <div>
+        <input
+          type="range" min="80" max="130" step="5"
+          value={current}
+          onChange={e => onChange(e.target.value)}
+          className="w-full accent-teal-600"
+        />
+        <div className="flex justify-between text-xs text-gray-400 mt-1">
+          <span>Küçük (80%)</span>
+          <span className="font-semibold text-teal-600">{current}%</span>
+          <span>Büyük (130%)</span>
+        </div>
+      </div>
+      <p className="text-xs text-gray-400">Sitedeki tüm yazı boyutlarını etkiler.</p>
+    </div>
+  );
+}
+
 const SECTIONS = [
   {
     title: 'Genel',
     icon: '🌐',
     desc: 'Her sayfada görünen içerikler',
     keys: [
+      { key: 'font_size_scale', type: 'font-scale', label: 'Yazı Boyutu' },
       'announcement_bar',
       'logo_url',
       'footer_address', 'footer_phone', 'footer_email',
@@ -573,6 +621,8 @@ export default function AdminCms() {
           <FaqEditor value={val} onChange={v => setValue(key, v)} />
         ) : type === 'json-articles' ? (
           <ArticlesEditor value={val} onChange={v => setValue(key, v)} />
+        ) : type === 'font-scale' ? (
+          <FontScaleField value={val} onChange={v => setValue(key, v)} />
         ) : (
           <input
             className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 transition-colors"

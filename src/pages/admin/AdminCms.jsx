@@ -528,7 +528,7 @@ export default function AdminCms() {
     try {
       const res = await api.put('/cms', { updates: changes });
       if (!res.success) throw new Error(res.error);
-      bustCmsCache();
+      bustCmsCache(res.data);
       setCms(res.data); setChanges({});
       setSaved(true); setTimeout(() => setSaved(false), 3000);
     } catch (err) { alert('Kaydetme hatası: ' + err.message); }

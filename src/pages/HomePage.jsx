@@ -213,7 +213,7 @@ export default function HomePage() {
       </section>
 
       {/* Trust Badges */}
-      <section className="border-b border-gray-100 bg-gray-300">
+      <section className="border-b border-gray-100 bg-[#eef2f7]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {cmsTrustBadges.map((badge) => (
@@ -241,7 +241,7 @@ export default function HomePage() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {cmsStats.map((stat, i) => (
               <AnimateInView key={stat.value} delay={i * 100}>
-                <div className="text-center p-6 rounded-2xl bg-gray-300 h-full">
+                <div className="text-center p-6 rounded-2xl bg-[#eef2f7] h-full">
                   <div className="text-4xl font-bold mb-1" style={{ color: '#0d9488' }}>{stat.value}</div>
                   <div className="text-sm font-semibold text-gray-800 mb-1">{stat.label}</div>
                   <div className="text-xs text-gray-500">{stat.desc}</div>
@@ -357,7 +357,7 @@ export default function HomePage() {
               </thead>
               <tbody>
                 {cmsComparison.map((row, i) => (
-                  <tr key={row.feature} className={i % 2 === 0 ? 'bg-gray-300' : 'bg-white'}>
+                  <tr key={row.feature} className={i % 2 === 0 ? 'bg-[#eef2f7]' : 'bg-white'}>
                     <td className="py-3 px-4 font-medium text-gray-700">{row.feature}</td>
                     {[row.pelvicair, row.internal, row.surgery, row.pt, row.pads].map((val, j) => (
                       <td key={j} className={`py-3 px-4 text-center ${j === 0 ? 'bg-teal-50' : ''}`}>
@@ -375,7 +375,7 @@ export default function HomePage() {
       </section>
 
       {/* Reviews */}
-      <section className="py-16 bg-gray-300">
+      <section className="py-16 bg-[#eef2f7]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <div className="flex justify-center items-center gap-2 mb-2">
@@ -437,7 +437,7 @@ export default function HomePage() {
       </section>
 
       {/* Newsletter */}
-      <section className="py-12 bg-gray-300 border-t border-gray-100">
+      <section className="py-12 bg-[#eef2f7] border-t border-gray-100">
         <div className="max-w-2xl mx-auto px-4 text-center">
           <h3 className="text-xl font-bold mb-2" style={{ color: '#1e3a5f' }}>Pelvik Sağlık Bültenimize Katılın</h3>
           <p className="text-gray-500 text-sm mb-5">İlk siparişinizde <span className="font-semibold text-teal-600">₺500 indirim</span> kazanın. Bilimsel içerikler ve ürün haberleri.</p>

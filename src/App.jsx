@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { useCms } from './hooks/useCms';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -28,6 +27,7 @@ import OrdersPage from './pages/OrdersPage';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
+import ResetPasswordPage from './pages/auth/ResetPasswordPage';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminProducts from './pages/admin/AdminProducts';
 import AdminOrders from './pages/admin/AdminOrders';
@@ -40,15 +40,6 @@ import ClinicianDashboard from './pages/clinician/ClinicianDashboard';
 import ClinicianPatients from './pages/clinician/ClinicianPatients';
 import ClinicianPatientDetail from './pages/clinician/ClinicianPatientDetail';
 import ClinicianBulkOrder from './pages/clinician/ClinicianBulkOrder';
-
-function FontScaleApplier() {
-  const { get } = useCms();
-  const scale = get('font_size_scale', '100');
-  useEffect(() => {
-    document.documentElement.style.fontSize = scale + '%';
-  }, [scale]);
-  return null;
-}
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -75,7 +66,6 @@ export default function App() {
     <BrowserRouter>
       <AuthProvider>
         <CartProvider>
-          <FontScaleApplier />
           <ScrollToTop />
           <Routes>
             {/* Admin Routes */}
@@ -137,6 +127,7 @@ export default function App() {
             <Route path="/giris" element={<LoginPage />} />
             <Route path="/kayit" element={<RegisterPage />} />
             <Route path="/sifremi-unuttum" element={<ForgotPasswordPage />} />
+            <Route path="/sifre-sifirla" element={<ResetPasswordPage />} />
 
             {/* Public Routes */}
             <Route path="/" element={<PublicLayout><HomePage /></PublicLayout>} />

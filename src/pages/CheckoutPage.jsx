@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { CheckCircle, Lock, ChevronRight, CreditCard, Building2 } from 'lucide-react';
+import api from '../api/client';
 
 const STEPS = ['Teslimat', 'Ödeme', 'Onay'];
 
@@ -81,11 +82,13 @@ function formatExpiry(val) {
 }
 
 export default function CheckoutPage() {
-  const { items, total, setSidebarOpen } = useCart();
+  const { items, total, setSidebarOpen, clearCart } = useCart();
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [payMethod, setPayMethod] = useState('card');
-  const [orderNumber] = useState(() => Math.floor(Math.random() * 900000) + 100000);
+  const [orderId, setOrderId] = useState(null);
+  const [orderLoading, setOrderLoading] = useState(false);
+  const [orderError, setOrderError] = useState('');
 
   const [delivery, setDelivery] = useState({ firstName: '', lastName: '', email: '', phone: '', address: '', city: '', district: '', zip: '' });
   const [card, setCard] = useState({ number: '', holder: '', expiry: '', cvv: '' });
@@ -130,9 +133,30 @@ export default function CheckoutPage() {
     if (validateDelivery()) { setErrors({}); setStep(1); }
   };
 
-  const handlePaySubmit = (e) => {
+  const handlePaySubmit = async (e) => {
     e.preventDefault();
-    if (validateCard()) { setErrors({}); setStep(2); }
+    if (!validateCard()) return;
+    setErrors({});
+    setOrderLoading(true);
+    setOrderError('');
+    try {
+      const mappedItems = items.map(item => ({
+        productId: item.id || null,
+        name: item.name,
+        price: item.price,
+        quantity: item.qty,
+        variant: item.variant || null,
+      }));
+      const res = await api.post('/orders', { items: mappedItems, address: delivery });
+      if (!res.success) throw new Error(res.error);
+      setOrderId(res.data.id);
+      clearCart();
+      setStep(2);
+    } catch (err) {
+      setOrderError(err.message || 'Sipariş oluşturulurken hata oluştu');
+    } finally {
+      setOrderLoading(false);
+    }
   };
 
   const inputCls = (field) =>
@@ -157,7 +181,7 @@ export default function CheckoutPage() {
             </div>
             <h2 className="text-2xl font-bold mb-2" style={{ color: '#1e3a5f' }}>Siparişiniz Alındı!</h2>
             <p className="text-gray-500 mb-6">
-              Sipariş numaranız: <span className="font-bold text-gray-900">#{orderNumber}</span><br />
+              Sipariş numaranız: <span className="font-bold text-gray-900">#{orderId ? orderId.slice(-8).toUpperCase() : '—'}</span><br />
               Onay e-postası <span className="font-medium">{delivery.email}</span> adresine gönderildi.
             </p>
             <div className="bg-teal-50 rounded-2xl p-5 text-left mb-8 border border-teal-100">
@@ -333,7 +357,7 @@ export default function CheckoutPage() {
                           { label: 'Banka', value: 'Ziraat Bankası' },
                           { label: 'Hesap Adı', value: 'PelvicAir Medikal A.Ş.' },
                           { label: 'IBAN', value: 'TR00 0001 0001 0000 0000 0000 00' },
-                          { label: 'Açıklama', value: `Sipariş #${orderNumber}` },
+                          { label: 'Açıklama', value: 'Ad Soyad + Sipariş' },
                         ].map(row => (
                           <div key={row.label} className="flex justify-between py-2.5 border-b border-gray-100 last:border-0">
                             <span className="text-gray-500 font-medium">{row.label}</span>
@@ -347,16 +371,24 @@ export default function CheckoutPage() {
                     </div>
                   )}
 
+                  {orderError && (
+                    <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl px-4 py-3">
+                      {orderError}
+                    </div>
+                  )}
                   <div className="flex gap-3">
                     <button type="button" onClick={() => setStep(0)}
                       className="px-5 py-3.5 rounded-xl border border-gray-200 font-medium text-gray-600 hover:bg-gray-50 transition">
                       ← Geri
                     </button>
-                    <button type="submit"
-                      className="flex-1 py-3.5 rounded-xl font-bold text-white hover:opacity-90 active:scale-[0.98] transition flex items-center justify-center gap-2"
+                    <button type="submit" disabled={orderLoading}
+                      className="flex-1 py-3.5 rounded-xl font-bold text-white hover:opacity-90 active:scale-[0.98] transition flex items-center justify-center gap-2 disabled:opacity-60"
                       style={{ backgroundColor: '#0d9488' }}>
-                      <Lock size={16} />
-                      Siparişi Tamamla · {total.toLocaleString('tr-TR')} ₺
+                      {orderLoading ? (
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      ) : (
+                        <><Lock size={16} />Siparişi Tamamla · {total.toLocaleString('tr-TR')} ₺</>
+                      )}
                     </button>
                   </div>
                 </form>

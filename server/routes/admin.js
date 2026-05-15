@@ -9,8 +9,9 @@ router.use(verifyToken, requireRole('admin', 'superadmin'));
 
 router.get('/dashboard', async (req, res) => {
   try {
-    const [totalOrders, totalRevenue, totalUsers, totalProducts, recentOrders, lowStockProducts] = await Promise.all([
+    const [totalOrders, totalBulkOrders, totalRevenue, totalUsers, totalProducts, recentOrders, lowStockProducts] = await Promise.all([
       prisma.order.count(),
+      prisma.bulkOrderRequest.count(),
       prisma.order.aggregate({ _sum: { total: true } }),
       prisma.user.count(),
       prisma.product.count({ where: { deletedAt: null, status: 'aktif' } }),
@@ -34,7 +35,7 @@ router.get('/dashboard', async (req, res) => {
       success: true,
       data: {
         stats: {
-          totalOrders,
+          totalOrders: totalOrders + totalBulkOrders,
           totalRevenue: totalRevenue._sum.total || 0,
           totalUsers,
           totalProducts,

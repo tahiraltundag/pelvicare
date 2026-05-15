@@ -6,6 +6,7 @@ const rateLimit = require('express-rate-limit');
 const crypto = require('crypto');
 const { PrismaClient } = require('@prisma/client');
 const { verifyToken } = require('../middleware/auth');
+const { sendMail } = require('../utils/mailer');
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -141,9 +142,21 @@ router.post('/forgot-password', async (req, res) => {
     const expiresAt = new Date(Date.now() + 3600000); // 1 hour
     await prisma.passwordReset.create({ data: { email: user.email, token, expiresAt } });
 
-    // In production, send email here
-    console.log(`[DEV] Password reset token for ${email}: ${token}`);
-    res.json({ success: true, data: { message: 'Şifre sıfırlama bağlantısı gönderildi', devToken: process.env.NODE_ENV !== 'production' ? token : undefined } });
+    const resetUrl = `${process.env.CLIENT_URL || 'http://localhost:5173'}/sifre-sifirla?token=${token}`;
+    const sent = await sendMail({
+      to: user.email,
+      subject: 'PelviCare – Şifre Sıfırlama',
+      html: `
+        <div style="font-family:sans-serif;max-width:480px;margin:auto">
+          <h2 style="color:#1e3a5f">Şifrenizi Sıfırlayın</h2>
+          <p>Aşağıdaki bağlantıya tıklayarak şifrenizi sıfırlayabilirsiniz. Bağlantı <strong>1 saat</strong> geçerlidir.</p>
+          <a href="${resetUrl}" style="display:inline-block;margin:16px 0;padding:12px 24px;background:#0d9488;color:#fff;border-radius:8px;text-decoration:none;font-weight:bold">Şifremi Sıfırla</a>
+          <p style="color:#888;font-size:13px">Bu isteği siz yapmadıysanız bu e-postayı görmezden gelebilirsiniz.</p>
+        </div>
+      `,
+    });
+    if (!sent) console.log(`[DEV] Password reset link for ${email}: ${resetUrl}`);
+    res.json({ success: true, data: { message: 'Şifre sıfırlama bağlantısı gönderildi' } });
   } catch {
     res.status(500).json({ success: false, error: 'Sunucu hatası' });
   }

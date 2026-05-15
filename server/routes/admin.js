@@ -208,4 +208,45 @@ router.get('/orders', async (req, res) => {
   }
 });
 
+router.get('/bulk-orders', async (req, res) => {
+  try {
+    const { status, page = 1, limit = 20 } = req.query;
+    const pageNum = Math.max(1, parseInt(page));
+    const limitNum = Math.min(100, parseInt(limit));
+    const where = {};
+    if (status) where.status = status;
+
+    const [orders, total] = await Promise.all([
+      prisma.bulkOrderRequest.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+        skip: (pageNum - 1) * limitNum,
+        take: limitNum,
+      }),
+      prisma.bulkOrderRequest.count({ where }),
+    ]);
+
+    res.json({ success: true, data: orders, meta: { total, page: pageNum, totalPages: Math.ceil(total / limitNum) } });
+  } catch {
+    res.status(500).json({ success: false, error: 'Sunucu hatası' });
+  }
+});
+
+router.patch('/bulk-orders/:id', async (req, res) => {
+  const { status } = req.body;
+  const valid = ['beklemede', 'gorusuldu', 'tamamlandi', 'iptal'];
+  if (!valid.includes(status)) {
+    return res.status(400).json({ success: false, error: 'Geçersiz durum' });
+  }
+  try {
+    const order = await prisma.bulkOrderRequest.update({
+      where: { id: req.params.id },
+      data: { status },
+    });
+    res.json({ success: true, data: order });
+  } catch {
+    res.status(500).json({ success: false, error: 'Sunucu hatası' });
+  }
+});
+
 module.exports = router;

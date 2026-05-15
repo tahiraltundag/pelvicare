@@ -46,6 +46,7 @@ const DEFAULT_ARTICLES = [
 export default function ResourcesPage() {
   const { get, getJson } = useCms();
   const heroTitle = get('resources_hero_title', 'Kaynaklar');
+  const heroTitleFs = get('resources_hero_title_fs', '');
   const downloads = getJson('resources_downloads', DEFAULT_DOWNLOADS);
   const articles = getJson('resources_articles', DEFAULT_ARTICLES);
 
@@ -54,7 +55,7 @@ export default function ResourcesPage() {
       {/* Hero */}
       <section className="py-16 lg:py-20" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 100%)' }}>
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4" style={heroTitleFs ? { fontSize: `${heroTitleFs}px` } : {}}>{heroTitle}</h1>
           <p className="text-blue-200 text-lg">İndirilebilir belgeler, makaleler ve pelvik sağlık rehberleri</p>
         </div>
       </section>

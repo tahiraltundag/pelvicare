@@ -74,7 +74,9 @@ export default function HomePage() {
   const [photoIndex, setPhotoIndex] = useState(0);
   const { get, getJson } = useCms();
   const heroTitle = get('hero_title', 'Pelvik Taban Terapisi. Müdahalesiz. Kolay.');
+  const heroTitleFs = get('hero_title_fs', '');
   const heroSubtitle = get('hero_subtitle', '');
+  const heroSubtitleFs = get('hero_subtitle_fs', '');
   const heroCta = get('hero_cta', 'Fiyatı Gör');
   const cmsStats = getJson('home_stats', stats);
   const cmsModalities = getJson('home_modalities', modalities);
@@ -113,14 +115,14 @@ export default function HomePage() {
                 <span className="w-2 h-2 bg-teal-400 rounded-full"></span>
                 <span className="text-teal-300 text-sm font-medium">CE Belgeli · Tıbbi Sınıf Cihaz</span>
               </div>
-              <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-6">
+              <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-6" style={heroTitleFs ? { fontSize: `${heroTitleFs}px` } : {}}>
                 {(() => {
                   const parts = heroTitle.split('Müdahalesiz.');
                   if (parts.length < 2) return heroTitle;
                   return <>{parts[0]}<br /><span className="text-teal-400">Müdahalesiz.</span>{parts[1]}</>;
                 })()}
               </h1>
-              <p className="text-lg text-blue-200 mb-8 leading-relaxed">
+              <p className="text-lg text-blue-200 mb-8 leading-relaxed" style={heroSubtitleFs ? { fontSize: `${heroSubtitleFs}px` } : {}}>
                 {heroSubtitle || 'EMS + Elektromanyetik Enerji + Vibrasyon. Üç güç, bir cihaz. 17 hastalık modunda klinik düzey rehabilitasyon artık evinizde.'}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mb-10">

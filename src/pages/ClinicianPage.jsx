@@ -27,7 +27,9 @@ export default function ClinicianPage() {
   const navigate = useNavigate();
   const { get, getJson } = useCms();
   const heroTitle = get('clinician_title', 'Hastanız İçin Yeni Bir Seçenek');
+  const heroTitleFs = get('clinician_title_fs', '');
   const heroSubtitle = get('clinician_subtitle', 'PelvicAir, klinik fizyoterapiye ek veya monoterapi olarak reçete edebileceğiniz, CE belgeli, klinik kanıtlı non-invazif bir cihaz.');
+  const heroSubtitleFs = get('clinician_subtitle_fs', '');
   const prescribeSteps = getJson('clinician_prescribe_steps', DEFAULT_PRESCRIBE_STEPS);
   const clinicalEvidence = getJson('clinician_evidence', DEFAULT_CLINICAL_EVIDENCE);
   const downloads = getJson('clinician_downloads', DEFAULT_DOWNLOADS);
@@ -41,8 +43,8 @@ export default function ClinicianPage() {
               <div className="inline-block bg-teal-500/20 border border-teal-400/30 rounded-full px-4 py-1.5 mb-4">
                 <span className="text-teal-300 text-sm font-medium">Sağlık Profesyonelleri</span>
               </div>
-              <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
-              <p className="text-xl text-blue-200 leading-relaxed mb-6">
+              <h1 className="text-4xl lg:text-5xl font-bold mb-4" style={heroTitleFs ? { fontSize: `${heroTitleFs}px` } : {}}>{heroTitle}</h1>
+              <p className="text-xl text-blue-200 leading-relaxed mb-6" style={heroSubtitleFs ? { fontSize: `${heroSubtitleFs}px` } : {}}>
                 {heroSubtitle}
               </p>
               <div className="grid grid-cols-3 gap-4 mb-6">

@@ -45,6 +45,7 @@ function RatingBar({ stars, count, total }) {
 export default function ReviewsPage() {
   const { get, getJson } = useCms();
   const heroTitle = get('reviews_hero_title', 'Kullanıcı Yorumları');
+  const heroTitleFs = get('reviews_hero_title_fs', '');
   const allReviews = getJson('reviews_items', DEFAULT_REVIEWS);
   const [activeFilter, setActiveFilter] = useState(null);
 
@@ -60,7 +61,7 @@ export default function ReviewsPage() {
       {/* Hero */}
       <section className="py-16" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 100%)' }}>
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4" style={heroTitleFs ? { fontSize: `${heroTitleFs}px` } : {}}>{heroTitle}</h1>
           <p className="text-blue-200 text-lg">Gerçek kullanıcılar, gerçek sonuçlar.</p>
           <div className="mt-6 inline-flex items-center gap-3 bg-white/10 rounded-2xl px-6 py-3">
             <StarRating rating={5} size={20} />

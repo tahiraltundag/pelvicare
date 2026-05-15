@@ -14,7 +14,9 @@ export default function ContactPage() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const { get } = useCms();
   const contactTitle = get('contact_title', 'İletişim');
+  const contactTitleFs = get('contact_title_fs', '');
   const contactSubtitle = get('contact_subtitle', 'Size nasıl yardımcı olabileceğimizi öğrenmek isteriz.');
+  const contactSubtitleFs = get('contact_subtitle_fs', '');
   const address = get('footer_address', 'Teknokent Binası, Blok A No:12 Ankara / Türkiye');
   const phone = get('footer_phone', '0850 123 45 67');
   const email = get('footer_email', 'info@pelvicair.com');
@@ -29,8 +31,8 @@ export default function ContactPage() {
       {/* Hero */}
       <section className="py-16 lg:py-20" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 100%)' }}>
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">{contactTitle}</h1>
-          <p className="text-blue-200 text-lg">{contactSubtitle}</p>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4" style={contactTitleFs ? { fontSize: `${contactTitleFs}px` } : {}}>{contactTitle}</h1>
+          <p className="text-blue-200 text-lg" style={contactSubtitleFs ? { fontSize: `${contactSubtitleFs}px` } : {}}>{contactSubtitle}</p>
         </div>
       </section>
 

@@ -23,7 +23,9 @@ const tagColors = {
 export default function SciencePage() {
   const { get, getJson } = useCms();
   const heroTitle = get('science_hero_title', 'Bilimsel Kanıtlar');
+  const heroTitleFs = get('science_hero_title_fs', '');
   const heroSubtitle = get('science_hero_subtitle', 'PelvicAir\'in etkinliği 50\'den fazla randomize kontrollü klinik çalışma ile desteklenmektedir.');
+  const heroSubtitleFs = get('science_hero_subtitle_fs', '');
   const clinicalStudies = getJson('science_studies', DEFAULT_STUDIES);
   const differentiators = getJson('science_differentiators', DEFAULT_DIFFS);
   const cmsClinicalResults = getJson('home_clinical_results', clinicalResults);
@@ -35,8 +37,8 @@ export default function SciencePage() {
       {/* Hero */}
       <section className="py-16 lg:py-24" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 100%)' }}>
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
-          <p className="text-xl text-blue-200 leading-relaxed mb-8">
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4" style={heroTitleFs ? { fontSize: `${heroTitleFs}px` } : {}}>{heroTitle}</h1>
+          <p className="text-xl text-blue-200 leading-relaxed mb-8" style={heroSubtitleFs ? { fontSize: `${heroSubtitleFs}px` } : {}}>
             {heroSubtitle}
           </p>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

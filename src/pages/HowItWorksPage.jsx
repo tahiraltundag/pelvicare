@@ -44,7 +44,9 @@ const APP_FEATURE_ICONS = [<Activity size={20} />, <Zap size={20} />, <Waves siz
 export default function HowItWorksPage() {
   const { get, getJson } = useCms();
   const heroTitle = get('how_hero_title', 'Nasıl Çalışır?');
+  const heroTitleFs = get('how_hero_title_fs', '');
   const heroSubtitle = get('how_hero_subtitle', 'PelvicAir, üç tedavi modalitesini tek bir giyilebilir cihazda birleştirerek klinik düzey pelvik taban rehabilitasyonunu evinize taşır.');
+  const heroSubtitleFs = get('how_hero_subtitle_fs', '');
   const phases = getJson('how_phases', DEFAULT_PHASES);
   const appFeatures = getJson('how_app_features', DEFAULT_APP_FEATURES);
   const howSteps = getJson('how_steps', DEFAULT_HOW_STEPS);
@@ -57,8 +59,8 @@ export default function HowItWorksPage() {
       {/* Hero */}
       <section className="py-16 lg:py-24" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 100%)' }}>
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
-          <p className="text-xl text-blue-200 leading-relaxed">
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4" style={heroTitleFs ? { fontSize: `${heroTitleFs}px` } : {}}>{heroTitle}</h1>
+          <p className="text-xl text-blue-200 leading-relaxed" style={heroSubtitleFs ? { fontSize: `${heroSubtitleFs}px` } : {}}>
             {heroSubtitle}
           </p>
         </div>

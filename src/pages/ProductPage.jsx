@@ -164,8 +164,11 @@ export default function ProductPage() {
   const { get, getJson } = useCms();
   const heroBadge = get('product_hero_badge', 'CE Belgeli · Tıbbi Sınıf');
   const heroTitle = get('product_hero_title', 'PelvicAir');
+  const heroTitleFs = get('product_hero_title_fs', '');
   const heroSubtitle = get('product_hero_subtitle', 'Akıllı Hibrit Pelvik Taban Rehabilitasyon Sistemi');
+  const heroSubtitleFs = get('product_hero_subtitle_fs', '');
   const heroTagline = get('product_hero_tagline', '"Üç güç. Bir cihaz. Sonsuz özgürlük."');
+  const heroTaglineFs = get('product_hero_tagline_fs', '');
   const cmsPackages = getJson('product_packages', null);
   const packageList = cmsPackages || packages;
 
@@ -187,9 +190,9 @@ export default function ProductPage() {
               <div className="inline-block bg-teal-500/20 border border-teal-400/30 rounded-full px-4 py-1.5 mb-4">
                 <span className="text-teal-300 text-sm font-medium">{heroBadge}</span>
               </div>
-              <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
-              <p className="text-lg text-blue-200 mb-2">{heroSubtitle}</p>
-              <p className="text-blue-300 text-sm mb-6">{heroTagline}</p>
+              <h1 className="text-4xl lg:text-5xl font-bold mb-4" style={heroTitleFs ? { fontSize: `${heroTitleFs}px` } : {}}>{heroTitle}</h1>
+              <p className="text-lg text-blue-200 mb-2" style={heroSubtitleFs ? { fontSize: `${heroSubtitleFs}px` } : {}}>{heroSubtitle}</p>
+              <p className="text-blue-300 text-sm mb-6" style={heroTaglineFs ? { fontSize: `${heroTaglineFs}px` } : {}}>{heroTagline}</p>
               <div className="flex items-center gap-3 mb-6">
                 <StarRating rating={5} />
                 <span className="text-blue-200 text-sm">4.8/5 · 500+ değerlendirme</span>

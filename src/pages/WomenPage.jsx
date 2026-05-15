@@ -13,7 +13,9 @@ const DEFAULT_PROFILES = [
 export default function WomenPage() {
   const { get, getJson } = useCms();
   const heroTitle = get('women_hero_title', 'Kadın Pelvik Sağlığı');
+  const heroTitleFs = get('women_hero_title_fs', '');
   const heroSubtitle = get('women_hero_subtitle', '10 bilimsel protokol. İdrar kaçırmadan vajinismusa, dismenorenin anından menopoza kapsamlı kadın pelvik rehabilitasyonu.');
+  const heroSubtitleFs = get('women_hero_subtitle_fs', '');
   const targetProfiles = getJson('women_profiles', DEFAULT_PROFILES);
   const cmsFemModes = getJson('female_modes', femaleModes);
 
@@ -23,8 +25,8 @@ export default function WomenPage() {
       <section className="py-16 lg:py-24" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 60%, #0d9488 100%)' }}>
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
           <div className="text-5xl mb-4">🌸</div>
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
-          <p className="text-xl text-blue-200 leading-relaxed mb-6">
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4" style={heroTitleFs ? { fontSize: `${heroTitleFs}px` } : {}}>{heroTitle}</h1>
+          <p className="text-xl text-blue-200 leading-relaxed mb-6" style={heroSubtitleFs ? { fontSize: `${heroSubtitleFs}px` } : {}}>
             {heroSubtitle}
           </p>
           <div className="flex flex-wrap justify-center gap-3">

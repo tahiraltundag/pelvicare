@@ -141,52 +141,20 @@ const CLINICIAN_DL_SCHEMA = [
   { key: 'format', label: 'Format (PDF/FORM)', type: 'text' },
 ];
 
-const FONT_SIZES = [
-  { label: 'XS', value: '85' },
-  { label: 'Küçük', value: '90' },
-  { label: 'Normal', value: '100' },
-  { label: 'Büyük', value: '110' },
-  { label: 'XL', value: '120' },
-  { label: 'XXL', value: '130' },
-];
-
-function FontScaleField({ value, onChange }) {
-  const current = value || '100';
-  return (
-    <div className="space-y-3">
-      <div className="flex gap-2 flex-wrap">
-        {FONT_SIZES.map(s => (
-          <button
-            key={s.value}
-            type="button"
-            onClick={() => onChange(s.value)}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
-              current === s.value
-                ? 'bg-teal-600 text-white border-teal-600'
-                : 'bg-white text-gray-700 border-gray-200 hover:border-teal-400'
-            }`}
-          >
-            {s.label}
-          </button>
-        ))}
-      </div>
-      <div>
-        <input
-          type="range" min="80" max="130" step="5"
-          value={current}
-          onChange={e => onChange(e.target.value)}
-          className="w-full accent-teal-600"
-        />
-        <div className="flex justify-between text-xs text-gray-400 mt-1">
-          <span>Küçük (80%)</span>
-          <span className="font-semibold text-teal-600">{current}%</span>
-          <span>Büyük (130%)</span>
-        </div>
-      </div>
-      <p className="text-xs text-gray-400">Sitedeki tüm yazı boyutlarını etkiler.</p>
-    </div>
-  );
-}
+const HEADING_KEYS = new Set([
+  'hero_title', 'hero_subtitle',
+  'contact_title', 'contact_subtitle',
+  'product_hero_title', 'product_hero_subtitle', 'product_hero_tagline',
+  'about_title',
+  'clinician_title', 'clinician_subtitle',
+  'faq_hero_title', 'faq_hero_subtitle',
+  'how_hero_title', 'how_hero_subtitle',
+  'women_hero_title', 'women_hero_subtitle',
+  'men_hero_title', 'men_hero_subtitle',
+  'science_hero_title', 'science_hero_subtitle',
+  'reviews_hero_title',
+  'resources_hero_title',
+]);
 
 const SECTIONS = [
   {
@@ -194,7 +162,6 @@ const SECTIONS = [
     icon: '🌐',
     desc: 'Her sayfada görünen içerikler',
     keys: [
-      { key: 'font_size_scale', type: 'font-scale', label: 'Yazı Boyutu' },
       'announcement_bar',
       'logo_url',
       'footer_address', 'footer_phone', 'footer_email',
@@ -603,14 +570,42 @@ export default function AdminCms() {
     const label = isObj ? keyEntry.label : (cms[key]?.label || key);
     const val = getValue(key);
     const changed = key in changes;
+    const isHeading = HEADING_KEYS.has(key);
+    const fsKey = `${key}_fs`;
+    const fsSize = isHeading ? (parseInt(getValue(fsKey)) || 0) : 0;
 
     return (
       <div key={key}>
-        <label className="flex items-center gap-1.5 text-xs font-semibold text-gray-600 mb-1.5">
-          {typeIcon(type)}
-          {label}
-          {changed && <span className="text-orange-500 text-[10px] font-medium">(değiştirildi)</span>}
-        </label>
+        <div className="flex items-center gap-1.5 text-xs font-semibold text-gray-600 mb-1.5">
+          <span className="flex items-center gap-1.5 flex-1">
+            {typeIcon(type)}
+            {label}
+            {changed && <span className="text-orange-500 text-[10px] font-medium">(değiştirildi)</span>}
+          </span>
+          {isHeading && (
+            <span className="inline-flex items-center gap-1">
+              <button type="button"
+                onClick={() => setValue(fsKey, String(Math.max(12, (fsSize || 36) - 2)))}
+                className="w-6 h-6 rounded border border-gray-300 text-sm font-bold text-gray-600 hover:bg-gray-100 flex items-center justify-center leading-none">
+                −
+              </button>
+              <span className="text-xs font-mono text-gray-500 w-10 text-center border border-gray-200 rounded px-1 py-0.5 bg-white">
+                {fsSize ? `${fsSize}px` : '–'}
+              </span>
+              <button type="button"
+                onClick={() => setValue(fsKey, String(Math.min(80, (fsSize || 36) + 2)))}
+                className="w-6 h-6 rounded border border-gray-300 text-sm font-bold text-gray-600 hover:bg-gray-100 flex items-center justify-center leading-none">
+                +
+              </button>
+              {fsSize > 0 && (
+                <button type="button" onClick={() => setValue(fsKey, '')}
+                  className="text-[10px] text-gray-400 hover:text-red-400 ml-0.5" title="Sıfırla">
+                  ↺
+                </button>
+              )}
+            </span>
+          )}
+        </div>
         {type === 'html' ? (
           <RichTextEditor value={val} onChange={v => setValue(key, v)} />
         ) : type === 'image' ? (
@@ -621,8 +616,6 @@ export default function AdminCms() {
           <FaqEditor value={val} onChange={v => setValue(key, v)} />
         ) : type === 'json-articles' ? (
           <ArticlesEditor value={val} onChange={v => setValue(key, v)} />
-        ) : type === 'font-scale' ? (
-          <FontScaleField value={val} onChange={v => setValue(key, v)} />
         ) : (
           <input
             className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 transition-colors"

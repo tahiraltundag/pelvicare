@@ -13,7 +13,9 @@ const DEFAULT_PROFILES = [
 export default function MenPage() {
   const { get, getJson } = useCms();
   const heroTitle = get('men_hero_title', 'Erkek Pelvik Sağlığı');
+  const heroTitleFs = get('men_hero_title_fs', '');
   const heroSubtitle = get('men_hero_subtitle', '7 bilimsel protokol. Erektil disfonksiyondan prostatik ağrıya, erken boşalmadan idrar kaçırmaya kapsamlı erkek pelvik rehabilitasyonu.');
+  const heroSubtitleFs = get('men_hero_subtitle_fs', '');
   const targetProfiles = getJson('men_profiles', DEFAULT_PROFILES);
   const cmsMalModes = getJson('male_modes', maleModes);
 
@@ -23,8 +25,8 @@ export default function MenPage() {
       <section className="py-16 lg:py-24" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 100%)' }}>
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
           <div className="text-5xl mb-4">💪</div>
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
-          <p className="text-xl text-blue-200 leading-relaxed mb-6">
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4" style={heroTitleFs ? { fontSize: `${heroTitleFs}px` } : {}}>{heroTitle}</h1>
+          <p className="text-xl text-blue-200 leading-relaxed mb-6" style={heroSubtitleFs ? { fontSize: `${heroSubtitleFs}px` } : {}}>
             {heroSubtitle}
           </p>
           <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-400/30 rounded-full px-5 py-2">

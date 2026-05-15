@@ -30,15 +30,17 @@ function FaqItem({ question, answer }) {
 export default function FaqPage() {
   const { get, getJson } = useCms();
   const heroTitle = get('faq_hero_title', 'Sık Sorulan Sorular');
+  const heroTitleFs = get('faq_hero_title_fs', '');
   const heroSubtitle = get('faq_hero_subtitle', 'PelvicAir hakkında merak ettiklerinizin yanıtları');
+  const heroSubtitleFs = get('faq_hero_subtitle_fs', '');
   const categories = getJson('faq_categories', DEFAULT_CATEGORIES);
 
   return (
     <div>
       <section className="py-16 lg:py-20" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 100%)' }}>
         <div className="max-w-3xl mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
-          <p className="text-blue-200 text-lg">{heroSubtitle}</p>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4" style={heroTitleFs ? { fontSize: `${heroTitleFs}px` } : {}}>{heroTitle}</h1>
+          <p className="text-blue-200 text-lg" style={heroSubtitleFs ? { fontSize: `${heroSubtitleFs}px` } : {}}>{heroSubtitle}</p>
         </div>
       </section>
 

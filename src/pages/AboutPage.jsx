@@ -27,6 +27,7 @@ const DEFAULT_TEAM = [
 export default function AboutPage() {
   const { get, getJson } = useCms();
   const heroTitle = get('about_title', 'Hakkımızda');
+  const heroTitleFs = get('about_title_fs', '');
   const missionContent = get('about_content', '');
   const values = getJson('about_values', DEFAULT_VALUES);
   const certifications = getJson('about_certifications', DEFAULT_CERTIFICATIONS);
@@ -37,7 +38,7 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="py-16 lg:py-24" style={{ background: 'linear-gradient(135deg, #0f2340 0%, #1e3a5f 100%)' }}>
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4">{heroTitle}</h1>
+          <h1 className="text-4xl lg:text-5xl font-bold mb-4" style={heroTitleFs ? { fontSize: `${heroTitleFs}px` } : {}}>{heroTitle}</h1>
           <p className="text-xl text-blue-200 leading-relaxed">
             PelvicAir, pelvik sağlık sorunlarının utanç kaynağı değil çözülebilir tıbbi durumlar olduğuna inanan bir ekip tarafından kurulmuştur.
           </p>

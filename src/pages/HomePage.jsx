@@ -113,7 +113,7 @@ export default function HomePage() {
             <div className="text-white -mt-10 lg:mt-0">
               <div className="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-400/30 rounded-full px-4 py-1.5 mb-6 mt-24">
                 <span className="w-2 h-2 bg-teal-400 rounded-full"></span>
-                <span className="text-teal-300 text-sm font-medium">CE Belgeli · Tıbbi Sınıf Cihaz</span>
+                <span className="text-teal-300 text-sm font-medium">CE Standartlarına Uygun - Tıbbi Sınıf Cihaz</span>
               </div>
               <h1 className="text-4xl lg:text-5xl font-bold leading-tight mb-6" style={heroTitleFs ? { fontSize: `${heroTitleFs}px` } : {}}>
                 {(() => {

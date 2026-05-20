@@ -350,7 +350,7 @@ export default function HomePage() {
               <thead>
                 <tr>
                   <th className="text-left py-3 px-4 text-gray-500 font-medium">Özellik</th>
-                  <th className="py-3 px-4 font-bold text-teal-600 bg-teal-50 rounded-t-xl">PelvicAir</th>
+                  <th className="py-3 px-4 font-bold text-teal-600 bg-teal-50 rounded-t-xl">PelviQ</th>
                   <th className="py-3 px-4 font-medium text-gray-500">İnternal Cihazlar</th>
                   <th className="py-3 px-4 font-medium text-gray-500">Cerrahi</th>
                   <th className="py-3 px-4 font-medium text-gray-500">Fizyoterapi</th>

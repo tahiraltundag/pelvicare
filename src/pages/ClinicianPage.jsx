@@ -116,7 +116,7 @@ export default function ClinicianPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>Reçete / Öneri Süreci</h2>
-            <p className="text-gray-500">3 adımda hastanıza PelvicAir'i önerin</p>
+            <p className="text-gray-500">3 Adımda Hastanıza PelvicQ'yu Önerin</p>
           </div>
           <div className="space-y-6">
             {prescribeSteps.map((s) => (

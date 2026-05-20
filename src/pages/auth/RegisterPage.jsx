@@ -67,7 +67,7 @@ export default function RegisterPage() {
             </span>
           </Link>
           <h1 className="text-2xl font-bold text-gray-900">Hesap Oluştur</h1>
-          <p className="text-gray-500 mt-1 text-sm">PelvicAir'e ücretsiz kayıt olun</p>
+          <p className="text-gray-500 mt-1 text-sm">PelviQ'e ücretsiz kayıt olun</p>
         </div>
 
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">

@@ -5,9 +5,9 @@ import { useCms } from '../hooks/useCms';
 
 const DEFAULT_CATEGORIES = [
   { category: 'Cihaz Kullanımı', questions: [
-    { q: 'PelvicAir nasıl kullanılır?', a: 'Elektrod pedi iç çamaşırınızın üzerine perineal bölgeye yerleştiriyorsunuz. Mobil uygulama üzerinden hastalık modunuzu seçiyorsunuz ve 20 dakikalık seanslara başlıyorsunuz.' },
+    { q: 'PelviQ nasıl kullanılır?', a: 'Elektrod pedi iç çamaşırınızın üzerine perineal bölgeye yerleştiriyorsunuz. Mobil uygulama üzerinden hastalık modunuzu seçiyorsunuz ve 20 dakikalık seanslara başlıyorsunuz.' },
     { q: 'Seans süresi ne kadar?', a: 'Standart seans süresi 20 dakikadır. Günde 1-2 seans önerilir.' },
-    { q: 'Cihaz ağrı verir mi?', a: 'Hayır. PelvicAir non-invazif tasarımıyla ağrısız çalışır.' },
+    { q: 'Cihaz ağrı verir mi?', a: 'Hayır. PelviQ non-invazif tasarımıyla ağrısız çalışır.' },
     { q: 'Elektrod pad ne kadar dayanır?', a: 'Her elektrod pad 3-5 seans kullanıma uygundur.' },
   ]},
 ];
@@ -31,7 +31,7 @@ export default function FaqPage() {
   const { get, getJson } = useCms();
   const heroTitle = get('faq_hero_title', 'Sık Sorulan Sorular');
   const heroTitleFs = get('faq_hero_title_fs', '');
-  const heroSubtitle = get('faq_hero_subtitle', 'PelvicAir hakkında merak ettiklerinizin yanıtları');
+  const heroSubtitle = get('faq_hero_subtitle', 'PelviQ hakkında merak ettiklerinizin yanıtları');
   const heroSubtitleFs = get('faq_hero_subtitle_fs', '');
   const categories = getJson('faq_categories', DEFAULT_CATEGORIES);
 

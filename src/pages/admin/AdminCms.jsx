@@ -79,7 +79,7 @@ const HOME_STEP_SCHEMA = [
 ];
 const COMPARISON_SCHEMA = [
   { key: 'feature', label: 'Özellik', type: 'text' },
-  { key: 'pelvicair', label: 'PelvicAir', type: 'boolean' },
+  { key: 'pelvicair', label: 'PelviQ', type: 'boolean' },
   { key: 'internal', label: 'İnternal Cihazlar', type: 'boolean' },
   { key: 'surgery', label: 'Cerrahi', type: 'boolean' },
   { key: 'pt', label: 'Fizyoterapi', type: 'boolean' },
@@ -185,7 +185,7 @@ const SECTIONS = [
   {
     title: 'Ürün Sayfası',
     icon: '📦',
-    desc: 'PelvicAir ürün sayfası hero ve paketler',
+    desc: 'PelviQ ürün sayfası hero ve paketler',
     keys: [
       'product_hero_badge',
       'product_hero_title',

@@ -24,7 +24,7 @@ export default function SciencePage() {
   const { get, getJson } = useCms();
   const heroTitle = get('science_hero_title', 'Bilimsel Kanıtlar');
   const heroTitleFs = get('science_hero_title_fs', '');
-  const heroSubtitle = get('science_hero_subtitle', 'PelvicAir\'in etkinliği 50\'den fazla randomize kontrollü klinik çalışma ile desteklenmektedir.');
+  const heroSubtitle = get('science_hero_subtitle', 'PelviQ\'in etkinliği 50\'den fazla randomize kontrollü klinik çalışma ile desteklenmektedir.');
   const heroSubtitleFs = get('science_hero_subtitle_fs', '');
   const clinicalStudies = getJson('science_studies', DEFAULT_STUDIES);
   const differentiators = getJson('science_differentiators', DEFAULT_DIFFS);
@@ -62,7 +62,7 @@ export default function SciencePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>Devrimci Teknoloji</h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">PelvicAir'i diğer cihazlardan ayıran dört temel patentli özellik</p>
+            <p className="text-gray-500 max-w-2xl mx-auto">PelviQ'i diğer cihazlardan ayıran dört temel patentli özellik</p>
           </div>
           <div className="grid sm:grid-cols-2 gap-6">
             {differentiators.map((d) => (

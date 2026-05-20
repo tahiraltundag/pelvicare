@@ -21,7 +21,7 @@ const IconFacebook = () => (
 
 const footerLinks = {
   Ürünler: [
-    { label: 'PelvicAir Cihazı', path: '/urun/pelvicair' },
+    { label: 'PelviQ Cihazı', path: '/urun/pelvicair' },
     { label: 'Kadın Modları', path: '/kadin' },
     { label: 'Erkek Modları', path: '/erkek' },
     { label: 'Elektrod Padler', path: '/urun/elektrod-pad' },
@@ -106,7 +106,7 @@ export default function Footer() {
               </a>
             </div>
             <p className="text-xs text-blue-400">
-              © 2026 PelvicAir. Tüm hakları saklıdır.
+              © 2026 PelviQ. Tüm hakları saklıdır.
             </p>
           </div>
         </div>

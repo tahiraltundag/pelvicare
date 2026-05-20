@@ -158,7 +158,7 @@ function DeviceLinkSection({ patientId, stats, onRefresh }) {
         /* Active link code waiting */
         <div>
           <p className="text-sm text-gray-500 mb-3">
-            Hasta bu kodu PelvicAir mobil uygulamasına girsin. Kod{' '}
+            Hasta bu kodu PelviQ mobil uygulamasına girsin. Kod{' '}
             <span className="font-semibold text-orange-600">
               {Math.ceil((new Date(stats.linkExpiresAt) - new Date()) / 86400000)} gün
             </span>{' '}

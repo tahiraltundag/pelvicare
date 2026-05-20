@@ -14,7 +14,7 @@ const navItems = [
   {
     label: 'Ürünler',
     children: [
-      { label: 'PelvicAir Cihazı', path: '/urun/pelvicair' },
+      { label: 'PelviQ Cihazı', path: '/urun/pelvicair' },
       { label: 'Kadın Modları', path: '/kadin' },
       { label: 'Erkek Modları', path: '/erkek' },
       { label: 'Elektrod Padler', path: '/urun/elektrod-pad' },

@@ -4,15 +4,15 @@ import { CheckCircle, ArrowRight, Download } from 'lucide-react';
 import { useCms } from '../hooks/useCms';
 
 const DEFAULT_PRESCRIBE_STEPS = [
-  { step: '1', title: 'Hastayı Değerlendirin', desc: 'Pelvik taban bozukluğunu tanımlayın ve PelvicAir kontrendikasyonlarını dışlayın.' },
-  { step: '2', title: 'Protokol Seçin', desc: 'Mobil uygulamadan veya PelvicAir Klinisyen Portalı\'ndan uygun hastalık modunu (K-01 ila E-07) önerin.' },
+  { step: '1', title: 'Hastayı Değerlendirin', desc: 'Pelvik taban bozukluğunu tanımlayın ve PelviQ kontrendikasyonlarını dışlayın.' },
+  { step: '2', title: 'Protokol Seçin', desc: 'Mobil uygulamadan veya PelviQ Klinisyen Portalı\'ndan uygun hastalık modunu (K-01 ila E-07) önerin.' },
   { step: '3', title: 'Hastayı Yönlendirin', desc: 'Reçete veya öneri mektubu yazın. Hasta web sitesinden veya yetkili satıcıdan temin edebilir.' },
 ];
 
 const DEFAULT_CLINICAL_EVIDENCE = [
-  { title: '%25 Hatalı Kegel', desc: 'Kadınların %25\'i Kegel egzersizini hatalı yapıyor — etki sıfır. PelvicAir pasif Kegel ile bu sorunu ortadan kaldırır.', source: 'Bø K. et al. 2012' },
-  { title: '%13 PT Tamamlama', desc: 'Pelvik taban fizyoterapisi seanslarını tamamlama oranı sadece %13. Evde PelvicAir ile uyum dramatik artar.', source: 'Klotz T. et al. 2019' },
-  { title: 'OAB İlaç Yan Etkileri', desc: 'Antikolinerjik ilaçların %40 bırakma oranı. PelvicAir farmakolojik olmayan bir alternatif sunar.', source: 'Chapple CR. et al. 2021' },
+  { title: '%25 Hatalı Kegel', desc: 'Kadınların %25\'i Kegel egzersizini hatalı yapıyor — etki sıfır. PelviQ pasif Kegel ile bu sorunu ortadan kaldırır.', source: 'Bø K. et al. 2012' },
+  { title: '%13 PT Tamamlama', desc: 'Pelvik taban fizyoterapisi seanslarını tamamlama oranı sadece %13. Evde PelviQ ile uyum dramatik artar.', source: 'Klotz T. et al. 2019' },
+  { title: 'OAB İlaç Yan Etkileri', desc: 'Antikolinerjik ilaçların %40 bırakma oranı. PelviQ farmakolojik olmayan bir alternatif sunar.', source: 'Chapple CR. et al. 2021' },
 ];
 
 const DEFAULT_DOWNLOADS = [
@@ -28,7 +28,7 @@ export default function ClinicianPage() {
   const { get, getJson } = useCms();
   const heroTitle = get('clinician_title', 'Hastanız İçin Yeni Bir Seçenek');
   const heroTitleFs = get('clinician_title_fs', '');
-  const heroSubtitle = get('clinician_subtitle', 'PelvicAir, klinik fizyoterapiye ek veya monoterapi olarak reçete edebileceğiniz, CE belgeli, klinik kanıtlı non-invazif bir cihaz.');
+  const heroSubtitle = get('clinician_subtitle', 'PelviQ, klinik fizyoterapiye ek veya monoterapi olarak reçete edebileceğiniz, CE belgeli, klinik kanıtlı non-invazif bir cihaz.');
   const heroSubtitleFs = get('clinician_subtitle_fs', '');
   const prescribeSteps = getJson('clinician_prescribe_steps', DEFAULT_PRESCRIBE_STEPS);
   const clinicalEvidence = getJson('clinician_evidence', DEFAULT_CLINICAL_EVIDENCE);
@@ -92,7 +92,7 @@ export default function ClinicianPage() {
         </div>
       </section>
 
-      {/* Why PelvicAir */}
+      {/* Why PelviQ */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">

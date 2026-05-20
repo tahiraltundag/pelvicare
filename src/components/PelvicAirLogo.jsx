@@ -45,7 +45,7 @@ export function PelvicAirLogotype({ iconSize = 36, dark = false }) {
           letterSpacing: '-0.02em',
         }}
       >
-        Pelvic<span style={{ color: '#0d9488' }}>Air</span>
+        Pelvi<span style={{ color: '#0d9488' }}>Q</span>
       </span>
     </div>
   );

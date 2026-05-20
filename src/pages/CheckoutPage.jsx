@@ -297,7 +297,7 @@ export default function CheckoutPage() {
 
                       {/* Kart Önizleme */}
                       <div className="rounded-2xl p-5 mb-5 text-white relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #1e3a5f 0%, #0d9488 100%)' }}>
-                        <div className="text-xs opacity-60 mb-6">PelvicAir Güvenli Ödeme</div>
+                        <div className="text-xs opacity-60 mb-6">PelviQ Güvenli Ödeme</div>
                         <div className="text-lg font-mono tracking-widest mb-4">
                           {card.number || '•••• •••• •••• ••••'}
                         </div>
@@ -355,7 +355,7 @@ export default function CheckoutPage() {
                       <div className="space-y-3 text-sm">
                         {[
                           { label: 'Banka', value: 'Ziraat Bankası' },
-                          { label: 'Hesap Adı', value: 'PelvicAir Medikal A.Ş.' },
+                          { label: 'Hesap Adı', value: 'PelviQ Medikal A.Ş.' },
                           { label: 'IBAN', value: 'TR00 0001 0001 0000 0000 0000 00' },
                           { label: 'Açıklama', value: 'Ad Soyad + Sipariş' },
                         ].map(row => (

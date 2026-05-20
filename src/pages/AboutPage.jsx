@@ -40,7 +40,7 @@ export default function AboutPage() {
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
           <h1 className="text-4xl lg:text-5xl font-bold mb-4" style={heroTitleFs ? { fontSize: `${heroTitleFs}px` } : {}}>{heroTitle}</h1>
           <p className="text-xl text-blue-200 leading-relaxed">
-            PelvicAir, pelvik sağlık sorunlarının utanç kaynağı değil çözülebilir tıbbi durumlar olduğuna inanan bir ekip tarafından kurulmuştur.
+            PelviQ, pelvik sağlık sorunlarının utanç kaynağı değil çözülebilir tıbbi durumlar olduğuna inanan bir ekip tarafından kurulmuştur.
           </p>
         </div>
       </section>
@@ -61,7 +61,7 @@ export default function AboutPage() {
                       Dünya genelinde 500 milyondan fazla insan pelvik taban bozukluğuyla yaşıyor. Bunların %68'i utanç, bilinçsizlik veya erişim engeli nedeniyle hiç tedavi aramıyor. Tek bir klinik HIFEM seansının maliyeti ₺5.000'i aşabiliyor.
                     </p>
                     <p className="text-gray-600 leading-relaxed mb-6">
-                      PelvicAir bu boşluğu kapatmak için kuruldu: Klinik etkinliği, ev erişilebilirliği ve hem kadın hem erkek kapsamıyla birleştiren, giyilebilir, non-invazif bir platform.
+                      PelviQ bu boşluğu kapatmak için kuruldu: Klinik etkinliği, ev erişilebilirliği ve hem kadın hem erkek kapsamıyla birleştiren, giyilebilir, non-invazif bir platform.
                     </p>
                   </>
               }
@@ -170,9 +170,9 @@ export default function AboutPage() {
               </div>
             </div>
             <blockquote className="text-blue-200 leading-relaxed text-lg italic">
-              "Pelvik taban sorunlarıyla kişisel deneyimim yaşandıktan sonra, bu konunun ne kadar büyük bir sessizlikle taşındığını gördüm. Mevcut çözümler ya klinik ortamda pahalı, ya invazif, ya da sadece kadınlara yönelik. PelvicAir'i hem kadın hem erkek için, hem klinik düzeyde etkili hem de evde kullanılabilir bir çözüm olarak inşa ettik."
+              "Pelvik taban sorunlarıyla kişisel deneyimim yaşandıktan sonra, bu konunun ne kadar büyük bir sessizlikle taşındığını gördüm. Mevcut çözümler ya klinik ortamda pahalı, ya invazif, ya da sadece kadınlara yönelik. PelviQ'i hem kadın hem erkek için, hem klinik düzeyde etkili hem de evde kullanılabilir bir çözüm olarak inşa ettik."
             </blockquote>
-            <div className="mt-4 text-sm text-blue-400">— Dr. Elif Yıldız, PelvicAir Kurucu</div>
+            <div className="mt-4 text-sm text-blue-400">— Dr. Elif Yıldız, PelviQ Kurucu</div>
           </div>
         </div>
       </section>

@@ -176,7 +176,7 @@ export default function HomePage() {
                       <img
                         key={photoIndex}
                         src={PRODUCT_IMAGES[photoIndex]}
-                        alt="PelvicAir ürün fotoğrafı"
+                        alt="PelviQ ürün fotoğrafı"
                         className="w-full h-full object-contain p-4"
                         style={{ animation: 'fadeIn 0.3s ease' }}
                       />
@@ -238,7 +238,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>Pelvik Sağlık: Sessiz Kriz</h2>
-            <p className="text-gray-500 max-w-2xl mx-auto">Milyonlar tedavi aramaktan çekinmekte. PelvicAir bu boşluğu klinik etkinlik ve ev erişilebilirliğiyle kapatıyor.</p>
+            <p className="text-gray-500 max-w-2xl mx-auto">Milyonlar tedavi aramaktan çekinmekte. PelviQ bu boşluğu klinik etkinlik ve ev erişilebilirliğiyle kapatıyor.</p>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {cmsStats.map((stat, i) => (

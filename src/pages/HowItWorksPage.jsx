@@ -25,7 +25,7 @@ const DEFAULT_HOW_STEPS = [
   { num: '01', title: 'Elektrod Pedi Hazırlayın', desc: 'Resealable poşetten çıkarın. Hidrojel yüzeyinin nemliliğini kontrol edin. Her pad 3–5 seans kullanıma uygundur.' },
   { num: '02', title: 'Pedi Yerleştirin', desc: 'İç çamaşırı konforu ile perineal bölgeye yerleştirin. Prob yok, girişim yok. Giysi altında tamamen görünmez.' },
   { num: '03', title: 'Uygulamayı Açın', desc: 'Bluetooth ile cihaza bağlanın. Kadın veya erkek profilinizi seçin. Hastalık modunuzu belirleyin ve seanı başlatın.' },
-  { num: '04', title: 'Seanı Tamamlayın', desc: '20 dakikalık protokol otomatik çalışır. Günlük aktivitelerinize devam edebilirsiniz. Uygulama ilerlemenizi kaydeder.' },
+  { num: '04', title: 'Seansı Tamamlayın', desc: '20 dakikalık protokol otomatik çalışır. Günlük aktivitelerinize devam edebilirsiniz. Uygulama ilerlemenizi kaydeder.' },
 ];
 
 const DEFAULT_CONTRAINDICATIONS = [

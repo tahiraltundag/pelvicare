@@ -277,7 +277,7 @@ export default function HomePage() {
             <div className="inline-flex items-center gap-2 bg-teal-600 text-white rounded-2xl px-6 py-3">
               <Zap size={18} />
               <span className="font-semibold">Sinerjik Etki:</span>
-              <span className="text-teal-100 text-sm">Kombinasyon tedavisi tek başına hiçbir modalitaenin ulaşamadığı derinliği sağlar.</span>
+              <span className="text-teal-100 text-sm">Kombinasyon tedavisi tek başına hiçbir modalitenin ulaşamadığı derinliği sağlar.</span>
             </div>
           </div>
         </div>
@@ -288,7 +288,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>Güvene Giden 4 Adım</h2>
-            <p className="text-gray-500">Klinik düzey tedavi, evde basit adımlarla.</p>
+            <p className="text-gray-500">Evde basit adımlarla, klinik düzey rehabilitasyon.</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {cmsSteps.map((s, i) => (

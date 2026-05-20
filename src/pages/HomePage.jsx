@@ -201,7 +201,7 @@ export default function HomePage() {
 
                 {/* Floating badges */}
                 <div className="hero-badge-float absolute top-14 -right-4 bg-white rounded-xl px-3 py-2 shadow-lg">
-                  <div className="text-xs font-bold text-gray-800">CE Belgeli</div>
+                  <div className="text-xs font-bold text-gray-800">CE Standartlarına Uygun</div>
                   <div className="text-xs text-gray-500">Tıbbi Cihaz</div>
                 </div>
                 <div className="hero-badge-float-alt absolute -bottom-4 -left-4 bg-teal-600 rounded-xl px-3 py-2 shadow-lg text-white">

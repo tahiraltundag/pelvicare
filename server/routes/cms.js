@@ -10,6 +10,7 @@ router.get('/', async (req, res) => {
     const items = await prisma.cmsContent.findMany({ orderBy: { key: 'asc' } });
     const result = {};
     items.forEach(item => { result[item.key] = item; });
+    res.set('Cache-Control', 'no-store');
     res.json({ success: true, data: result });
   } catch {
     res.status(500).json({ success: false, error: 'Sunucu hatası' });

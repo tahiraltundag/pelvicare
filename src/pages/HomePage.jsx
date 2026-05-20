@@ -31,7 +31,7 @@ const DEFAULT_TRUST_BADGES = [
   { icon: 'Shield', label: 'CE Belgeli', sub: 'Tıbbi Cihaz' },
   { icon: 'Activity', label: '50+ Klinik Araştırma', sub: 'RCT Destekli' },
   { icon: 'Star', label: '4.8/5 Puan', sub: '500+ Değerlendirme' },
-  { icon: 'CheckCircle', label: '60 Gün', sub: 'Para İade Garantisi' },
+  { icon: 'CheckCircle', label: '14 Gün', sub: 'Para İadesi Garantisi' },
 ];
 
 const ICON_MAP = {

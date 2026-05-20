@@ -81,7 +81,7 @@ export default function Header() {
           <Link to="/" onClick={() => setSidebarOpen(false)} className="flex items-center gap-2.5">
             <PelvicAirIcon size={36} />
             <span className="text-xl font-extrabold tracking-tight" style={{ color: '#1e3a5f', letterSpacing: '-0.02em' }}>
-              Pelvic<span style={{ color: '#0d9488' }}>Air</span>
+              Pelvi<span style={{ color: '#0d9488' }}>Q</span>
             </span>
           </Link>
 

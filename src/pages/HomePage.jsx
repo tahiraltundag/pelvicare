@@ -342,7 +342,7 @@ export default function HomePage() {
       <section className="py-16 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>PelvicAir vs. Diğer Yöntemler</h2>
+            <h2 className="text-3xl font-bold mb-3" style={{ color: '#1e3a5f' }}>PelviQ vs. Diğer Yöntemler</h2>
             <p className="text-gray-500">Neden PelviQ? Bir Karşılaştırma.</p>
           </div>
           <div className="overflow-x-auto">

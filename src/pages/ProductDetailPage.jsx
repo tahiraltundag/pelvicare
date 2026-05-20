@@ -250,7 +250,7 @@ export default function ProductDetailPage() {
               {/* Variants */}
               {variants.length > 0 && (
                 <div>
-                  <p className="text-xs font-semibold text-gray-600 mb-2">Varyant</p>
+
                   <div className="flex flex-wrap gap-2">
                     {variants.map((v, i) => {
                       const val = typeof v === 'string' ? v : v.value || v.name || String(i);

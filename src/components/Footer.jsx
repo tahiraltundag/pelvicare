@@ -59,7 +59,7 @@ export default function Footer() {
             <div className="flex items-center gap-2.5 mb-4">
               <PelvicAirIcon size={36} />
               <span className="text-xl font-extrabold tracking-tight" style={{ letterSpacing: '-0.02em' }}>
-                Pelvic<span className="text-teal-400">Air</span>
+                Pelvi<span className="text-teal-400">Q</span>
               </span>
             </div>
             <p className="text-sm text-blue-200 leading-relaxed mb-4">
